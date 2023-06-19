@@ -52,7 +52,7 @@ public class CreateLevelTool : MonoBehaviour
         maxDis = GetMaxDistance();
         int numOfText = list.Count * 10;
         PlayerPrefs.SetInt("Number of Texts", numOfText);
-        InstantiateLevel(0);
+        InstantiateLevel(2);
     }
 
     void InKetQua(int j)
@@ -84,7 +84,12 @@ public class CreateLevelTool : MonoBehaviour
         {
             if (Find2CanCircle(list, i, dir))
             {
+
                 list[i].rotation = rotDir[dir];
+                if (i == 0 || i == 1)
+                    continue;
+                if (list[i].rotation == list[i - 1].rotation || list[i].rotation == list[i - 2].rotation)
+                    continue;
                 if (i + 1 == list.Count)
                 {
                     count++;

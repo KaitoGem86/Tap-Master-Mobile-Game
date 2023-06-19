@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public LevelData data;
     private void Awake()
     {
+        Application.targetFrameRate = 120;
         PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
         Instance = this;
     }

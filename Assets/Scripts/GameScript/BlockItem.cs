@@ -45,9 +45,9 @@ public class BlockItem : MonoBehaviour
     {
         foreach (GameObject go in pool.pool)
         {
-            go.GetComponent<MeshRenderer>().material = blockMaterial;
+            go.GetComponent<TestMoveBlock>().SetMaterial(blockMaterial);
         }
-        blockPrefab.GetComponent<MeshRenderer>().material = blockMaterial;
+        blockPrefab.GetComponent<TestMoveBlock>().SetMaterial(blockMaterial);
     }
 
     public void SetInteractable(bool islo)

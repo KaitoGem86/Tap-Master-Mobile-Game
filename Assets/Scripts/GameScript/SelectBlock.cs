@@ -27,8 +27,10 @@ public class SelectBlock : MonoBehaviour
             Debug.DrawRay(selectPos, Vector3.forward * 60, Color.red, 3);
             if (Physics.Raycast(selectPos, Vector3.forward * 60, out hit))
             {
-                BlockController selectedBlock = hit.collider.gameObject.GetComponent<BlockController>();
-                selectedBlock.CanMove = true;
+                //BlockController selectedBlock = hit.collider.gameObject.GetComponent<BlockController>();
+                //selectedBlock.IsMoving = true;
+                TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponent<TestMoveBlock>();
+                testMoveBlock.IsSelected = true;
             }
         }
     }

@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class BlockPool : MonoBehaviour
 {
-    [SerializeField] List<BlockController> listBlock = new List<BlockController>();
+    [SerializeField] GameObject blockPrefab;
     [SerializeField] public Rigidbody rb;
 
     private Vector3 oldPos = Vector3.zero;
@@ -109,10 +109,8 @@ public class BlockPool : MonoBehaviour
 
     void Initial()
     {
-        Debug.Log("Assets\\Resources\\LevelData\\level " + Level);
         path_list = Resources.LoadAll<TextAsset>("LevelData\\level " + Level);
         i = UnityEngine.Random.Range(0, path_list.Length);
-        Debug.Log(path_list.Length);
         levelText = path_list[i];
     }
 
@@ -143,8 +141,14 @@ public class BlockPool : MonoBehaviour
             z = float.Parse(line.Substring(k, 4));
             Vector3 angle = new Vector3(x, y, z);
 
-            var go = Instantiate(listBlock[0].gameObject, pos * 4.05f, Quaternion.Euler(angle), this.transform);
+            var go = Instantiate(/*listBlock[0].gameObject*/ blockPrefab, pos * 4f, Quaternion.Euler(angle), this.transform);
             pool.Add(go);
         }
+
+        //foreach (var go in pool)
+        //{
+        //    BlockController b = go.GetComponent<BlockController>();
+        //    b.SetOtherObstacle(b);
+        //}
     }
 }
