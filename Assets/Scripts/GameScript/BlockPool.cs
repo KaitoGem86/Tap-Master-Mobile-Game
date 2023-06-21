@@ -18,8 +18,9 @@ public class BlockPool : MonoBehaviour
     //private Vector3 aRotate = new Vector3();
     private int level;
     private int count;
-    private TextAsset[] path_list;
-    private TextAsset levelText;
+    //private TextAsset[] path_list;
+    //private TextAsset levelText;
+    private LevelDatasController levelData;
     private int size;
     private int i;
     //private bool isARotating = false;
@@ -107,48 +108,59 @@ public class BlockPool : MonoBehaviour
         return rb.angularVelocity != Vector3.zero;
     }
 
+    //void Initial()
+    //{
+    //    path_list = Resources.LoadAll<TextAsset>("LevelData\\level " + Level);
+    //    i = UnityEngine.Random.Range(0, path_list.Length);
+    //    levelText = path_list[i];
+    //}
+
+    //void Readdata()
+    //{
+    //    string[] lines = levelText.text.Split("\n");
+    //    size = Int16.Parse(lines[0]);
+    //    GameManager.Instance.camSize = Int16.Parse(lines[1]);
+    //    if (GameManager.Instance.camSize == 0)
+    //        GameManager.Instance.camSize = 1;
+    //    CameraController.SetCameraSize(GameManager.Instance.camSize > 2 ? GameManager.Instance.camSize : 2);
+    //    for (int i = 2; i < lines.Length - 1; i++)
+    //    {
+    //        string line = lines[i];
+    //        int j = line.IndexOf('(') + 1;
+    //        float x = float.Parse(line.Substring(j, 4));
+    //        int k = line.IndexOf(' ', (int)j) + 1;
+    //        float y = float.Parse(line.Substring(k, 4));
+    //        j = line.IndexOf(' ', (int)k) + 1;
+    //        float z = float.Parse(line.Substring(j, 4));
+    //        Vector3 pos = new Vector3(x, y, z);
+
+    //        k = line.IndexOf('(', (int)j) + 1;
+    //        x = float.Parse(line.Substring(k, 4));
+    //        j = line.IndexOf(' ', (int)k) + 1;
+    //        y = float.Parse(line.Substring(j, 4));
+    //        k = line.IndexOf(' ', (int)j) + 1;
+    //        z = float.Parse(line.Substring(k, 4));
+    //        Vector3 angle = new Vector3(x, y, z);
+
+    //        var go = Instantiate(/*listBlock[0].gameObject*/ blockPrefab, pos * 4f, Quaternion.Euler(angle), this.transform);
+    //        pool.Add(go);
+    //    }
+    //}
+
     void Initial()
     {
-        path_list = Resources.LoadAll<TextAsset>("LevelData\\level " + Level);
-        i = UnityEngine.Random.Range(0, path_list.Length);
-        levelText = path_list[i];
+        levelData = GameManager.Instance.data.datasControllers[this.level - 1];
     }
 
     void Readdata()
     {
-        string[] lines = levelText.text.Split("\n");
-        size = Int16.Parse(lines[0]);
-        GameManager.Instance.camSize = Int16.Parse(lines[1]);
-        if (GameManager.Instance.camSize == 0)
-            GameManager.Instance.camSize = 1;
+        this.size = levelData.numOfBlocks;
+        GameManager.Instance.camSize = levelData.maxDis;
         CameraController.SetCameraSize(GameManager.Instance.camSize > 2 ? GameManager.Instance.camSize : 2);
-        for (int i = 2; i < lines.Length - 1; i++)
+        foreach (var s in levelData.states)
         {
-            string line = lines[i];
-            int j = line.IndexOf('(') + 1;
-            float x = float.Parse(line.Substring(j, 4));
-            int k = line.IndexOf(' ', (int)j) + 1;
-            float y = float.Parse(line.Substring(k, 4));
-            j = line.IndexOf(' ', (int)k) + 1;
-            float z = float.Parse(line.Substring(j, 4));
-            Vector3 pos = new Vector3(x, y, z);
-
-            k = line.IndexOf('(', (int)j) + 1;
-            x = float.Parse(line.Substring(k, 4));
-            j = line.IndexOf(' ', (int)k) + 1;
-            y = float.Parse(line.Substring(j, 4));
-            k = line.IndexOf(' ', (int)j) + 1;
-            z = float.Parse(line.Substring(k, 4));
-            Vector3 angle = new Vector3(x, y, z);
-
-            var go = Instantiate(/*listBlock[0].gameObject*/ blockPrefab, pos * 4f, Quaternion.Euler(angle), this.transform);
+            var go = Instantiate(blockPrefab, s.pos * 4, Quaternion.Euler(s.rotation), this.transform);
             pool.Add(go);
         }
-
-        //foreach (var go in pool)
-        //{
-        //    BlockController b = go.GetComponent<BlockController>();
-        //    b.SetOtherObstacle(b);
-        //}
     }
 }

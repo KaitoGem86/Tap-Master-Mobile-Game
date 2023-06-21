@@ -20,7 +20,7 @@ public class SelectBlock : MonoBehaviour
         //Debug.Log(InputController.instance.Timer);
         //Debug.DrawRay(InputController.instance.GetInputPosition(), Vector3.forward * 60, Color.red, 3);
 
-        if (InputController.instance.CheckSelect() && InputController.instance.Timer < 0.15f)
+        if (InputController.instance.CheckSelect() && InputController.instance.Timer < 0.2f)
         {
             GameManager.Instance.blockPool.rb.angularVelocity = Vector3.zero;
             Vector3 selectPos = InputController.instance.GetInputPosition();
@@ -29,7 +29,7 @@ public class SelectBlock : MonoBehaviour
             {
                 //BlockController selectedBlock = hit.collider.gameObject.GetComponent<BlockController>();
                 //selectedBlock.IsMoving = true;
-                TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponent<TestMoveBlock>();
+                TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();
                 testMoveBlock.IsSelected = true;
             }
         }

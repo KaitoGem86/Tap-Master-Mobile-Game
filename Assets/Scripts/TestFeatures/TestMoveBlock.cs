@@ -85,7 +85,10 @@ public class TestMoveBlock : MonoBehaviour
         if (Physics.Raycast(blockRb.transform.position, this.transform.up, out RaycastHit hitInfo))
         {
             //Debug.DrawRay(blockRb.transform.position, this.transform.up * hitInfo.distance, Color.red);
-            this.obstaclePos = hitInfo.collider.gameObject.GetComponent<TestMoveBlock>().startPos;
+            if (hitInfo.collider.gameObject.CompareTag("BlockChild"))
+                this.obstaclePos = hitInfo.collider.gameObject.GetComponentInParent<TestMoveBlock>().startPos;
+            else
+                this.obstaclePos = hitInfo.collider.gameObject.GetComponent<TestMoveBlock>().startPos;
         }
         else
         {

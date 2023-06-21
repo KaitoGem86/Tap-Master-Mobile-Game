@@ -6,4 +6,5 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public int numberOfLevels;
+    [SerializeField] public List<LevelDatasController> datasControllers = new List<LevelDatasController>();
 }

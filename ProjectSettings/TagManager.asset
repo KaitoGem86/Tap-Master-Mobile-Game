@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Escaping
+  - BlockChild
   layers:
   - Default
   - TransparentFX
