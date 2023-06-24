@@ -123,13 +123,13 @@ public class TestMoveBlock : MonoBehaviour
 
     IEnumerator UpdateData()
     {
-        GameManager.Instance.count -= 1;
+        GameManager.Instance.countBlocks -= 1;
         int currenCoin = PlayerPrefs.GetInt("Coin", 0);
         GameManager.Instance.coin += 1;
         PlayerPrefs.SetInt("Coin", currenCoin + 1);
         UIManager.instance.SetCoinText();
         UIManager.instance.UpdateBlocksNum();
-        if (GameManager.Instance.count == 0)
+        if (GameManager.Instance.countBlocks == 0)
         {
             Debug.Log("WinGame");
             GameManager.Instance.WinGame();
