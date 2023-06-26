@@ -59,11 +59,19 @@ public class AchievementListController : MonoBehaviour
     }
 
 
-    public void UpdateAchievementList(AchievementData data)
+    public void UpdateAchievementList(AchievementController passedAchievement)
     {
+        AchievementData data = passedAchievement.Data;
         Debug.Log("AddList");
         waitedList.RemoveAchievement(data);
         passedList.AddAchievement(data);
+
+        int i = existingList.FindIndex(a => a == passedAchievement);
+        existingList[i].Data = waitedList.list[2];
+        existingList[i].List = this;
+        existingList[i].InitializeAchievement();
+        existingList[i].UpdateValue();
+        AchievementGoalsController.UpdateTaskList(existingList[i].TaskTag);
     }
 
     public void HireList()
@@ -71,6 +79,7 @@ public class AchievementListController : MonoBehaviour
         foreach (var task in existingList)
         {
             Destroy(task.gameObject);
+
         }
     }
 }

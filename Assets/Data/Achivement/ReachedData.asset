@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fc26922ddf6d8940b98da95e0018919, type: 3}
   m_Name: ReachedData
   m_EditorClassIdentifier: 
-  keys:
-  - Number of passed levels
-  - Number of moved blocks
-  values: 0000000000000000
+  keys: []
+  values: 

@@ -410,7 +410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &157130620
 RectTransform:
   m_ObjectHideFlags: 0
@@ -521,6 +521,7 @@ MonoBehaviour:
   passedList: {fileID: 11400000, guid: 100d485a0aed9604faa018bb366bf423, type: 2}
   reachedData: {fileID: 0}
   achievementPrefab: {fileID: 5731617677435830142, guid: cb413cfbc786fdd4594b40dda254f4dc, type: 3}
+  existingList: []
 --- !u!4 &198158368
 Transform:
   m_ObjectHideFlags: 0
@@ -1356,7 +1357,7 @@ GameObject:
   - component: {fileID: 647985247}
   - component: {fileID: 647985250}
   m_Layer: 5
-  m_Name: GamePlayModePanel
+  m_Name: GameLevelPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1941,8 +1942,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 257.434, y: 0.4081}
-  m_SizeDelta: {x: 394.868, y: 115.7515}
+  m_AnchoredPosition: {x: 236, y: -3.4485}
+  m_SizeDelta: {x: 302.3877, y: 108.0382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &770019254
 MonoBehaviour:
@@ -2080,7 +2081,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -148.10693}
-  m_SizeDelta: {x: -980, y: -2164}
+  m_SizeDelta: {x: -980, y: -2340}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &776147878
 MonoBehaviour:
@@ -2174,6 +2175,7 @@ MonoBehaviour:
   passedList: {fileID: 11400000, guid: 100d485a0aed9604faa018bb366bf423, type: 2}
   reachedData: {fileID: 11400000, guid: 3f4bdb372f180a1469ac4709e37b8e22, type: 2}
   achievementPrefab: {fileID: 5731617677435830142, guid: cb413cfbc786fdd4594b40dda254f4dc, type: 3}
+  existingList: []
 --- !u!1 &789450067
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,7 +2759,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 120, y: 170}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &901024838
 MonoBehaviour:
@@ -2779,7 +2781,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -805539632, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+  m_Sprite: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3677,8 +3679,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -389, y: -122}
-  m_SizeDelta: {x: 108, y: 140}
+  m_AnchoredPosition: {x: -398, y: -122}
+  m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1374212516
 MonoBehaviour:
@@ -3700,7 +3702,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -805539632, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+  m_Sprite: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4934,6 +4936,9 @@ MonoBehaviour:
   blockPrice: 100
   mainCam: {fileID: 963194225}
   blockPool: {fileID: 1597308416}
+  selectBlock: {fileID: 346405046}
+  currentLevel: 1
+  totalBlocks: 0
   coin: 0
   data: {fileID: 11400000, guid: c183f69bd5d12214ab9b2ff7bdd80b0e, type: 2}
 --- !u!4 &1718777737

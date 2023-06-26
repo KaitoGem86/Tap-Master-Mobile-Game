@@ -12,6 +12,7 @@ public class PauseGameMenuController : MonoBehaviour
     {
         Time.timeScale = 1;
         GameManager.Instance.blockPool.gameObject.SetActive(true);
+        GameManager.Instance.selectBlock.SetActive(true);
         this.gameObject.SetActive(false);
     }
 

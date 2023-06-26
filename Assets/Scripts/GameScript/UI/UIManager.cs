@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        GameManager.Instance.selectBlock.SetActive(false);
         pauseGameMenu.SetActive(true);
     }
 
@@ -72,6 +73,8 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         blockListPanel.SetActive(true);
+        UIManager.instance.SetCoinText();
+        GameManager.Instance.selectBlock.SetActive(false);
         GameManager.Instance.blockPool.gameObject.SetActive(false);
     }
 
@@ -79,6 +82,7 @@ public class UIManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         gamePlayModeMenu.SetActive(true);
+        GameManager.Instance.selectBlock.SetActive(false);
         GameManager.Instance.blockPool.gameObject.SetActive(false);
     }
 

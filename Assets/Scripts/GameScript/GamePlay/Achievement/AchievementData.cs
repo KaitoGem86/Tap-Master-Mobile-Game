@@ -12,4 +12,5 @@ public class AchievementData
     public string description;
     public Sprite icon;
     public int goalValue;
+    public int reward;
 }

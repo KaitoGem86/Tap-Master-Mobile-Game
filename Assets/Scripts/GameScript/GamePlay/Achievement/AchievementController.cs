@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,12 +11,13 @@ public class AchievementController : BaseAchievement
     private int id;
     private string taskTag;
     [SerializeField] private TMP_Text description;
+    [SerializeField] private TMP_Text rewardText;
     [SerializeField] private Image icon;
-    [SerializeField] AchievementBar bar;
+    [SerializeField] public AchievementBar bar;
     private AchievementListController list;
     [SerializeField] private int goalValue;
+    [SerializeField] private int reward;
     [SerializeField] private int value;
-    private float timer = 1;
     private AchievementData data;
 
     public string TaskTag { get { return taskTag; } }
@@ -24,6 +26,7 @@ public class AchievementController : BaseAchievement
     public AchievementListController List { get { return list; } set { list = value; } }
 
     public int Value { get { return value; } }
+    public int GoalValue { get { return goalValue; } }
 
     public override void InitializeAchievement()
     {
@@ -32,6 +35,8 @@ public class AchievementController : BaseAchievement
         this.description.text = data.description;
         this.icon.sprite = data.icon;
         this.goalValue = data.goalValue;
+        this.reward = data.reward;
+        rewardText.text = $"+{this.reward}";
         //this.list = this.gameObject.GetComponentInParent<AchievementListController>();
     }
 
@@ -40,44 +45,34 @@ public class AchievementController : BaseAchievement
         if (value > goalValue)
         {
             value = goalValue;
-            StartCoroutine(ReachedAchievement_2());
+            ReachedAchievement();
         }
     }
 
     public void UpdateValue()
     {
-        value = AchievementGoalsController.GetValue(taskTag);
-        Debug.Log(value);
-        bar.UpdateCompletedBar(value, goalValue);
-        //if (this.list != null)
-        //    Debug.Log(this.list.gameObject.name);
-        //else
-        //    Debug.Log(null);
-        //AchievementGoalsController.WriteData(this.list.reachedData, this);
-        if (value >= goalValue)
+        if (!this.gameObject.IsDestroyed())
         {
-            value = goalValue;
-            StartCoroutine(ReachedAchievement());
+            value = AchievementGoalsController.GetValue(taskTag);
+            bar.UpdateCompletedBar(value, goalValue);
+            AchievementGoalsController.WriteData(this.list.reachedData, this);
+            if (value >= goalValue)
+            {
+                value = goalValue;
+                ReachedAchievement();
+            }
         }
     }
 
-    IEnumerator ReachedAchievement()
+    void ReachedAchievement()
     {
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            yield return new WaitForEndOfFrame();
-        }
+        int coin = PlayerPrefs.GetInt("Coin", 0);
+        Debug.Log("Coin: " + coin);
+        Debug.Log("Reward: " + this.reward);
+        PlayerPrefs.SetInt("Coint", coin + this.reward);
+        Debug.Log("Total Coin: " + PlayerPrefs.GetInt("Coint", 0));
         Debug.Log("Achievement Reached: " + this.description);
-        this.list.UpdateAchievementList(data);
-        Destroy(gameObject);
+        this.list.UpdateAchievementList(this);
     }
 
-    IEnumerator ReachedAchievement_2()
-    {
-        this.list.UpdateAchievementList(data);
-        //this.list.existingList.Remove(this);
-        Destroy(gameObject);
-        yield return null;
-    }
 }

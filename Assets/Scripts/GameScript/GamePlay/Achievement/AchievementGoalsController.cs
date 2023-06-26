@@ -29,14 +29,17 @@ public static class AchievementGoalsController
 
     public static void WriteData(ReachedValueData targetData, AchievementController writedData)
     {
-        Debug.Log("Write Data");
-        if (targetData.data.ContainsKey(writedData.TaskTag))
+
+        foreach (KeyValuePair<string, int> pair in TaskValueList)
         {
-            targetData.data[writedData.TaskTag] = writedData.Value;
-        }
-        else
-        {
-            targetData.data.Add(writedData.TaskTag, writedData.Value);
+            if (targetData.data.ContainsKey(pair.Key))
+            {
+                targetData.data[pair.Key] = pair.Value;
+            }
+            else
+            {
+                targetData.data.Add(pair.Key, pair.Value);
+            }
         }
     }
 

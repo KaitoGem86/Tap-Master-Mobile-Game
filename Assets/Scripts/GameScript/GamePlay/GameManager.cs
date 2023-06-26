@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public int blockPrice = 100;
     public GameObject mainCam;
     public BlockPool blockPool;
+    public GameObject selectBlock;
 
     [SerializeField]
     internal int currentLevel = 1;
