@@ -17,23 +17,23 @@ MonoBehaviour:
     tag: Number of passed levels
     description: Pass 5 levels
     icon: {fileID: 21300000, guid: 9125c204f566db048a92ebcb64d9d14a, type: 3}
-    goalValue: 5
+    goalValue: 50
     reward: 5
   - id: 1
     tag: Number of passed levels
     description: Pass 10 levels
     icon: {fileID: 21300000, guid: 9125c204f566db048a92ebcb64d9d14a, type: 3}
-    goalValue: 10
+    goalValue: 100
     reward: 10
   - id: 2
     tag: Number of moved blocks
     description: Move 5 blocks
     icon: {fileID: 21300000, guid: c7aa62ae78ffca0498c89e5f45f94c0e, type: 3}
-    goalValue: 5
+    goalValue: 50
     reward: 5
   - id: 3
     tag: Number of moved blocks
     description: Move 20 blocks
     icon: {fileID: 21300000, guid: c7aa62ae78ffca0498c89e5f45f94c0e, type: 3}
-    goalValue: 20
+    goalValue: 200
     reward: 10

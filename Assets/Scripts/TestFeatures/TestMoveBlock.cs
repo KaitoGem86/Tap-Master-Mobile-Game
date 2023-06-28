@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -32,12 +33,6 @@ public class TestMoveBlock : MonoBehaviour
     void Update()
     {
         SetObstacle();
-
-        //if (obstaclePos != null)
-        //    Debug.Log(obstaclePos.transform.position + " - " + this.gameObject.name + " - " + CheckCanEscape());
-        //else
-        //    Debug.Log("NULL - " + this.gameObject.name + " - True");
-
         Move();
     }
 
@@ -81,10 +76,8 @@ public class TestMoveBlock : MonoBehaviour
 
     void SetObstacle()
     {
-        //Debug.Log(this.gameObject.name + this.blockRb.transform.position);
         if (Physics.Raycast(blockRb.transform.position, this.transform.up, out RaycastHit hitInfo))
         {
-            //Debug.DrawRay(blockRb.transform.position, this.transform.up * hitInfo.distance, Color.red);
             if (hitInfo.collider.gameObject.CompareTag("BlockChild"))
                 this.obstaclePos = hitInfo.collider.gameObject.GetComponentInParent<TestMoveBlock>().startPos;
             else
@@ -92,7 +85,6 @@ public class TestMoveBlock : MonoBehaviour
         }
         else
         {
-            //Debug.DrawRay(blockRb.transform.position, this.transform.up * 20);
             this.obstaclePos = null;
         }
     }
@@ -135,6 +127,14 @@ public class TestMoveBlock : MonoBehaviour
             GameManager.Instance.WinGame();
         }
         yield return null;
+    }
+
+    public void PreMove(Vector3 startPos, Vector3 startAngle, Vector3 endPos, Vector3 endAngle)
+    {
+        this.transform.position = startPos;
+        this.transform.rotation = Quaternion.Euler(startAngle);
+        this.transform.DOLocalMove(endPos, duration: 2f).SetEase(Ease.InSine);
+        this.transform.DOLocalRotate(endAngle, duration: 2f).SetEase(Ease.InSine);
     }
 
     public void SetMaterial(Material material)

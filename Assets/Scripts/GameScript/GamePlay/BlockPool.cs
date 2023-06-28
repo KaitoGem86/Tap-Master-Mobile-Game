@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -43,6 +44,7 @@ public class BlockPool : MonoBehaviour
     // Start is called before the first frame update
     public void StartInit(int l)
     {
+        this.transform.DORotate(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360)), 2);
         this.Level = l;
         //InitPool();
         Initial();
@@ -120,7 +122,8 @@ public class BlockPool : MonoBehaviour
         CameraController.SetCameraSize(GameManager.Instance.camSize > 2 ? GameManager.Instance.camSize : 2);
         foreach (var s in levelData.states)
         {
-            var go = Instantiate(blockPrefab, s.pos * 4, Quaternion.Euler(s.rotation), this.transform);
+            var go = Instantiate(blockPrefab, s.pos * 10, Quaternion.Euler(s.rotation + Vector3.up * 100), this.transform);
+            go.GetComponent<TestMoveBlock>().PreMove(s.pos * 10, s.rotation + Vector3.up * 3000, s.pos * 4, s.rotation);
             pool.Add(go);
         }
     }

@@ -54,7 +54,6 @@ public class ViewBlockListController : MonoBehaviour
             blockItems.Add(go.GetComponent<BlockItem>());
             if (block.isDefault)
             {
-                Debug.Log(block.blockName);
                 PlayerPrefs.SetInt("BlockItem " + block.blockName, 1);
                 go.GetComponent<Button>().interactable = true;
             }

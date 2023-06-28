@@ -670,7 +670,7 @@ TextureImporter:
         width: 425
         height: 182
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -691,7 +691,7 @@ TextureImporter:
         width: 425
         height: 182
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -712,7 +712,7 @@ TextureImporter:
         width: 424
         height: 184
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -720,6 +720,48 @@ TextureImporter:
       bones: []
       spriteID: c11d02713d9b4a54e8ee42d108983561
       internalID: 2033171865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_29
+      rect:
+        serializedVersion: 2
+        x: 3091
+        y: 2319
+        width: 180
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d41367a78fcb4d4b88f990c109b783e
+      internalID: 1200463671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_30
+      rect:
+        serializedVersion: 2
+        x: 3500
+        y: 2319
+        width: 181
+        height: 181
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 742c5c24c7a7f7e43877749c570645e9
+      internalID: 832208045
       vertices: []
       indices: 
       edges: []
@@ -751,6 +793,7 @@ TextureImporter:
       Button_15: -1824000895
       Button_2: -1945005496
       Button_27: -532656826
+      Button_29: 1200463671
       Button_14: 5386178
       Button_11: 1294017027
       Button_16: -984389744
@@ -764,6 +807,7 @@ TextureImporter:
       Button_7: -759670889
       Button_25: 1832497459
       Button_26: -2134839058
+      Button_30: 832208045
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,7 +10,6 @@ public class BlockListPanelController : MonoBehaviour
     //[SerializeField] TMP_Text CoinText;
     [SerializeField] ViewBlockListController blockList;
     [SerializeField] Button buyButton;
-
 
     private void Start()
     {
@@ -23,8 +23,13 @@ public class BlockListPanelController : MonoBehaviour
 
     public void ExitPanel()
     {
-        Time.timeScale = 1;
-        GameManager.Instance.blockPool.gameObject.SetActive(true);
+        Vector3 r = this.transform.position + Vector3.left * 540;
+        this.transform.DOMove(r, duration: 0.3f).SetEase(Ease.InSine).OnComplete(Exit);
+    }
+
+    public void Exit()
+    {
+        //GameManager.Instance.blockPool.gameObject.SetActive(true);
         GameManager.Instance.selectBlock.SetActive(true);
         this.gameObject.SetActive(false);
     }
@@ -53,5 +58,16 @@ public class BlockListPanelController : MonoBehaviour
         PlayerPrefs.SetInt("Coin", currenCoin - GameManager.Instance.blockPrice);
         UIManager.instance.SetCoinText();
         blockList.interactableIndexs.Remove(blockList.interactableIndexs[random]);
+    }
+
+    public void OnEnable()
+    {
+        Vector3 r = this.transform.position;
+        Debug.Log(r);
+        if (r == new Vector3(540, 960, 0))
+            this.transform.position = r + Vector3.left * 540;
+        else
+            r += Vector3.right * 540;
+        this.transform.DOMove(r, duration: 0.3f).SetEase(Ease.InOutSine);
     }
 }
