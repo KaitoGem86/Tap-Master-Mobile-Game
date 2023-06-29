@@ -63,6 +63,10 @@ public class CameraController : MonoBehaviour
             Touch touch2 = Input.GetTouch(1);
             float dis = Vector3.Distance(touch1.position, touch2.position);
             float size = dis / olddis;
+            if (size == 1)
+            {
+                return;
+            }
             if (_camera.orthographicSize >= startSize - decreaseSize && _camera.orthographicSize <= startSize + increaseSize)
             {
                 _camera.orthographicSize -= 0.5f * (size > 1 ? 1 : -1);
@@ -74,7 +78,6 @@ public class CameraController : MonoBehaviour
                 _camera.orthographicSize = startSize + increaseSize;
             GameManager.Instance.blockPool.rb.angularVelocity = Vector3.zero;
             olddis = dis;
-
         }
     }
 

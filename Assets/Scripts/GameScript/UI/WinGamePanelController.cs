@@ -11,10 +11,12 @@ public class WinGamePanelController : MonoBehaviour
     [SerializeField] public AchievementListController achievementPanel;
     [SerializeField] RectTransform rect;
 
+    float width;
     bool isContinue;
     // Start is called before the first frame update
     private void Start()
     {
+        width = UIManager.instance.canvas.pixelRect.width;
         isContinue = true;
         SetSummaryCoin();
         rect = GetComponent<RectTransform>();
@@ -33,7 +35,7 @@ public class WinGamePanelController : MonoBehaviour
             isContinue = false;
             if (rect != null)
             {
-                var t = rect.position + Vector3.left * 540;
+                var t = rect.position + Vector3.left * width;
                 this.transform.DOMove(t, duration: 0.3f).SetEase(Ease.InOutSine).OnComplete(Continue);
             }
             else

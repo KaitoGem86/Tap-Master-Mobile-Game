@@ -7,13 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [SerializeField] private GameObject GameWinMenu;
+    [SerializeField] public GameObject GameWinMenu;
     [SerializeField] private GameObject GameOverMenu;
 
     public int blockPrice = 100;
     public GameObject mainCam;
     public BlockPool blockPool;
     public GameObject selectBlock;
+    public GameObject input;
 
     [SerializeField]
     internal int currentLevel = 1;
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
+        GameManager.Instance.selectBlock.SetActive(false);
         if (currentLevel == data.numberOfLevels)
         {
             PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
@@ -63,7 +65,6 @@ public class GameManager : MonoBehaviour
         }
         PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
         AchievementGoalsController.UpdateList(totalBlocks, currentLevel);
-        GameWinMenu.GetComponent<WinGamePanelController>().CheckTask();
         GameWinMenu.SetActive(true);
     }
 
@@ -82,6 +83,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        GameManager.Instance.selectBlock.SetActive(false);
         GameOverMenu.SetActive(true);
     }
 }

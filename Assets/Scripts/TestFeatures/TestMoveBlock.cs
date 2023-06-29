@@ -123,18 +123,17 @@ public class TestMoveBlock : MonoBehaviour
         UIManager.instance.UpdateBlocksNum();
         if (GameManager.Instance.countBlocks == 0)
         {
-            Debug.Log("WinGame");
             GameManager.Instance.WinGame();
         }
         yield return null;
     }
 
-    public void PreMove(Vector3 startPos, Vector3 startAngle, Vector3 endPos, Vector3 endAngle)
+    public void PreMove(Vector3 startPos, Vector3 startAngle, Vector3 endPos, Vector3 endAngle, int i)
     {
         this.transform.position = startPos;
         this.transform.rotation = Quaternion.Euler(startAngle);
-        this.transform.DOLocalMove(endPos, duration: 2f).SetEase(Ease.InSine);
-        this.transform.DOLocalRotate(endAngle, duration: 2f).SetEase(Ease.InSine);
+        this.transform.DOLocalMove(endPos, duration: 1.5f).SetEase(Ease.InSine).SetDelay(i * 0.04f);
+        this.transform.DOLocalRotate(endAngle, duration: 1.5f).SetEase(Ease.InSine).SetDelay(i * 0.04f);
     }
 
     public void SetMaterial(Material material)

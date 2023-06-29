@@ -15,12 +15,10 @@ public static class AchievementGoalsController
             {
                 if (!data.data.ContainsKey(kvp.Key))
                 {
-                    Debug.Log("Add Task");
                     TaskValueList.Add(kvp.Key, kvp.Value);
                 }
                 else
                 {
-                    Debug.Log("Update Task");
                     TaskValueList[kvp.Key] = kvp.Value;
                 }
             }
@@ -47,7 +45,6 @@ public static class AchievementGoalsController
     {
         if (!TaskValueList.ContainsKey(tag))
         {
-            Debug.Log("Add Task " + tag);
             TaskValueList.Add(tag, 0);
         }
     }
@@ -69,7 +66,6 @@ public static class AchievementGoalsController
                 int value = levels;
                 TaskValueList[pair.Key] = value > pair.Value ? value : pair.Value;
             }
-            Debug.Log(pair.Key + "-" + TaskValueList[pair.Key]);
         }
     }
 

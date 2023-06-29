@@ -44,7 +44,7 @@ public class BlockPool : MonoBehaviour
     // Start is called before the first frame update
     public void StartInit(int l)
     {
-        this.transform.DORotate(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360)), 2);
+        this.transform.parent.transform.DORotate(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360)), 2);
         this.Level = l;
         //InitPool();
         Initial();
@@ -101,7 +101,7 @@ public class BlockPool : MonoBehaviour
         float horizontal = speed * (newPos.x - oldPos.x);
         float vertical = speed * (newPos.y - oldPos.y);
 
-        rb.AddTorque(new Vector3(vertical, -horizontal, 0).normalized * 40);
+        rb.AddTorque(new Vector3(vertical, -horizontal, 0).normalized * 20);
         oldPos = newPos;
     }
 
@@ -123,7 +123,7 @@ public class BlockPool : MonoBehaviour
         foreach (var s in levelData.states)
         {
             var go = Instantiate(blockPrefab, s.pos * 10, Quaternion.Euler(s.rotation + Vector3.up * 100), this.transform);
-            go.GetComponent<TestMoveBlock>().PreMove(s.pos * 10, s.rotation + Vector3.up * 3000, s.pos * 4, s.rotation);
+            go.GetComponent<TestMoveBlock>().PreMove(s.pos * 20, s.rotation + new Vector3(180, 180, 0), s.pos * 4, s.rotation, levelData.states.FindIndex(x => x == s));
             pool.Add(go);
         }
     }

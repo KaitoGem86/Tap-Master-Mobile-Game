@@ -6218,6 +6218,7 @@ MonoBehaviour:
   mainCam: {fileID: 963194225}
   blockPool: {fileID: 1597308416}
   selectBlock: {fileID: 346405046}
+  input: {fileID: 1051620698}
   currentLevel: 1
   totalBlocks: 0
   coin: 0
@@ -6546,7 +6547,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764876719}
-  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6554,7 +6555,7 @@ Transform:
   - {fileID: 1597308417}
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1766205511
 GameObject:
   m_ObjectHideFlags: 0
@@ -7177,6 +7178,7 @@ MonoBehaviour:
   blockListPanel: {fileID: 157130619}
   gamePlayModeMenu: {fileID: 647985246}
   levelText: {fileID: 1756812452}
+  canvas: {fileID: 1982762792}
 --- !u!1 &2049527584
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,15 +6,18 @@ using UnityEngine;
 public class LevelPanelController : MonoBehaviour
 {
     RectTransform rect;
+    float width;
+
 
     private void Start()
     {
         rect = GetComponent<RectTransform>();
+        width = UIManager.instance.canvas.pixelRect.width;
     }
 
     public void ExitPanel()
     {
-        Vector3 r = this.transform.position + Vector3.right * 540;
+        Vector3 r = this.transform.position + Vector3.right * width;
         this.transform.DOMove(r, duration: 0.3f).SetEase(Ease.InSine).OnComplete(Exit);
     }
 
@@ -27,12 +30,12 @@ public class LevelPanelController : MonoBehaviour
 
     public void OnEnable()
     {
-        var r = this.transform.position;
-        Debug.Log(r);
-        if (r == new Vector3(540, 960, 0))
-            this.transform.position = r + Vector3.right * 540;
-        else
-            r += Vector3.left * 540;
-        this.transform.DOMove(r, duration: 0.5f).SetEase(Ease.InOutSine);
+        //var r = this.transform.position;
+        //Debug.Log(r);
+        //if (r == UIManager.instance.canvas.transform.position)
+        //    this.transform.position = r + Vector3.right * width;
+        //else
+        //    r += Vector3.left * width;
+        this.transform.DOMove(UIManager.instance.canvas.transform.position, duration: 0.3f).SetEase(Ease.InOutSine);
     }
 }

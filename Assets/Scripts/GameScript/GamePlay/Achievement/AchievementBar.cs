@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class AchievementBar : MonoBehaviour
     public void UpdateCompletedBar(int value, int goal)
     {
         if (value > goal)
-            completedBar.fillAmount = 1;
-        completedBar.fillAmount = (float)value / goal;
+            completedBar.DOFillAmount(1, 0.5f);
+        completedBar.DOFillAmount((float)value / goal, 0.5f);
     }
 }

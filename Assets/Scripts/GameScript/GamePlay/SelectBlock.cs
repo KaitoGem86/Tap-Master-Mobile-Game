@@ -7,8 +7,6 @@ public class SelectBlock : MonoBehaviour
 {
     RaycastHit hit;
 
-
-
     private void Update()
     {
         Select();
@@ -22,13 +20,6 @@ public class SelectBlock : MonoBehaviour
         if (InputController.instance.CheckSelect() && InputController.instance.Timer < 0.2f)
         {
             GameManager.Instance.blockPool.rb.angularVelocity = Vector3.zero;
-            GameManager.Instance.countTouchs -= 1;
-            UIManager.instance.UpdateTouchsNum();
-            if (GameManager.Instance.countTouchs == 0)
-            {
-                if (GameManager.Instance.countBlocks != 0)
-                    GameManager.Instance.GameOver();
-            }
             Vector3 selectPos = InputController.instance.GetInputPosition();
             Debug.DrawRay(selectPos, Vector3.forward * 60, Color.red, 3);
             if (Physics.Raycast(selectPos, Vector3.forward * 60, out hit))
@@ -38,6 +29,17 @@ public class SelectBlock : MonoBehaviour
                 TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();
                 testMoveBlock.IsSelected = true;
             }
+            GameManager.Instance.countTouchs -= 1;
+            UIManager.instance.UpdateTouchsNum();
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (GameManager.Instance.countTouchs == 0)
+        {
+            if (GameManager.Instance.countBlocks > 0)
+                GameManager.Instance.GameOver();
         }
     }
 }

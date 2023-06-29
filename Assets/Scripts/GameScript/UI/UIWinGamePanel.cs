@@ -27,6 +27,8 @@ public class UIWinGamePanel : MonoBehaviour
         {
             seq.Append(child.transform.DOScale(Vector3.one, duration: 0.3f));
         }
+        GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckTask();
+
         seq.Append(tapNotification.transform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.InOutSine));
     }
 

@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject blockListPanel;
     [SerializeField] private GameObject gamePlayModeMenu;
     [SerializeField] private TMP_Text levelText;
+    [SerializeField] public Canvas canvas;
+
 
     public static UIManager instance;
 
@@ -23,8 +25,11 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pauseGameMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
         pauseGameMenu.SetActive(false);
+        blockListPanel.transform.position = this.transform.position + Vector3.left * canvas.pixelRect.width;
         blockListPanel.SetActive(false);
+        gamePlayModeMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
         gamePlayModeMenu.SetActive(false);
         SetLevelText();
     }
