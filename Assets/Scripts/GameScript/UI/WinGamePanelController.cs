@@ -59,4 +59,9 @@ public class WinGamePanelController : MonoBehaviour
     {
         achievementPanel.CheckTask();
     }
+
+    public void CheckAchieve()
+    {
+        achievementPanel.CheckAchieve();
+    }
 }

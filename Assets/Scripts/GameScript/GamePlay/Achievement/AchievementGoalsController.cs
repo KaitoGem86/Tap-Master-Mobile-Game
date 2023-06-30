@@ -52,7 +52,6 @@ public static class AchievementGoalsController
     public static void UpdateList(int blocks, int levels)
     {
         int n = TaskValueList.Count;
-        Debug.Log(n);
         for (int i = 0; i < n; i++)
         {
             var pair = TaskValueList.ElementAt(i);

@@ -1,6 +1,6 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AchievementListController : MonoBehaviour
@@ -58,18 +58,28 @@ public class AchievementListController : MonoBehaviour
         }
     }
 
+    public void CheckAchieve()
+    {
+        foreach (var task in existingList)
+        {
+            task.CheckReachedAchievement();
+        }
+    }
+
 
     public void UpdateAchievementList(AchievementController passedAchievement)
     {
+        Sequence seq = DOTween.Sequence();
         AchievementData data = passedAchievement.Data;
         Debug.Log("AddList");
         waitedList.RemoveAchievement(data);
         passedList.AddAchievement(data);
-
         int i = existingList.FindIndex(a => a == passedAchievement);
+        seq.Append(existingList[i].Description.DOFade(0, 0.7f));
         existingList[i].Data = waitedList.list[2];
         existingList[i].List = this;
         existingList[i].InitializeAchievement();
+        seq.Append(existingList[i].Description.DOFade(1, 0.7f));
         existingList[i].UpdateValue();
         AchievementGoalsController.UpdateTaskList(existingList[i].TaskTag);
     }

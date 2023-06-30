@@ -10,7 +10,6 @@ public class UIWinGamePanel : MonoBehaviour
     [SerializeField] GameObject taskPanel;
     [SerializeField] GameObject tapNotification;
 
-
     List<GameObject> children = new List<GameObject>();
     private void OnEnable()
     {
@@ -27,12 +26,11 @@ public class UIWinGamePanel : MonoBehaviour
         {
             seq.Append(child.transform.DOScale(Vector3.one, duration: 0.3f));
         }
-        GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckTask();
-
+        seq.InsertCallback(1.3f, () => GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckTask());
+        seq.InsertCallback(2f, () => GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckAchieve());
+        //GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckTask();
         seq.Append(tapNotification.transform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.InOutSine));
     }
-
-
 
     private void Start()
     {

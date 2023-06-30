@@ -14,7 +14,7 @@ public class AchievementController : BaseAchievement
     [SerializeField] private TMP_Text rewardText;
     [SerializeField] private Image icon;
     [SerializeField] public AchievementBar bar;
-    private AchievementListController list;
+    [SerializeField] private AchievementListController list;
     [SerializeField] private int goalValue;
     [SerializeField] private int reward;
     [SerializeField] private int value;
@@ -24,6 +24,7 @@ public class AchievementController : BaseAchievement
     public AchievementData Data { get { return data; } set { data = value; } }
 
     public AchievementListController List { get { return list; } set { list = value; } }
+    public TMP_Text Description { get { return description; } }
 
     public int Value { get { return value; } }
     public int GoalValue { get { return goalValue; } }
@@ -37,7 +38,8 @@ public class AchievementController : BaseAchievement
         this.goalValue = data.goalValue;
         this.reward = data.reward;
         rewardText.text = $"+{this.reward}";
-        //this.list = this.gameObject.GetComponentInParent<AchievementListController>();
+        value = AchievementGoalsController.GetValue(taskTag);
+        bar.UpdateCompletedBar(value, goalValue, list.existingList.FindIndex(x => x == this));
     }
 
     private void OnEnable()
@@ -54,13 +56,18 @@ public class AchievementController : BaseAchievement
         if (!this.gameObject.IsDestroyed())
         {
             value = AchievementGoalsController.GetValue(taskTag);
-            bar.UpdateCompletedBar(value, goalValue);
+            bar.UpdateCompletedBar(value, goalValue, list.existingList.FindIndex(x => x == this));
             AchievementGoalsController.WriteData(this.list.reachedData, this);
-            if (value >= goalValue)
-            {
-                value = goalValue;
-                ReachedAchievement();
-            }
+        }
+    }
+
+
+    public void CheckReachedAchievement()
+    {
+        if (value >= goalValue)
+        {
+            value = goalValue;
+            ReachedAchievement();
         }
     }
 
@@ -74,5 +81,4 @@ public class AchievementController : BaseAchievement
         Debug.Log("Achievement Reached: " + this.description);
         this.list.UpdateAchievementList(this);
     }
-
 }
