@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786466238029416029}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -151,7 +151,10 @@ MonoBehaviour:
   icon: {fileID: 1786466238509858414}
   button: {fileID: 1786466238029414819}
   amount: 0
-  rewardTag: Coin
+  amountText: {fileID: 1786466238031378605}
+  rewardType: 0
+  isCollectedIcon: {fileID: -808101242, guid: bc165d1840373634688ec18e7ff57cb5, type: 3}
+  listController: {fileID: 0}
 --- !u!1 &1786466238031378607
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,8 +255,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 4
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

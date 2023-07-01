@@ -1,3 +1,5 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,8 +16,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gamePlayModeMenu;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] public Canvas canvas;
+    [SerializeField] private GameObject dailyRewardPanel;
+    [SerializeField] private GameObject dailyRewardNotification;
 
-
+    DateTime now;
     public static UIManager instance;
 
     private void Awake()
@@ -37,7 +41,12 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        dailyRewardNotification.SetActive(CheckCanCollectTime());
+    }
 
+    private void FixedUpdate()
+    {
+        DateTime now = DateTime.Now;
     }
 
     public void SetCoinText()
@@ -89,5 +98,31 @@ public class UIManager : MonoBehaviour
         //GameManager.Instance.blockPool.gameObject.SetActive(false);
     }
 
+    public void ChooseDailyRewardPanel()
+    {
+        dailyRewardPanel.SetActive(true);
+        GameManager.Instance.selectBlock.SetActive(false);
+    }
 
+    bool CheckCanCollectTime()
+    {
+        now = DateTime.Now;
+        DateTime oldDate;
+        if (DateTime.TryParse(PlayerPrefs.GetString("The last time logged in"), out oldDate))
+        {
+            if (oldDate != now && now.Minute != oldDate.Minute)
+            {
+                //PlayerPrefs.SetString("The last time logged in", now.ToString());
+                return true;
+            }
+            else
+                return false;
+        }
+        else
+        {
+            Debug.Log("No logged in");
+            PlayerPrefs.SetString("The last time logged in", now.ToString());
+            return true;
+        }
+    }
 }

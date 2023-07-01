@@ -733,7 +733,7 @@ TextureImporter:
         width: 180
         height: 182
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -754,7 +754,7 @@ TextureImporter:
         width: 181
         height: 181
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -762,6 +762,48 @@ TextureImporter:
       bones: []
       spriteID: 742c5c24c7a7f7e43877749c570645e9
       internalID: 832208045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_31
+      rect:
+        serializedVersion: 2
+        x: 1140
+        y: 1665
+        width: 180
+        height: 183
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0d3ea850f9aa7541b8cfb93e56cb974
+      internalID: -942808400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_32
+      rect:
+        serializedVersion: 2
+        x: 1550
+        y: 1665
+        width: 180
+        height: 182
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46922a14505104745ad0209a98faa62f
+      internalID: -1775775471
       vertices: []
       indices: 
       edges: []
@@ -780,6 +822,7 @@ TextureImporter:
       Button_17: -714836240
       Button_12: -423026209
       Button_5: 331913650
+      Button_31: -942808400
       Button_8: 608061739
       Button_1: -981601310
       Button_4: -1635648540
@@ -798,6 +841,7 @@ TextureImporter:
       Button_11: 1294017027
       Button_16: -984389744
       Button_23: -1184204916
+      Button_32: -1775775471
       Button_6: 1899926232
       Button_20: -808101242
       Button_22: -1400589287

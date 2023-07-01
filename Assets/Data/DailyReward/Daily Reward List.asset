@@ -12,4 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4067ff09fb524c41bbfe5e61f8aa995, type: 3}
   m_Name: Daily Reward List
   m_EditorClassIdentifier: 
-  dataList: []
+  dataList:
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0
+  - icon: {fileID: 977264488, guid: 5ceaa5a1e3444b24ea1eab82fe2d1a86, type: 3}
+    amount: 0
+    rewardType: 0

@@ -7,5 +7,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Daily List")]
 public class DailyRewardList : ScriptableObject
 {
-    [SerializeField] List<DailyRewardData> dataList = new List<DailyRewardData>();
+    [SerializeField] public List<DailyRewardData> dataList = new List<DailyRewardData>();
 }
