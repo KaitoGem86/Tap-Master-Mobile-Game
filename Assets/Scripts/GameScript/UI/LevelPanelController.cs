@@ -23,8 +23,7 @@ public class LevelPanelController : MonoBehaviour
 
     void Exit()
     {
-        //GameManager.Instance.blockPool.gameObject.SetActive(true);
-        GameManager.Instance.selectBlock.SetActive(true);
+        GameManager.Instance.isOnMenu = false;
         gameObject.SetActive(false);
     }
 

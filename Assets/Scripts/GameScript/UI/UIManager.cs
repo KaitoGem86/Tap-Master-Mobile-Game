@@ -29,8 +29,8 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pauseGameMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
-        pauseGameMenu.SetActive(false);
+        //pauseGameMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
+        //pauseGameMenu.SetActive(false);
         blockListPanel.transform.position = this.transform.position + Vector3.left * canvas.pixelRect.width;
         blockListPanel.SetActive(false);
         gamePlayModeMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dailyRewardNotification.SetActive(CheckCanCollectTime());
+        dailyRewardNotification.SetActive(DailyRewardSystem.CheckCanCollect());
     }
 
     private void FixedUpdate()
@@ -78,51 +78,27 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
-        GameManager.Instance.selectBlock.SetActive(false);
+        GameManager.Instance.isOnMenu = true;
         pauseGameMenu.SetActive(true);
     }
 
     public void ChooseBlock()
     {
+        GameManager.Instance.isOnMenu = true;
         blockListPanel.SetActive(true);
-        //blockListPanel.GetComponent<BlockListPanelController>().SetActive();
         UIManager.instance.SetCoinText();
-        GameManager.Instance.selectBlock.SetActive(false);
-        //GameManager.Instance.blockPool.gameObject.SetActive(false);
     }
 
     public void ChoosePlayMode()
     {
+        GameManager.Instance.isOnMenu = true;
         gamePlayModeMenu.SetActive(true);
-        GameManager.Instance.selectBlock.SetActive(false);
-        //GameManager.Instance.blockPool.gameObject.SetActive(false);
     }
 
     public void ChooseDailyRewardPanel()
     {
+        GameManager.Instance.isOnMenu = true;
         dailyRewardPanel.SetActive(true);
-        GameManager.Instance.selectBlock.SetActive(false);
     }
 
-    bool CheckCanCollectTime()
-    {
-        now = DateTime.Now;
-        DateTime oldDate;
-        if (DateTime.TryParse(PlayerPrefs.GetString("The last time logged in"), out oldDate))
-        {
-            if (oldDate != now && now.Minute != oldDate.Minute)
-            {
-                //PlayerPrefs.SetString("The last time logged in", now.ToString());
-                return true;
-            }
-            else
-                return false;
-        }
-        else
-        {
-            Debug.Log("No logged in");
-            PlayerPrefs.SetString("The last time logged in", now.ToString());
-            return true;
-        }
-    }
 }

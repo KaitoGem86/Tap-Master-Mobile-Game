@@ -34,7 +34,7 @@ public class BlockListPanelController : MonoBehaviour
     public void Exit()
     {
         //GameManager.Instance.blockPool.gameObject.SetActive(true);
-        GameManager.Instance.selectBlock.SetActive(true);
+        GameManager.Instance.isOnMenu = false;
         this.gameObject.SetActive(false);
     }
 

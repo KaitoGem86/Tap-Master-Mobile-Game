@@ -23,10 +23,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     internal int totalBlocks;
-
     internal int countBlocks;
     internal int countTouchs;
 
+    internal bool isOnMenu = false;
     public int coin;
     public LevelData data;
     private void Awake()

@@ -34,16 +34,22 @@ public class DailyRewardListController : MonoBehaviour
         {
             InitializeList();
         }
-        GetIndex();
-        UpdateDailyRewardList();
+        if (DailyRewardSystem.CheckCanCollect())
+        {
+            GetIndex();
+            UpdateDailyRewardList();
+        }
     }
 
     private void OnEnable()
     {
         if (count == 0)
             return;
-        GetIndex();
-        UpdateDailyRewardList();
+        if (DailyRewardSystem.CheckCanCollect())
+        {
+            GetIndex();
+            UpdateDailyRewardList();
+        }
     }
 
     void InitializeList()
@@ -65,9 +71,6 @@ public class DailyRewardListController : MonoBehaviour
         //dailyReward.Add(this.specialReward.GetComponent<DailyRewardItem>());
         for (int i = 0; i < dailyReward.Count; i++)
         {
-            Debug.Log(i);
-            //Debug.Log(i);
-            Debug.Log("Update");
             dailyReward[i].InitializeReward(data.dataList[i]);
         }
     }
@@ -75,7 +78,6 @@ public class DailyRewardListController : MonoBehaviour
     public void GetIndex()
     {
         //check datetime of this game opening
-
         collectIndex = PlayerPrefs.GetInt("Collect daily reward at index: ", 0);
         Debug.Log(collectIndex);
         for (int i = 0; i < collectIndex; i++)
@@ -86,10 +88,11 @@ public class DailyRewardListController : MonoBehaviour
         for (int i = collectIndex; i < dailyReward.Count; i++)
         {
             dailyReward[i].Button.interactable = false;
-            Debug.Log(dailyReward[i].Button.interactable + " - " + i);
         }
-        if (CheckCanCollectTime() || !isDailyCollected)
+        if (DailyRewardSystem.CheckCanCollect())
+        {
             dailyReward[collectIndex].Button.interactable = true;
+        }
         count = 1;
     }
 
@@ -98,29 +101,6 @@ public class DailyRewardListController : MonoBehaviour
         foreach (DailyRewardItem item in dailyReward)
         {
             item.IsCollected = false;
-        }
-    }
-
-    bool CheckCanCollectTime()
-    {
-        now = DateTime.Now;
-        DateTime oldDate;
-        if (DateTime.TryParse(PlayerPrefs.GetString("The last time logged in"), out oldDate))
-        {
-            if (oldDate != now && now.Minute != oldDate.Minute)
-            {
-                isDailyCollected = false;
-                PlayerPrefs.SetString("The last time logged in", now.ToString());
-                return true;
-            }
-            else
-                return false;
-        }
-        else
-        {
-            Debug.Log("No logged in");
-            PlayerPrefs.SetString("The last time logged in", now.ToString());
-            return true;
         }
     }
 }

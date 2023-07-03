@@ -17,6 +17,11 @@ public class SelectBlock : MonoBehaviour
         //Debug.Log(InputController.instance.CheckSelect());
         //Debug.Log(InputController.instance.Timer);
         //Debug.DrawRay(InputController.instance.GetInputPosition(), Vector3.forward * 60, Color.red, 3);
+        if (GameManager.Instance.isOnMenu)
+        {
+            return;
+        }
+
         if (InputController.instance.CheckSelect() && InputController.instance.Timer < 0.2f)
         {
             GameManager.Instance.blockPool.rb.angularVelocity = Vector3.zero;

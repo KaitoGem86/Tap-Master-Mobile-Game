@@ -46,6 +46,7 @@ public class DailyRewardItem : MonoBehaviour
 
     public void CollectReward()
     {
+        DailyRewardSystem.isDailyCollected = true;
         switch (rewardType)
         {
             case RewardType.Coin:
@@ -57,6 +58,7 @@ public class DailyRewardItem : MonoBehaviour
     public virtual void CollectCoin()
     {
         isCollected = true;
+        PlayerPrefs.SetInt("Collected Daily Reward", 1);
         listController.IsDailyCollected = true;
         button.interactable = false;
         int coin = PlayerPrefs.GetInt("Coin", 0);

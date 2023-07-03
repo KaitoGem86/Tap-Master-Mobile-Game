@@ -5,8 +5,25 @@ using UnityEngine;
 
 public class DailyRewardPanelController : MonoBehaviour
 {
-    [SerializeField] GameObject dailyList;
-    [SerializeField] GameObject specialDailyList;
+    bool isAwake = false;
+
+    private void Awake()
+    {
+        DailyRewardSystem.isDailyCollected = PlayerPrefs.GetInt("Collected Daily Reward", 0) == 1;
+    }
+
+    private void Start()
+    {
+        if (DailyRewardSystem.CheckCanCollect())
+        {
+            GameManager.Instance.isOnMenu = true;
+            this.transform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.InOutSine);
+        }
+        else
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
 
     private void OnEnable()
     {
@@ -18,7 +35,15 @@ public class DailyRewardPanelController : MonoBehaviour
     }
     void Exit()
     {
-        GameManager.Instance.selectBlock.SetActive(true);
+        if (!isAwake)
+        {
+            isAwake = true;
+            PauseGameMenuController.isInteractable = true;
+        }
+        else
+        {
+            GameManager.Instance.isOnMenu = false;
+        }
         this.gameObject.SetActive(false);
     }
 }
