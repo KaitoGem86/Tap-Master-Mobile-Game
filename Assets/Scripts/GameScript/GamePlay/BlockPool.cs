@@ -127,4 +127,27 @@ public class BlockPool : MonoBehaviour
             pool.Add(go);
         }
     }
+
+    public void RandomChangeBlockToReward()
+    {
+        int n = pool.Count;
+        for (int i = UnityEngine.Random.Range(0, n); i < n; i++)
+        {
+            if (!pool[i].activeSelf)
+            {
+                continue;
+            }
+            else
+            {
+                TestMoveBlock p = pool[i].GetComponent<TestMoveBlock>();
+                if (p.IsSelected)
+                    continue;
+                else
+                {
+                    p.ChangeTypeOfBlock();
+                    return;
+                }
+            }
+        }
+    }
 }

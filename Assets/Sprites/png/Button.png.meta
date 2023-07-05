@@ -775,7 +775,7 @@ TextureImporter:
         width: 180
         height: 183
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -796,7 +796,7 @@ TextureImporter:
         width: 180
         height: 182
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -804,6 +804,48 @@ TextureImporter:
       bones: []
       spriteID: 46922a14505104745ad0209a98faa62f
       internalID: -1775775471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_33
+      rect:
+        serializedVersion: 2
+        x: 3093
+        y: 1884
+        width: 178
+        height: 180
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a532e2c86075154487fdf3fe18fb40d
+      internalID: 1560569994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Button_34
+      rect:
+        serializedVersion: 2
+        x: 3501
+        y: 1883
+        width: 179
+        height: 181
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33f13f966e8a1c5418ee73b074a706b9
+      internalID: -165865397
       vertices: []
       indices: 
       edges: []
@@ -830,6 +872,7 @@ TextureImporter:
       Button_28: 2033171865
       Button_10: -1735385582
       Button_18: -1120355674
+      Button_33: 1560569994
       Button_3: 382300084
       Button_21: 1141231994
       Button_13: -934241967
@@ -845,6 +888,7 @@ TextureImporter:
       Button_6: 1899926232
       Button_20: -808101242
       Button_22: -1400589287
+      Button_34: -165865397
       Button_19: 438705542
       Button_0: -1786727756
       Button_24: -50613922

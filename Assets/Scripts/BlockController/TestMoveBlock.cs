@@ -10,6 +10,7 @@ public class TestMoveBlock : MonoBehaviour
     [SerializeField] GameObject startPos;
     [SerializeField] LayerMask layerMask;
     [SerializeField] MeshRenderer mesh;
+    [SerializeField] RewardBlock rewardBlock;
 
     private GameObject obstaclePos;
     private float time = 3;
@@ -121,6 +122,12 @@ public class TestMoveBlock : MonoBehaviour
         PlayerPrefs.SetInt("Coin", currenCoin + 1);
         UIManager.instance.SetCoinText();
         UIManager.instance.UpdateBlocksNum();
+        if (GameManager.Instance.countBlocks == GameManager.Instance.blockPool.pool.Count / 2 && GameManager.Instance.countBlocks != 0)
+        {
+            int i = Random.Range(0, 100);
+            if (i < 30)
+                GameManager.Instance.blockPool.RandomChangeBlockToReward();
+        }
         if (GameManager.Instance.countBlocks == 0)
         {
             GameManager.Instance.WinGame();
@@ -139,5 +146,15 @@ public class TestMoveBlock : MonoBehaviour
     public void SetMaterial(Material material)
     {
         this.mesh.material = material;
+    }
+
+    public void ChangeTypeOfBlock()
+    {
+        DG.Tweening.Sequence sequence = DOTween.Sequence();
+        sequence.Append(this.mesh.material.DOFade(0, 0.5f));
+        this.mesh.material = rewardBlock.Material;
+        sequence.Append(this.mesh.material.DOFade(1, 0.5f));
+        this.enabled = false;
+        rewardBlock.enabled = true;
     }
 }

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,25 +17,30 @@ public class PauseGameMenuController : MonoBehaviour
 
     float width;
     RectTransform rect;
-    bool isAwake = false;
+    bool isAwake = true;
+    bool isStart = true;
     public static bool isInteractable = false;
+
 
     public void OnEnable()
     {
-        //var r = this.transform.position;
-        //Debug.Log(r);
-        //if (r == UIManager.instance.canvas.transform.position)
-        //    this.transform.position = r + Vector3.right * width;
-        //else
-        //    r += Vector3.left * width;
-        if (!isAwake)
+        if (isAwake)
         {
-            isAwake = true;
+            isAwake = false;
         }
         else
-            this.transform.DOMove(UIManager.instance.canvas.transform.position, duration: 0.3f).SetEase(Ease.InOutSine);
+        {
+            if (!isStart)
+                this.transform.DOMove(UIManager.instance.canvas.transform.position, duration: 0.3f).SetEase(Ease.InOutSine);
+            else
+            {
+                isStart = false;
+                Vector3 r = this.transform.position + Vector3.right * width;
+                this.transform.position = r;
+                this.gameObject.SetActive(false);
+            }
+        }
     }
-
 
     public void ExitPanel()
     {

@@ -33,6 +33,9 @@ public class SelectBlock : MonoBehaviour
                 //selectedBlock.IsMoving = true;
                 TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();
                 testMoveBlock.IsSelected = true;
+                RewardBlock rewardBlock = hit.collider.gameObject.GetComponentInParent<RewardBlock>();
+                if (rewardBlock.enabled)
+                    rewardBlock.OnCollectReward();
             }
             GameManager.Instance.countTouchs -= 1;
             UIManager.instance.UpdateTouchsNum();

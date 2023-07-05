@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2089950795038433057}
   - component: {fileID: 1088029608}
+  - component: {fileID: 3533464077727056137}
   - component: {fileID: 8380462962453433951}
   m_Layer: 0
   m_Name: Block
@@ -53,7 +54,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   mesh: {fileID: 7597983243997734441}
+  rewardBlock: {fileID: 3533464077727056137}
   isSelected: 0
+--- !u!114 &3533464077727056137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089950795038433062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8f1afe735a1854997631af784aff36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  amount: 0
+  material: {fileID: 2100000, guid: 5f86da0a68c8e6d43a78504466f36945, type: 2}
+  meshRenderer: {fileID: 7597983243997734441}
 --- !u!65 &8380462962453433951
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -169,13 +187,21 @@ PrefabInstance:
       value: Toward Block (1)
       objectReference: {fileID: 0}
     - target: {fileID: 8390640059603647358, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
-      propertyPath: m_TagString
-      value: BlockChild
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8390640059605563854, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8390640059605563854, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e02e73b452230e045b38cf8b2291b7b1, type: 2}
+      objectReference: {fileID: 2100000, guid: a7013bf7fb3e5a94592bb5b61dd60191, type: 2}
+    - target: {fileID: 8390640059605563854, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bf7d69f83d9f4d746b42ba0f7325057a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
 --- !u!23 &7597983243997734441 stripped
@@ -188,24 +214,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8390640059603347270, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
   m_PrefabInstance: {fileID: 2089950794046070759}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7597983244000109721 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8390640059603647358, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
-  m_PrefabInstance: {fileID: 2089950794046070759}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1747286263255442578
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7597983244000109721}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 3.9, y: 3.9, z: 3.9}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8045196485845790507 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 8261493669189021900, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}

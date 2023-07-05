@@ -21,10 +21,23 @@ public class UIManager : MonoBehaviour
 
     DateTime now;
     public static UIManager instance;
+    bool isAwake;
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Is Awake", 0);
+    }
 
     private void Awake()
     {
+        isAwake = PlayerPrefs.GetInt("Is Awake", 0) == 0;
         instance = this;
+        if (isAwake)
+        {
+            PlayerPrefs.SetInt("Is Awake", 1);
+            pauseGameMenu.gameObject.SetActive(true);
+            dailyRewardPanel.gameObject.SetActive(true);
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -73,6 +86,7 @@ public class UIManager : MonoBehaviour
 
     public void ReplayGame()
     {
+        UIManager.instance.pauseGameMenu.SetActive(false);
         SceneManager.LoadScene("SampleScene");
     }
 
