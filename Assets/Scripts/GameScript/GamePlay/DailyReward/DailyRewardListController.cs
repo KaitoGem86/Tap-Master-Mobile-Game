@@ -62,7 +62,6 @@ public class DailyRewardListController : MonoBehaviour
         }
         dailyReward.Add(specialReward.GetComponent<DailyRewardItem>());
         dailyReward[6].ListController = this;
-        Debug.Log("Init");
     }
 
     public void UpdateDailyRewardList()

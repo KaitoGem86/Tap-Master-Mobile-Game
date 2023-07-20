@@ -38,7 +38,8 @@ public class CameraController : MonoBehaviour
     {
         //_camera.orthographicSize = 15;
         //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-        ZoomCamera();
+        if (GameManager.Instance.blockPool.canRotate)
+            ZoomCamera();
     }
 
     void ZoomCamera()
@@ -83,12 +84,14 @@ public class CameraController : MonoBehaviour
 
     public static void SetCameraSize(int i)
     {
-        if (i >= 5)
+        if (i >= 15)
+            _camera.orthographicSize = 4 * i;
+        else if (i >= 5)
             _camera.orthographicSize = 7 * i;
         else
             _camera.orthographicSize = 10 * i;
         startSize = _camera.orthographicSize;
-        Vector3 pos = new Vector3(0, 0, -30);
+        Vector3 pos = new Vector3(0, 0, -50);
         _camera.transform.position = pos;
         increaseSize = (int)startSize / 10 * 3.5f;
         decreaseSize = (int)startSize / 10 * 2.5f;

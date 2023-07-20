@@ -5,8 +5,6 @@ using System.IO;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-//THêm 1 dòng sau dòng chứa size đầu tiên, ghi lại khoảng cách xa nhất giữa 2 trong số các block trong pool.
-//Chỉnh lại vị trí của các block level 1, 2 sao cho tâm của pool hợp lý nhất có thể.
 
 [Serializable]
 public class state
@@ -84,7 +82,6 @@ public class CreateLevelTool : MonoBehaviour
         {
             if (Find2CanCircle(list, i, dir))
             {
-
                 list[i].rotation = rotDir[dir];
                 if (i == 0 || i == 1)
                     continue;

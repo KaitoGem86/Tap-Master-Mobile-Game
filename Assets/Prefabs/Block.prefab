@@ -53,8 +53,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  mesh: {fileID: 7597983243997734441}
   rewardBlock: {fileID: 3533464077727056137}
+  mesh: {fileID: 7597983243997734441}
   isSelected: 0
 --- !u!114 &3533464077727056137
 MonoBehaviour:
@@ -186,22 +186,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Toward Block (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 8390640059603647358, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8390640059605563854, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8390640059605563854, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a7013bf7fb3e5a94592bb5b61dd60191, type: 2}
-    - target: {fileID: 8390640059605563854, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: bf7d69f83d9f4d746b42ba0f7325057a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bbf704d59313a944bd10a2c24871bac, type: 3}
 --- !u!23 &7597983243997734441 stripped

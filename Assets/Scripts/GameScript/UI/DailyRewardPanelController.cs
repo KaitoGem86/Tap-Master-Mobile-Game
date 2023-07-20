@@ -35,6 +35,7 @@ public class DailyRewardPanelController : MonoBehaviour
     }
     void Exit()
     {
+        GameManager.Instance.blockPool.canRotate = true;
         if (!isAwake)
         {
             isAwake = true;

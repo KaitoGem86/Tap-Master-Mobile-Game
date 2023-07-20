@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,7 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text CoinText;
     [SerializeField] private GameObject pauseGameMenu;
     [SerializeField] private GameObject blockListPanel;
-    [SerializeField] private GameObject gamePlayModeMenu;
+    [SerializeField] private GameObject levelListPanel;
+    [SerializeField] private GameObject settingPanel;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] public Canvas canvas;
     [SerializeField] private GameObject dailyRewardPanel;
@@ -21,15 +23,17 @@ public class UIManager : MonoBehaviour
 
     DateTime now;
     public static UIManager instance;
-    bool isAwake;
+    public bool isAwake;
 
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("Is Awake", 0);
+        settingPanel.GetComponent<SettingPanel>().SaveSoundState();
     }
 
     private void Awake()
     {
+        settingPanel.GetComponent<SettingPanel>().InitializeSound();
         isAwake = PlayerPrefs.GetInt("Is Awake", 0) == 0;
         instance = this;
         if (isAwake)
@@ -44,11 +48,19 @@ public class UIManager : MonoBehaviour
     {
         //pauseGameMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
         //pauseGameMenu.SetActive(false);
+        settingPanel.GetComponent<SettingPanel>().InitializeVibrating();
+        if (!pauseGameMenu.activeSelf)
+        {
+            float t = pauseGameMenu.transform.position.x + canvas.pixelRect.width;
+            pauseGameMenu.GetComponent<RectTransform>().position = new Vector3(t, pauseGameMenu.transform.position.y, pauseGameMenu.transform.position.z);
+
+        }
         blockListPanel.transform.position = this.transform.position + Vector3.left * canvas.pixelRect.width;
         blockListPanel.SetActive(false);
-        gamePlayModeMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
-        gamePlayModeMenu.SetActive(false);
-        SetLevelText();
+        levelListPanel.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
+        levelListPanel.SetActive(false);
+        settingPanel.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
+        settingPanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -92,25 +104,29 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
+        GameManager.Instance.blockPool.canRotate = false;
         GameManager.Instance.isOnMenu = true;
         pauseGameMenu.SetActive(true);
     }
 
     public void ChooseBlock()
     {
+        GameManager.Instance.blockPool.canRotate = false;
         GameManager.Instance.isOnMenu = true;
         blockListPanel.SetActive(true);
         UIManager.instance.SetCoinText();
     }
 
-    public void ChoosePlayMode()
+    public void ChooseLevel()
     {
+        GameManager.Instance.blockPool.canRotate = false;
         GameManager.Instance.isOnMenu = true;
-        gamePlayModeMenu.SetActive(true);
+        levelListPanel.SetActive(true);
     }
 
     public void ChooseDailyRewardPanel()
     {
+        GameManager.Instance.blockPool.canRotate = false;
         GameManager.Instance.isOnMenu = true;
         dailyRewardPanel.SetActive(true);
     }

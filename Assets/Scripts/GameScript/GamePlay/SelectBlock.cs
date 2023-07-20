@@ -31,14 +31,15 @@ public class SelectBlock : MonoBehaviour
             {
                 //BlockController selectedBlock = hit.collider.gameObject.GetComponent<BlockController>();
                 //selectedBlock.IsMoving = true;
+                SoundManager.instance.PlayClickSound();
                 TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();
                 testMoveBlock.IsSelected = true;
                 RewardBlock rewardBlock = hit.collider.gameObject.GetComponentInParent<RewardBlock>();
                 if (rewardBlock.enabled)
                     rewardBlock.OnCollectReward();
+                GameManager.Instance.countTouchs -= 1;
+                UIManager.instance.UpdateTouchsNum();
             }
-            GameManager.Instance.countTouchs -= 1;
-            UIManager.instance.UpdateTouchsNum();
         }
     }
 

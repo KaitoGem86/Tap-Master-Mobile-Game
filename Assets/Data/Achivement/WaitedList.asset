@@ -13,27 +13,27 @@ MonoBehaviour:
   m_Name: WaitedList
   m_EditorClassIdentifier: 
   list:
-  - id: 0
-    tag: Number of passed levels
-    description: Pass 20 levels
-    icon: {fileID: 21300000, guid: 9125c204f566db048a92ebcb64d9d14a, type: 3}
-    goalValue: 20
-    reward: 5
   - id: 1
     tag: Number of passed levels
-    description: Pass 40 levels
+    description: Pass 400 levels
     icon: {fileID: 21300000, guid: 9125c204f566db048a92ebcb64d9d14a, type: 3}
-    goalValue: 40
+    goalValue: 400
     reward: 10
   - id: 2
     tag: Number of moved blocks
     description: Move 500 blocks
     icon: {fileID: 21300000, guid: c7aa62ae78ffca0498c89e5f45f94c0e, type: 3}
-    goalValue: 50
+    goalValue: 500
     reward: 10
   - id: 3
     tag: Number of moved blocks
     description: Move 500 blocks
     icon: {fileID: 21300000, guid: c7aa62ae78ffca0498c89e5f45f94c0e, type: 3}
     goalValue: 500
+    reward: 10
+  - id: 4
+    tag: Number of passed levels
+    description: Pass 4000 levels
+    icon: {fileID: 21300000, guid: c7aa62ae78ffca0498c89e5f45f94c0e, type: 3}
+    goalValue: 4000
     reward: 10

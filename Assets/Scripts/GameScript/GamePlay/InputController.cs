@@ -27,7 +27,7 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.touchCount == 1)
+        if (Input.GetMouseButton(0) || Input.touchCount == 1)
         {
             timer += Time.deltaTime;
         }
@@ -65,6 +65,21 @@ public class InputController : MonoBehaviour
         }
 
         return Vector3.positiveInfinity;
+    }
+
+    public Vector3 GetInputMoveObject()
+    {
+        Vector3 inputPos = Vector3.negativeInfinity;
+        if (Input.GetMouseButton(0))
+        {
+            inputPos = Input.mousePosition;
+        }
+        if (Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+            inputPos = Camera.main.ScreenToWorldPoint(touch.position);
+        }
+        return inputPos;
     }
 
     public int CheckSpread()

@@ -187,7 +187,7 @@ TextureImporter:
         width: 703
         height: 178
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -195,6 +195,69 @@ TextureImporter:
       bones: []
       spriteID: 69c47d2515a98ac42af8326e35c8a3c6
       internalID: -411537922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Window_4
+      rect:
+        serializedVersion: 2
+        x: 2715
+        y: 2363
+        width: 763
+        height: 524
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8463eecd7e02194c94c103fabe386b2
+      internalID: -42386750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Window_5
+      rect:
+        serializedVersion: 2
+        x: 2779
+        y: 1961
+        width: 150
+        height: 143
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8e61a63c19040e4cad50e8844f98d3a
+      internalID: -359792904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Window_6
+      rect:
+        serializedVersion: 2
+        x: 2149
+        y: 3325
+        width: 303
+        height: 441
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 123fe2107b2f7624b81bc1c26bf30e0e
+      internalID: -116987213
       vertices: []
       indices: 
       edges: []
@@ -210,10 +273,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Window_6: -116987213
       Window_2: 700715735
       Window_0: 2147135658
       Window_1: -1289319069
+      Window_4: -42386750
       Window_3: -411537922
+      Window_5: -359792904
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

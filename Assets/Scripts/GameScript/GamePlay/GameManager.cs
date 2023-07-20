@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject GameWinMenu;
     [SerializeField] private GameObject GameOverMenu;
+    [SerializeField] public GameObject bombButton;
 
     public int blockPrice = 100;
     public GameObject mainCam;
@@ -18,19 +19,40 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     internal int currentLevel = 1;
-
     internal int camSize;
 
     [SerializeField]
     internal int totalBlocks;
     internal int countBlocks;
     internal int countTouchs;
-
     internal bool isOnMenu = false;
+    internal bool allowedVibrating;
     public int coin;
     public LevelData data;
     private void Awake()
     {
+        //SoundManager.instance.PlayBackgroundMusic();
+
+        if (PlayerPrefs.GetInt("Easy Level List", 0) == 0)
+        {
+            PlayerPrefs.SetInt("Easy Level List", 1);
+            PlayerPrefs.SetInt($"Level 1 passed", 1);
+
+        }
+
+        if (PlayerPrefs.GetInt("Medium Level List", 0) == 0)
+        {
+            PlayerPrefs.SetInt("Medium Level List", 11);
+            PlayerPrefs.SetInt($"Level 11 passed", 1);
+
+        }
+
+        if (PlayerPrefs.GetInt("Hard Level List", 0) == 0)
+        {
+            PlayerPrefs.SetInt("Hard Level List", 31);
+            PlayerPrefs.SetInt($"Level 31 passed", 1);
+        }
+
         Application.targetFrameRate = 120;
         PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
         Instance = this;
@@ -39,24 +61,35 @@ public class GameManager : MonoBehaviour
         GameWinMenu.SetActive(false);
     }
 
-
     private void Start()
     {
         GameWinMenu.SetActive(false);
         GameOverMenu.SetActive(false);
         coin = 0;
-        currentLevel = PlayerPrefs.GetInt("Current Level", 0) + 1;
-        PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
-        GameManager.Instance.blockPool.StartInit(currentLevel);
-        countBlocks = blockPool.Size;
-        totalBlocks = countBlocks;
-        countTouchs = countBlocks + 7;
-        UIManager.instance.UpdateBlocksNum();
-        UIManager.instance.UpdateTouchsNum();
+        bombButton.SetActive(currentLevel >= 6);
+
+        if (!UIManager.instance.isAwake)
+        {
+            currentLevel = PlayerPrefs.GetInt("Current Level", 0) + 1;
+            PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
+            GameManager.Instance.blockPool.StartInit(currentLevel);
+            countBlocks = blockPool.Size;
+            totalBlocks = countBlocks;
+            countTouchs = countBlocks + 700;
+            UIManager.instance.UpdateBlocksNum();
+            UIManager.instance.UpdateTouchsNum();
+            UIManager.instance.SetLevelText();
+        }
     }
 
     public void WinGame()
     {
+        SoundManager.instance.PlayWinGameSound();
+        if (allowedVibrating)
+        {
+            Debug.Log("Vibrate");
+            VibrationManager.Vibrate(30);
+        }
         GameManager.Instance.selectBlock.SetActive(false);
         if (currentLevel == data.numberOfLevels)
         {
@@ -64,6 +97,10 @@ public class GameManager : MonoBehaviour
             currentLevel = data.numberOfLevels - 1;
         }
         PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
+        PlayerPrefs.SetInt("Easy Level List", PlayerPrefs.GetInt("Easy Level List") < currentLevel ? currentLevel : PlayerPrefs.GetInt("Easy Level List"));
+        PlayerPrefs.SetInt("Medium Level List", PlayerPrefs.GetInt("Medium Level List") < currentLevel ? currentLevel : PlayerPrefs.GetInt("Medium Level List"));
+        PlayerPrefs.SetInt("Hard Level List", PlayerPrefs.GetInt("Hard Level List") < currentLevel ? currentLevel : PlayerPrefs.GetInt("Hard Level List"));
+
         AchievementGoalsController.UpdateList(totalBlocks, currentLevel);
         GameWinMenu.SetActive(true);
     }
@@ -83,6 +120,12 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        SoundManager.instance.PlayGameOverSound();
+        if (allowedVibrating)
+        {
+            Debug.Log("Vibrate");
+            VibrationManager.Vibrate(30);
+        }
         GameManager.Instance.selectBlock.SetActive(false);
         GameOverMenu.SetActive(true);
     }

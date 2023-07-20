@@ -23,7 +23,6 @@ public class LevelItem : MonoBehaviour
         set { level = value; }
     }
 
-
     public void ChangLevel()
     {
         GameManager.Instance.ChangeLevel(Level);

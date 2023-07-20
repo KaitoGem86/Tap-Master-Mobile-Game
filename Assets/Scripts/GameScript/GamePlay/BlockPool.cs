@@ -13,6 +13,7 @@ public class BlockPool : MonoBehaviour
 {
     [SerializeField] GameObject blockPrefab;
     [SerializeField] public Rigidbody rb;
+    [SerializeField] TestMoveBlock block;
 
     private Vector3 oldPos = Vector3.zero;
     private Vector3 newPos = Vector3.zero;
@@ -28,11 +29,14 @@ public class BlockPool : MonoBehaviour
 
     public bool isRotating = false;
     public List<GameObject> pool;
+    public bool canRotate = true;
 
     public int Size
     {
         get { return size; }
     }
+
+    public Rigidbody Rb { get { return rb; } set { rb = value; } }
 
     public int Level
     {
@@ -44,17 +48,24 @@ public class BlockPool : MonoBehaviour
     // Start is called before the first frame update
     public void StartInit(int l)
     {
-        this.transform.parent.transform.DORotate(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360)), 2);
+        MeshRenderer mesh = blockPrefab.GetComponent<TestMoveBlock>().Mesh;
+        UnityEngine.Color a = mesh.sharedMaterial.color;
+        a.a = 0;
+        mesh.sharedMaterial.SetColor("_Color", a);
         this.Level = l;
         //InitPool();
         Initial();
         Readdata();
+        this.transform.parent.transform.DORotate(new Vector3(UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360), UnityEngine.Random.Range(0, 360)), 3);
+        a.a = 1;
+        mesh.sharedMaterial.SetColor("_Color", a);
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        Rotate();
+        if (canRotate)
+            Rotate();
         isRotating = CheckRotating();
         if (isRotating)
             this.transform.rotation = rb.rotation;
@@ -117,13 +128,26 @@ public class BlockPool : MonoBehaviour
 
     void Readdata()
     {
+        DG.Tweening.Sequence seq = DOTween.Sequence();
         this.size = levelData.states.Count;
+        float timer = 0;
+        if (this.size < 50)
+            timer = 0.5f / this.size;
+        else if (this.size < 100)
+            timer = 1f / this.size;
+        else if (this.size >= 300)
+            timer = 3f / this.size;
+        else
+            timer = 2f / this.size;
         GameManager.Instance.camSize = levelData.maxDis;
         CameraController.SetCameraSize(GameManager.Instance.camSize > 2 ? GameManager.Instance.camSize : 2);
-        foreach (var s in levelData.states)
+
+        for (int i = 0; i < levelData.states.Count; i++)
         {
-            var go = Instantiate(blockPrefab, s.pos * 10, Quaternion.Euler(s.rotation + Vector3.up * 100), this.transform);
-            go.GetComponent<TestMoveBlock>().PreMove(s.pos * 20, s.rotation + new Vector3(180, 180, 0), s.pos * 4, s.rotation, levelData.states.FindIndex(x => x == s));
+            var s = levelData.states[i];
+            var go = Instantiate(blockPrefab, s.pos * 30, Quaternion.Euler(s.rotation + new Vector3(180, 180, 0)), this.transform);
+            TestMoveBlock goBlock = go.GetComponent<TestMoveBlock>();
+            seq.Append(goBlock.Mesh.material.DOFade(1, timer).OnComplete(() => goBlock.PreMove(s.pos * 30, s.rotation + new Vector3(180, 180, 0), s.pos * 4, s.rotation, i)));
             pool.Add(go);
         }
     }

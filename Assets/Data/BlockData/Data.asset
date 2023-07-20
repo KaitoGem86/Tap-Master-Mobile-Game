@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
   - blockName: Block 1
-    material: {fileID: 2100000, guid: 72c44f820e292664ead684b85643fada, type: 2}
+    material: {fileID: 2100000, guid: 6a0d24c0651c5734e91acccf331a2a94, type: 2}
     image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
     isDefault: 1
   - blockName: Block 2
-    material: {fileID: 2100000, guid: 69c3c648559bfd34eaae3ff327107596, type: 2}
+    material: {fileID: 2100000, guid: 4b5dce0492bdfb648a389fe390071625, type: 2}
     image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
     isDefault: 0
   - blockName: Block 3

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Escaping
   - BlockChild
+  - Bomb
   layers:
   - Default
   - TransparentFX

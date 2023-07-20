@@ -39,7 +39,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 250}
+  m_SizeDelta: {x: 320, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4518539345185557080
 CanvasRenderer:
@@ -69,7 +69,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -2134839058, guid: bc165d1840373634688ec18e7ff57cb5, type: 3}
+  m_Sprite: {fileID: 700715735, guid: 9719a9ebd30a34c44975129e54800961, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -109,9 +109,9 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: -532656826, guid: bc165d1840373634688ec18e7ff57cb5, type: 3}
+    m_PressedSprite: {fileID: -1289319069, guid: 9719a9ebd30a34c44975129e54800961, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 2033171865, guid: bc165d1840373634688ec18e7ff57cb5, type: 3}
+    m_DisabledSprite: {fileID: -116987213, guid: 9719a9ebd30a34c44975129e54800961, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -184,8 +184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030518, y: 0}
-  m_SizeDelta: {x: 700, y: 250}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 320, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4518539346731050511
 CanvasRenderer:
@@ -224,8 +224,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281862119
-  m_fontColor: {r: 0.9056604, g: 0.029049424, b: 0.21831135, a: 1}
+    rgba: 4293361927
+  m_fontColor: {r: 0.027450955, g: 0.5057607, b: 0.90588236, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
