@@ -27,6 +27,7 @@ public class SelectBlock : MonoBehaviour
             GameManager.Instance.blockPool.rb.angularVelocity = Vector3.zero;
             Vector3 selectPos = InputController.instance.GetInputPosition();
             Debug.DrawRay(selectPos, Vector3.forward * 60, Color.red, 3);
+            ParticleController.instance.OnClick();
             if (Physics.Raycast(selectPos, Vector3.forward * 60, out hit))
             {
                 //BlockController selectedBlock = hit.collider.gameObject.GetComponent<BlockController>();

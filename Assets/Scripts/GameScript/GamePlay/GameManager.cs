@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
     public void WinGame()
     {
         SoundManager.instance.PlayWinGameSound();
+        ParticleController.instance.OnWinGame();
         if (allowedVibrating)
         {
             Debug.Log("Vibrate");
@@ -102,7 +103,20 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Hard Level List", PlayerPrefs.GetInt("Hard Level List") < currentLevel ? currentLevel : PlayerPrefs.GetInt("Hard Level List"));
 
         AchievementGoalsController.UpdateList(totalBlocks, currentLevel);
+        float time = 1.5f;
+        StartCoroutine(EnableWinGamePanel(time));
+        //GameWinMenu.SetActive(true);
+    }
+
+    IEnumerator EnableWinGamePanel(float t)
+    {
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            yield return new WaitForEndOfFrame();
+        }
         GameWinMenu.SetActive(true);
+        yield return null;
     }
 
     public void NextLevel()

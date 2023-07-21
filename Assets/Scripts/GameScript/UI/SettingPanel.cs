@@ -39,6 +39,7 @@ public class SettingPanel : MonoBehaviour
     public void ChangeBackgroundMusicVolume()
     {
         SoundManager.instance.ChangeBackgroundMusicVolume(backgroundMusicCtrl.value);
+        PlayerPrefs.SetFloat("Background Music Volume", backgroundMusicCtrl.value);
     }
 
     public void ChangeEffectVolume()

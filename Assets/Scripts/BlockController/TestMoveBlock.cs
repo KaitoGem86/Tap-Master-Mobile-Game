@@ -11,6 +11,7 @@ public class TestMoveBlock : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] RewardBlock rewardBlock;
     [SerializeField] MeshRenderer mesh;
+    [SerializeField] GameObject tail;
 
     private GameObject obstaclePos;
     private float time = 3;
@@ -65,6 +66,7 @@ public class TestMoveBlock : MonoBehaviour
             {
                 if (count == 0)
                 {
+                    tail.SetActive(true);
                     this.startPos.GetComponent<TestObstacleBlock>().isEscaping = true;
                     StartCoroutine(Escaped());
                     StartCoroutine(UpdateData());
