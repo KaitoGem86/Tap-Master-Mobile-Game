@@ -21,6 +21,7 @@ public class WinGamePanelController : MonoBehaviour
         isContinue = true;
         SetSummaryCoin();
         rect = GetComponent<RectTransform>();
+        this.enabled = false;
     }
 
     // Update is called once per frame
@@ -31,6 +32,10 @@ public class WinGamePanelController : MonoBehaviour
 
     void TapToContinue()
     {
+
+        Debug.Log("OK");
+        Debug.Log(Input.GetMouseButtonDown(0));
+
         if (InputController.instance.CheckSelect() && isContinue)
         {
             isContinue = false;

@@ -50,8 +50,6 @@ public class SettingPanel : MonoBehaviour
     public void AllowVibrating()
     {
         GameManager.Instance.allowedVibrating = vibrationCtrl.isOn;
-        Debug.Log(vibrationCtrl.isOn);
-
         PlayerPrefs.SetInt("Vibration", vibrationCtrl.isOn ? 1 : 0);
     }
 

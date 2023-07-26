@@ -20,8 +20,6 @@ public class BlockPool : MonoBehaviour
     //private Vector3 aRotate = new Vector3();
     private int level;
     private int count;
-    //private TextAsset[] path_list;
-    //private TextAsset levelText;
     private LevelDatasController levelData;
     private int size;
     private int i;
@@ -44,6 +42,11 @@ public class BlockPool : MonoBehaviour
         set { level = value; }
     }
 
+    public GameObject BlockPrefab
+    {
+        get => blockPrefab;
+        set => blockPrefab = value;
+    }
 
     // Start is called before the first frame update
     public void StartInit(int l)

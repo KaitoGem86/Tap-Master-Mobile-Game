@@ -8,9 +8,33 @@ using UnityEngine.UI;
 public class BlockListPanelController : MonoBehaviour
 {
     //[SerializeField] TMP_Text CoinText;
+    [Header("Item lists")]
     [SerializeField] ViewBlockListController blockList;
+    [SerializeField] EffectItemList tapEffectList;
     [SerializeField] Button buyButton;
+
+    [Space]
+    [Header("Elements of panel")]
+    [SerializeField] GameObject blockSkinsList;
+    [SerializeField] GameObject tapEffectsList;
+    [SerializeField] GameObject trailsList;
+    [SerializeField] GameObject winGameEffectsList;
+    [SerializeField] Toggle blockSkinToggle;
+    [SerializeField] Toggle tapEffectToggle;
+    [SerializeField] Toggle trailToggle;
+    [SerializeField] Toggle winGameEffectToggle;
+
+
+
+
     float width;
+    GameObject currentList;
+
+    public void OnEnable()
+    {
+        currentList = blockSkinsList;
+        this.transform.DOMove(UIManager.instance.canvas.transform.position, duration: 0.3f).SetEase(Ease.InOutSine);
+    }
 
     private void Start()
     {
@@ -33,9 +57,11 @@ public class BlockListPanelController : MonoBehaviour
 
     public void Exit()
     {
-        //GameManager.Instance.blockPool.gameObject.SetActive(true);
         GameManager.Instance.blockPool.canRotate = true;
         GameManager.Instance.isOnMenu = false;
+        currentList.SetActive(false);
+        blockSkinsList.SetActive(true);
+        blockSkinToggle.isOn = true;
         this.gameObject.SetActive(false);
     }
 
@@ -51,7 +77,31 @@ public class BlockListPanelController : MonoBehaviour
         buyButton.interactable = PlayerPrefs.GetInt("Coin", 0) >= GameManager.Instance.blockPrice;
     }
 
-    public void BuyBlock()
+    public void BuyItem()
+    {
+        if (currentList == blockSkinsList)
+        {
+            BuyBlock();
+        }
+        else if (currentList == tapEffectsList)
+        {
+            BuyTapEffect();
+        }
+        else if (currentList == trailsList)
+        {
+            BuyTrail();
+        }
+        else if (currentList == winGameEffectsList)
+        {
+            BuyWinGameEffect();
+        }
+        else
+        {
+            Debug.Log("NULL Current List");
+        }
+    }
+
+    void BuyBlock()
     {
         if (blockList.interactableIndexs.Count <= 0)
             return;
@@ -65,18 +115,86 @@ public class BlockListPanelController : MonoBehaviour
         blockList.interactableIndexs.Remove(blockList.interactableIndexs[random]);
     }
 
-    public void OnEnable()
+    void BuyTapEffect()
     {
-        //Vector3 r = this.transform.position;
-        //Debug.Log(r + " - " + UIManager.instance.canvas.transform.position);
-        //if (r == UIManager.instance.canvas.transform.position)
-        //{
-        //    Vector3 p = this.GetComponent<RectTransform>().position;
-        //    this.GetComponent<RectTransform>().position = p + Vector3.left * width;
-        //    Debug.Log(this.transform.position);
-        //}
-        //else
-        //    r += Vector3.right * width;
-        this.transform.DOMove(UIManager.instance.canvas.transform.position, duration: 0.3f).SetEase(Ease.InOutSine);
+        Debug.Log("Buy tap effect");
+        if (tapEffectList.NotBuyedItems.Count <= 0)
+            return;
+        int random = Random.Range(0, tapEffectList.NotBuyedItems.Count);
+        tapEffectList.Items[tapEffectList.NotBuyedItems[random]].SetInteractable();
+        int currenCoin = PlayerPrefs.GetInt("Coin", 0);
+        PlayerPrefs.SetInt("Coin", currenCoin - GameManager.Instance.effectPrice);
+        UIManager.instance.SetCoinText();
+        tapEffectList.NotBuyedItems.RemoveAt(random);
+    }
+
+    void BuyTrail()
+    {
+        Debug.Log("Buy trail");
+    }
+
+    void BuyWinGameEffect()
+    {
+        Debug.Log("Buy win game effect");
+    }
+
+    public void ChooseBlockSkinsList()
+    {
+        if (blockSkinToggle.isOn)
+        {
+            blockSkinsList.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+            blockSkinsList.SetActive(true);
+            currentList.SetActive(false);
+            currentList = blockSkinsList;
+            blockSkinToggle.interactable = false;
+            tapEffectToggle.interactable = true;
+            trailToggle.interactable = true;
+            winGameEffectToggle.interactable = true;
+        }
+    }
+
+    public void ChooseTapEffectsList()
+    {
+        if (tapEffectToggle.isOn)
+        {
+            tapEffectsList.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+            tapEffectsList.SetActive(true);
+            currentList.SetActive(false);
+            currentList = tapEffectsList;
+            blockSkinToggle.interactable = true;
+            tapEffectToggle.interactable = false;
+            trailToggle.interactable = true;
+            winGameEffectToggle.interactable = true;
+        }
+    }
+
+    public void ChooseTrailsList()
+    {
+        if (trailToggle.isOn)
+        {
+            trailsList.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+            trailsList.SetActive(true);
+            currentList.SetActive(false);
+            currentList = trailsList;
+            blockSkinToggle.interactable = true;
+            tapEffectToggle.interactable = true;
+            trailToggle.interactable = false;
+            winGameEffectToggle.interactable = true;
+        }
+    }
+
+    public void ChooseWinGameEffectsList()
+    {
+        if (winGameEffectToggle.isOn)
+        {
+            winGameEffectsList.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+            winGameEffectsList.SetActive(true);
+            currentList.SetActive(false);
+            currentList = winGameEffectsList;
+            blockSkinToggle.interactable = true;
+            tapEffectToggle.interactable = true;
+            trailToggle.interactable = true;
+            winGameEffectToggle.interactable = false;
+        }
     }
 }

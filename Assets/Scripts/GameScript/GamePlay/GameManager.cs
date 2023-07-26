@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject bombButton;
 
     public int blockPrice = 100;
+    public int effectPrice = 100;
     public GameObject mainCam;
     public BlockPool blockPool;
     public GameObject selectBlock;

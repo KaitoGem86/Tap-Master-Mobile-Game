@@ -78,7 +78,6 @@ public class DailyRewardListController : MonoBehaviour
     {
         //check datetime of this game opening
         collectIndex = PlayerPrefs.GetInt("Collect daily reward at index: ", 0);
-        Debug.Log(collectIndex);
         for (int i = 0; i < collectIndex; i++)
         {
             dailyReward[i].IsCollected = true;

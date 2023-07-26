@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,6 +87,9 @@ public class LevelPanelController : MonoBehaviour
             easyLevelList.SetActive(true);
             currentLevelList.SetActive(false);
             currentLevelList = easyLevelList;
+            mediumLevelToggle.interactable = true;
+            hardLevelToggle.interactable = true;
+            easyLevelToggle.interactable = false;
         }
     }
 
@@ -99,6 +103,9 @@ public class LevelPanelController : MonoBehaviour
             mediumLevelList.SetActive(true);
             currentLevelList.SetActive(false);
             currentLevelList = mediumLevelList;
+            easyLevelToggle.interactable = true;
+            hardLevelToggle.interactable = true;
+            mediumLevelToggle.interactable = false;
         }
     }
 
@@ -112,6 +119,9 @@ public class LevelPanelController : MonoBehaviour
             hardLevelList.SetActive(true);
             currentLevelList.SetActive(false);
             currentLevelList = hardLevelList;
+            easyLevelToggle.interactable = true;
+            mediumLevelToggle.interactable = true;
+            hardLevelToggle.interactable = false;
         }
     }
 }

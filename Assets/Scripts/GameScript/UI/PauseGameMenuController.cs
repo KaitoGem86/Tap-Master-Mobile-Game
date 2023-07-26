@@ -100,7 +100,6 @@ public class PauseGameMenuController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && isInteractable && Input.mousePosition.y < tapPivot.transform.position.y - tapPivot.GetComponent<RectTransform>().rect.width / 2 /*&& Input.mousePosition.y > gamePlayModeMenu.transform.position.y*/)
         {
-            Debug.Log(Input.mousePosition.y);
             var t = rect.position + Vector3.right * width;
             this.transform.DOMove(t, duration: 0.3f).SetEase(Ease.InOutSine).OnComplete(Exit);
         }

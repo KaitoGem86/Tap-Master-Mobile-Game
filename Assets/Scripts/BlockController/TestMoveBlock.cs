@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class TestMoveBlock : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] RewardBlock rewardBlock;
     [SerializeField] MeshRenderer mesh;
-    [SerializeField] GameObject tail;
+    [SerializeField] TrailRenderer trail;
 
     private GameObject obstaclePos;
     private float time = 3;
@@ -30,6 +31,12 @@ public class TestMoveBlock : MonoBehaviour
     {
         get => mesh;
         set => mesh = value;
+    }
+
+    public TrailRenderer Trail
+    {
+        get => trail;
+        set => trail = value;
     }
 
     // Start is called before the first frame update
@@ -66,7 +73,7 @@ public class TestMoveBlock : MonoBehaviour
             {
                 if (count == 0)
                 {
-                    tail.SetActive(true);
+                    trail.gameObject.SetActive(true);
                     this.startPos.GetComponent<TestObstacleBlock>().isEscaping = true;
                     StartCoroutine(Escaped());
                     StartCoroutine(UpdateData());

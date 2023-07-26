@@ -9,6 +9,7 @@ public class UIWinGamePanel : MonoBehaviour
     [SerializeField] GameObject coinSummaryText;
     [SerializeField] GameObject taskPanel;
     [SerializeField] GameObject tapNotification;
+    [SerializeField] WinGamePanelController thisPanel;
 
     List<GameObject> children = new List<GameObject>();
     private void OnEnable()
@@ -29,7 +30,7 @@ public class UIWinGamePanel : MonoBehaviour
         seq.InsertCallback(1.3f, () => GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckTask());
         seq.InsertCallback(2f, () => GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckAchieve());
         //GameManager.Instance.GameWinMenu.GetComponent<WinGamePanelController>().CheckTask();
-        seq.Append(tapNotification.transform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.InOutSine));
+        seq.Append(tapNotification.transform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.InOutSine).OnComplete(() => { thisPanel.enabled = true; }));
     }
 
     private void Start()
