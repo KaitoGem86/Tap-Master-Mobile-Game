@@ -61,7 +61,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBackgroundMusic()
     {
-        Debug.Log("Start");
         int i = Random.Range(0, backgroundMusics.Length);
         backgroundMusic.clip = backgroundMusics[0];
         backgroundMusic.Play();

@@ -1112,6 +1112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockList: {fileID: 1641051827}
   tapEffectList: {fileID: 1309241395}
+  winEffectList: {fileID: 1219725926}
+  trailEffectList: {fileID: 1536227866}
   buyButton: {fileID: 639623910}
   blockSkinsList: {fileID: 1453484860}
   tapEffectsList: {fileID: 497153505}

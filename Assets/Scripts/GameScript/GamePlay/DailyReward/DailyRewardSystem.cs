@@ -25,7 +25,6 @@ public class DailyRewardSystem : MonoBehaviour
         }
         else
         {
-            Debug.Log("No logged in");
             PlayerPrefs.SetString("The last time logged in", now.ToString());
             return true;
         }

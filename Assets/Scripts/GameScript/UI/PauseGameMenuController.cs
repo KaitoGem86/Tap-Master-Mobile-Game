@@ -43,6 +43,8 @@ public class PauseGameMenuController : MonoBehaviour
 
     private void Update()
     {
+        if (blockListPanel.activeSelf || gamePlayModeMenu.activeSelf || settingPanel.activeSelf)
+            return;
         TapToContinue();
     }
 

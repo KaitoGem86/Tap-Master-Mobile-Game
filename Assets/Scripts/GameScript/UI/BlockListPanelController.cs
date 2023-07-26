@@ -11,6 +11,8 @@ public class BlockListPanelController : MonoBehaviour
     [Header("Item lists")]
     [SerializeField] ViewBlockListController blockList;
     [SerializeField] EffectItemList tapEffectList;
+    [SerializeField] EffectItemList winEffectList;
+    [SerializeField] EffectItemList trailEffectList;
     [SerializeField] Button buyButton;
 
     [Space]
@@ -131,11 +133,27 @@ public class BlockListPanelController : MonoBehaviour
     void BuyTrail()
     {
         Debug.Log("Buy trail");
+        if (trailEffectList.NotBuyedItems.Count <= 0)
+            return;
+        int random = Random.Range(0, trailEffectList.NotBuyedItems.Count);
+        trailEffectList.Items[trailEffectList.NotBuyedItems[random]].SetInteractable();
+        int currenCoin = PlayerPrefs.GetInt("Coin", 0);
+        PlayerPrefs.SetInt("Coin", currenCoin - GameManager.Instance.effectPrice);
+        UIManager.instance.SetCoinText();
+        trailEffectList.NotBuyedItems.RemoveAt(random);
     }
 
     void BuyWinGameEffect()
     {
         Debug.Log("Buy win game effect");
+        if (winEffectList.NotBuyedItems.Count <= 0)
+            return;
+        int random = Random.Range(0, winEffectList.NotBuyedItems.Count);
+        winEffectList.Items[winEffectList.NotBuyedItems[random]].SetInteractable();
+        int currenCoin = PlayerPrefs.GetInt("Coin", 0);
+        PlayerPrefs.SetInt("Coin", currenCoin - GameManager.Instance.effectPrice);
+        UIManager.instance.SetCoinText();
+        winEffectList.NotBuyedItems.RemoveAt(random);
     }
 
     public void ChooseBlockSkinsList()
