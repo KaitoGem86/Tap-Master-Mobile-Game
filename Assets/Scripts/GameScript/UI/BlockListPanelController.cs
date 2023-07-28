@@ -27,8 +27,6 @@ public class BlockListPanelController : MonoBehaviour
     [SerializeField] Toggle winGameEffectToggle;
 
 
-
-
     float width;
     GameObject currentList;
 
@@ -60,7 +58,7 @@ public class BlockListPanelController : MonoBehaviour
     public void Exit()
     {
         GameManager.Instance.blockPool.canRotate = true;
-        GameManager.Instance.isOnMenu = false;
+        GameManager.Instance.isOnMenu = false || UIManager.instance.isAwake;
         currentList.SetActive(false);
         blockSkinsList.SetActive(true);
         blockSkinToggle.isOn = true;

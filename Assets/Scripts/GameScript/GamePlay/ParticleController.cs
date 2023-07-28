@@ -33,22 +33,28 @@ public class ParticleController : MonoBehaviour
 
     private void OnEnable()
     {
-        InitializeSystem();
     }
 
     public void InitializeSystem()
     {
+        ParticleSystem.MainModule cMain = clickPrefab.main;
+        cMain.startSize = _camera.orthographicSize / 20;
+        ParticleSystem.MainModule wMain = winGamePrefab.main;
+        wMain.startSize = _camera.orthographicSize / 20;
+
+
+
         for (int i = 0; i < 10; i++)
         {
             var go = Instantiate(clickPrefab.gameObject, clickGroup.transform);
             _clickEffect.Add(go.GetComponent<ParticleSystem>());
         }
         var win1 = Instantiate(winGamePrefab.gameObject, winGameGroup.transform);
-        win1.transform.position = new Vector3(11, -10, 0);
+        win1.transform.position = new Vector3(11, -10, 0) * _camera.orthographicSize / 20;
         win1.transform.rotation = Quaternion.Euler(180, 0, 200);
         _winGameEffect.Add(win1.GetComponent<ParticleSystem>());
         var win2 = Instantiate(winGamePrefab.gameObject, winGameGroup.transform);
-        win2.transform.position = new Vector3(-11, -10, 0);
+        win2.transform.position = new Vector3(-11, -10, 0) * _camera.orthographicSize / 20;
         win2.transform.rotation = Quaternion.Euler(0, 0, 20);
         _winGameEffect.Add(win2.GetComponent<ParticleSystem>());
     }

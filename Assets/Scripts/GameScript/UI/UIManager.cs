@@ -88,12 +88,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdateBlocksNum()
     {
-        remainingBlocks.SetText($"Remaining Blocks: {GameManager.Instance.countBlocks}");
+        remainingBlocks.SetText($"{GameManager.Instance.countBlocks} Blocks");
     }
 
     public void UpdateTouchsNum()
     {
-        remainingTouchs.SetText($"Remaining Touchs: {GameManager.Instance.countTouchs}");
+        remainingTouchs.SetText($"{GameManager.Instance.countTouchs} Moves");
     }
 
     public void ReplayGame()

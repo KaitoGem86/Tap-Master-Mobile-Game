@@ -63,7 +63,7 @@ public class SettingPanel : MonoBehaviour
     public void Exit()
     {
         GameManager.Instance.blockPool.canRotate = true;
-        GameManager.Instance.isOnMenu = false;
+        GameManager.Instance.isOnMenu = false || UIManager.instance.isAwake;
         gameObject.SetActive(false);
     }
     // Start is called before the first frame update

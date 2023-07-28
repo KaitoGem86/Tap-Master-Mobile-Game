@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class BombController : MonoBehaviour
 {
+    [SerializeField] ParticleSystem bombExplosion;
     Vector3 pos;
     Vector3 oldPos;
     Vector3 direction;
-    int count = 1;
     float timer = 0;
     float coeff;
+    bool isMoving = false;
     bool isUsing = false;
 
     List<Vector3> leftTop = new List<Vector3>();
@@ -37,46 +38,55 @@ public class BombController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Input.mousePosition.y > -7)
-            GameManager.Instance.blockPool.canRotate = true;
-        if (Input.GetMouseButtonUp(0) && timer < 0.3f && isUsing)
+        if (Input.GetMouseButtonDown(0))
         {
-            //Debug.Log(direction);
-            CreateListTargetPos();
-            Vector3 targetPos = ChooseTargetPos(direction);
-            Debug.Log(targetPos);
-            UseBomb(targetPos);
-            isUsing = false;
-        }
-        if (Input.GetMouseButton(0) && InputController.instance.Timer > 0.3f)
-        {
-            timer = InputController.instance.Timer;
-            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).y < -7)
+            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).y < pos.y + 2)
             {
-                StartCoroutine(MoveWithTouch());
+                oldPos = Input.mousePosition;
+                GameManager.Instance.blockPool.canRotate = false;
+                StartCoroutine(CheckUsingOrMoving());
             }
-            isUsing = false;
-        }
-        else if (Input.GetMouseButton(0) && InputController.instance.Timer < 0.3f)
-        {
-            GameManager.Instance.blockPool.canRotate = false;
-            timer = InputController.instance.Timer;
-            Vector3 newPos = Input.mousePosition;
-            if (count == 1)
+            else
             {
-                oldPos = newPos;
-                count = 0;
+                GameManager.Instance.blockPool.canRotate = true;
             }
-            direction = newPos - oldPos;
-            oldPos = newPos;
-            isUsing = true;
         }
     }
+
+    IEnumerator CheckUsingOrMoving()
+    {
+        while (Input.GetMouseButton(0))
+        {
+            timer += Time.deltaTime;
+            isUsing = true;
+            if (timer > 0.2f)
+            {
+                if (isMoving == false)
+                    StartCoroutine(MoveWithTouch());
+                isUsing = false;
+            }
+            Vector3 newPos = Input.mousePosition;
+            direction = newPos - oldPos;
+            yield return new WaitForEndOfFrame();
+            //oldPos = newPos;
+        }
+        if (isUsing)
+        {
+            Debug.Log(direction);
+            CreateListTargetPos();
+            Vector3 targetPos = ChooseTargetPos(direction);
+            UseBomb(targetPos);
+            timer = 0;
+        }
+        yield return null;
+    }
+
 
     IEnumerator MoveWithTouch()
     {
         while (Input.GetMouseButton(0))
         {
+            isMoving = true;
             Vector3 movePos = InputController.instance.GetInputMoveObject();
             GameManager.Instance.blockPool.canRotate = false;
             GameManager.Instance.blockPool.isRotating = false;
@@ -87,15 +97,17 @@ public class BombController : MonoBehaviour
 
         GameManager.Instance.blockPool.canRotate = true;
         this.transform.DOMove(new Vector3(pos.x, pos.y * coeff, pos.z), duration: 0.3f);
+        timer = 0;
         yield return null;
+        isMoving = false;
     }
 
     void UseBomb(Vector3 targetPos)
     {
         destroyedBlock.Clear();
-        for (int i = -2; i < 3; i++)
+        for (int i = -2; i <= 2; i++)
         {
-            for (int j = -2; j < 2; j++)
+            for (int j = -2; j <= 2; j++)
             {
                 Debug.DrawRay(new Vector3(targetPos.x + i * 2, targetPos.y + j * 2, -30), new Vector3(0, 0, 1) * 30, Color.blue, 300);
                 if (Physics.Raycast(new Vector3(targetPos.x + i * 2, targetPos.y + i * 2, -30), new Vector3(0, 0, 1), out RaycastHit hit))
@@ -108,7 +120,7 @@ public class BombController : MonoBehaviour
                 }
             }
         }
-        Debug.Log(destroyedBlock.Count);
+        //Debug.Log(destroyedBlock.Count);
         Vector3 direction = targetPos - this.transform.position;
         Debug.DrawRay(this.transform.position, direction, Color.white, 300);
         this.transform.DOMove(targetPos, duration: 0.3f);
@@ -116,15 +128,21 @@ public class BombController : MonoBehaviour
         {
             this.transform.position = pos;
             GameManager.Instance.blockPool.canRotate = true;
-            DestroyBlocks();
+            DestroyBlocks(targetPos);
             this.gameObject.SetActive(false);
 
         });
         this.transform.DORotate(new Vector3(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z - 30), duration: 0.6f).SetLoops(2, LoopType.Yoyo);
     }
 
-    private void DestroyBlocks()
+    private void DestroyBlocks(Vector3 targetPos)
     {
+        Vector3 p = targetPos;
+        p.z = -30;
+        bombExplosion.transform.position = p;
+        //Debug.Log(this.transform.position);
+        bombExplosion.Play();
+        //Debug.Log(bombExplosion.transform.position);
         foreach (var block in destroyedBlock)
         {
             GameManager.Instance.countTouchs += 1;

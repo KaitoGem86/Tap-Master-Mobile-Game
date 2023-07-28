@@ -66,14 +66,17 @@ public class GameManager : MonoBehaviour
     {
         GameWinMenu.SetActive(false);
         GameOverMenu.SetActive(false);
+        currentLevel = PlayerPrefs.GetInt("Current Level", 0) + 1;
         coin = 0;
+        Debug.Log(currentLevel + "-" + (currentLevel >= 6));
         bombButton.SetActive(currentLevel >= 6);
 
         if (!UIManager.instance.isAwake)
         {
-            currentLevel = PlayerPrefs.GetInt("Current Level", 0) + 1;
+
             PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
             GameManager.Instance.blockPool.StartInit(currentLevel);
+            ParticleController.instance.InitializeSystem();
             countBlocks = blockPool.Size;
             totalBlocks = countBlocks;
             countTouchs = countBlocks + 700;

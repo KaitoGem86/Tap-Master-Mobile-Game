@@ -14,9 +14,6 @@ public class SelectBlock : MonoBehaviour
 
     void Select()
     {
-        //Debug.Log(InputController.instance.CheckSelect());
-        //Debug.Log(InputController.instance.Timer);
-        //Debug.DrawRay(InputController.instance.GetInputPosition(), Vector3.forward * 60, Color.red, 3);
         if (GameManager.Instance.isOnMenu)
         {
             return;
@@ -30,8 +27,6 @@ public class SelectBlock : MonoBehaviour
             ParticleController.instance.OnClick();
             if (Physics.Raycast(selectPos, Vector3.forward * 60, out hit))
             {
-                //BlockController selectedBlock = hit.collider.gameObject.GetComponent<BlockController>();
-                //selectedBlock.IsMoving = true;
                 SoundManager.instance.PlayClickSound();
                 TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();
                 testMoveBlock.IsSelected = true;

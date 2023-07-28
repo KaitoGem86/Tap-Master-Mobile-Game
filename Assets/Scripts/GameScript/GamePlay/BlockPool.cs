@@ -75,7 +75,6 @@ public class BlockPool : MonoBehaviour
     }
 
 
-
     void Rotate()
     {
         //if (Input.GetMouseButton(0))
@@ -150,6 +149,8 @@ public class BlockPool : MonoBehaviour
             var s = levelData.states[i];
             var go = Instantiate(blockPrefab, s.pos * 30, Quaternion.Euler(s.rotation + new Vector3(180, 180, 0)), this.transform);
             TestMoveBlock goBlock = go.GetComponent<TestMoveBlock>();
+            goBlock.SetColorArrow();
+            goBlock.SetLocalScale();
             seq.Append(goBlock.Mesh.material.DOFade(1, timer).OnComplete(() => goBlock.PreMove(s.pos * 30, s.rotation + new Vector3(180, 180, 0), s.pos * 4, s.rotation, i)));
             pool.Add(go);
         }

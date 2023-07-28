@@ -58,6 +58,7 @@ public class PauseGameMenuController : MonoBehaviour
             GameManager.Instance.currentLevel = PlayerPrefs.GetInt("Current Level", 0) + 1;
             PlayerPrefs.SetInt($"Level {GameManager.Instance.currentLevel} passed", 1);
             GameManager.Instance.blockPool.StartInit(GameManager.Instance.currentLevel);
+            ParticleController.instance.InitializeSystem();
             GameManager.Instance.countBlocks = GameManager.Instance.blockPool.Size;
             GameManager.Instance.totalBlocks = GameManager.Instance.countBlocks;
             GameManager.Instance.countTouchs = GameManager.Instance.countBlocks + 700;
