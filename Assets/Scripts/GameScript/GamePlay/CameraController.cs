@@ -91,7 +91,7 @@ public class CameraController : MonoBehaviour
         else
             _camera.orthographicSize = 10 * i;
         startSize = _camera.orthographicSize;
-        Vector3 pos = new Vector3(0, 0, -50);
+        Vector3 pos = new Vector3(0, 0, -100);
         _camera.transform.position = pos;
         increaseSize = (int)startSize / 10 * 3.5f;
         decreaseSize = (int)startSize / 10 * 2.5f;

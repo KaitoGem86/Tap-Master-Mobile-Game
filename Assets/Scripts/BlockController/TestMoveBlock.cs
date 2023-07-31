@@ -90,13 +90,18 @@ public class TestMoveBlock : MonoBehaviour
             {
                 isSelected = false;
                 this.mesh.material = blockedMaterial;
+                SetActiveArrow(false);
                 float duration = Vector3.Distance(this.transform.position, this.obstaclePos.transform.position - this.transform.up * 4);
                 duration = duration > 20 ? 2 : duration / 10;
-                if (duration == 0)
-                    duration = 0.3f;
+                if (duration < 0.2f)
+                    duration = 0.2f;
                 var t = this.blockRb.transform.DOLocalMove(
                     this.blockRb.transform.InverseTransformPoint(this.obstaclePos.transform.position - this.transform.up * 4), duration: duration
-                    ).SetLoops(2, LoopType.Yoyo).OnComplete(() => isHitted = true);
+                    ).SetLoops(2, LoopType.Yoyo).OnComplete(() =>
+                    {
+                        isHitted = true;
+                        SetActiveArrow(true);
+                    });
                 t.OnStart(() => StartCoroutine(FindObstacle(this.blockRb.transform.up)));
                 t.OnUpdate(() =>
                 {
@@ -145,6 +150,7 @@ public class TestMoveBlock : MonoBehaviour
     IEnumerator Escaped()
     {
         this.mesh.material = escapeMaterial;
+        SetActiveArrow(false);
         while (time > 0)
         {
             time -= Time.deltaTime;
@@ -180,10 +186,17 @@ public class TestMoveBlock : MonoBehaviour
             GameObject startOPos = obstacles[i];
             Debug.DrawRay(obstacles[i].transform.TransformPoint(obstacles[i].transform.localPosition), direction * 30, Color.white, 300);
             var t = obstacles[i].transform.DOLocalMove(obstacles[i].transform.localPosition + obstacles[i].transform.InverseTransformDirection(direction.normalized * 0.8f),
-                                                       duration: 0.1f).SetLoops(2, LoopType.Yoyo).OnStart(() => startOPos.GetComponent<MeshRenderer>().material = this.blockedMaterial);
-            t.OnComplete(() => startOPos.GetComponent<MeshRenderer>().material = this.currentMaterial);
+                                                       duration: 0.1f).SetLoops(2, LoopType.Yoyo).OnStart(() =>
+                                                       {
+                                                           startOPos.GetComponent<MeshRenderer>().material = this.blockedMaterial;
+                                                           startOPos.GetComponentInParent<TestMoveBlock>().SetActiveArrow(false);
+                                                       });
+            t.OnComplete(() =>
+            {
+                startOPos.GetComponent<MeshRenderer>().material = this.currentMaterial;
+                startOPos.GetComponentInParent<TestMoveBlock>().SetActiveArrow(true);
+            });
             seq.Append(t);
-
         }
     }
 
@@ -228,6 +241,14 @@ public class TestMoveBlock : MonoBehaviour
         this.arrows[1].color = a;
         this.arrows[2].color = a;
         this.arrows[3].color = a;
+    }
+
+    public void SetActiveArrow(bool value)
+    {
+        this.arrows[0].gameObject.SetActive(value);
+        this.arrows[1].gameObject.SetActive(value);
+        this.arrows[2].gameObject.SetActive(value);
+        this.arrows[3].gameObject.SetActive(value);
     }
 
     public void SetLocalScale()

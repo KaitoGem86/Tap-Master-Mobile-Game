@@ -75,8 +75,6 @@ public class LevelPanelController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
-
     public void ChooseEasyLevelList()
     {
         if (easyLevelToggle.isOn)

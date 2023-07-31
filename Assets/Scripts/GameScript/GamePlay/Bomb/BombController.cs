@@ -5,14 +5,19 @@ using UnityEngine;
 
 public class BombController : MonoBehaviour
 {
+    [Header("Bomb Features")]
     [SerializeField] ParticleSystem bombExplosion;
+    [SerializeField] LineRenderer touchToSetDirectionLine;
+    [SerializeField] DrawDirectionLine directionLine;
+
     Vector3 pos;
     Vector3 oldPos;
     Vector3 direction;
+    Vector3 checkBlockDirection;
     float timer = 0;
     float coeff;
-    bool isMoving = false;
     bool isUsing = false;
+    RaycastHit hitInfo;
 
     List<Vector3> leftTop = new List<Vector3>();
     List<Vector3> centerTop = new List<Vector3>();
@@ -25,7 +30,7 @@ public class BombController : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        GameManager.Instance.blockPool.canRotate = false;
+        //GameManager.Instance.blockPool.canRotate = false;
         coeff = GameManager.Instance.mainCam.GetComponent<Camera>().orthographicSize / 20;
         pos = this.transform.position;
         this.transform.position = new Vector3(pos.x, pos.y * coeff, pos.z);
@@ -33,106 +38,91 @@ public class BombController : MonoBehaviour
         this.transform.DOScale(new Vector3(0.05f * coeff, 0.05f * coeff, 0.05f * coeff), duration: 0.5f);
         this.direction = Vector3.zero;
         timer = 0;
+
+        touchToSetDirectionLine.SetPosition(0, this.transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) && Camera.main.ScreenToWorldPoint(Input.mousePosition).y <= pos.y + this.GetComponent<MeshCollider>().bounds.size.y / 2)
         {
-            if (Camera.main.ScreenToWorldPoint(Input.mousePosition).y < pos.y + 2)
-            {
-                oldPos = Input.mousePosition;
-                GameManager.Instance.blockPool.canRotate = false;
-                StartCoroutine(CheckUsingOrMoving());
-            }
-            else
-            {
-                GameManager.Instance.blockPool.canRotate = true;
-            }
-        }
-    }
-
-    IEnumerator CheckUsingOrMoving()
-    {
-        while (Input.GetMouseButton(0))
-        {
-            timer += Time.deltaTime;
-            isUsing = true;
-            if (timer > 0.2f)
-            {
-                if (isMoving == false)
-                    StartCoroutine(MoveWithTouch());
-                isUsing = false;
-            }
-            Vector3 newPos = Input.mousePosition;
-            direction = newPos - oldPos;
-            yield return new WaitForEndOfFrame();
-            //oldPos = newPos;
-        }
-        if (isUsing)
-        {
-            Debug.Log(direction);
-            CreateListTargetPos();
-            Vector3 targetPos = ChooseTargetPos(direction);
-            UseBomb(targetPos);
-            timer = 0;
-        }
-        yield return null;
-    }
-
-
-    IEnumerator MoveWithTouch()
-    {
-        while (Input.GetMouseButton(0))
-        {
-            isMoving = true;
-            Vector3 movePos = InputController.instance.GetInputMoveObject();
             GameManager.Instance.blockPool.canRotate = false;
-            GameManager.Instance.blockPool.isRotating = false;
-            movePos.z = this.transform.position.z;
-            this.transform.position = movePos;
-            yield return new WaitForEndOfFrame();
+            isUsing = true;
+            touchToSetDirectionLine.gameObject.SetActive(true);
+            directionLine.gameObject.SetActive(true);
+            touchToSetDirectionLine.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            direction = touchToSetDirectionLine.GetPosition(0) - touchToSetDirectionLine.GetPosition(1);
+            SetDirection(direction);
         }
-
-        GameManager.Instance.blockPool.canRotate = true;
-        this.transform.DOMove(new Vector3(pos.x, pos.y * coeff, pos.z), duration: 0.3f);
-        timer = 0;
-        yield return null;
-        isMoving = false;
+        else if (Input.GetMouseButtonUp(0) && isUsing)
+        {
+            Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            t.z = this.transform.position.z;
+            float f = Vector3.Distance(t, this.transform.position);
+            if (f < 1f)
+                DontThrowBomb();
+            else
+                ThrowBomb();
+            isUsing = false;
+        }
+        else
+        {
+            GameManager.Instance.blockPool.canRotate = true;
+        }
     }
 
-    void UseBomb(Vector3 targetPos)
+    void SetDirection(Vector3 dir)
     {
-        destroyedBlock.Clear();
-        for (int i = -2; i <= 2; i++)
+        Vector3 bombDir = dir;
+        bombDir.z = 0;
+        if (Physics.Raycast(this.transform.position + bombDir * 3, Vector3.forward, out hitInfo))
         {
-            for (int j = -2; j <= 2; j++)
+            if (hitInfo.collider.CompareTag("BlockChild"))
             {
-                Debug.DrawRay(new Vector3(targetPos.x + i * 2, targetPos.y + j * 2, -30), new Vector3(0, 0, 1) * 30, Color.blue, 300);
-                if (Physics.Raycast(new Vector3(targetPos.x + i * 2, targetPos.y + i * 2, -30), new Vector3(0, 0, 1), out RaycastHit hit))
-                {
-                    var hitBlock = hit.transform.gameObject.GetComponentInParent<TestMoveBlock>();
-                    if (!destroyedBlock.Contains(hitBlock))
-                    {
-                        destroyedBlock.Add(hitBlock);
-                    }
-                }
+                directionLine.PreDraw(hitInfo.point);
+                directionLine.DrawLine(hitInfo.point, hitInfo.normal);
+                checkBlockDirection = hitInfo.normal;
             }
         }
-        //Debug.Log(destroyedBlock.Count);
-        Vector3 direction = targetPos - this.transform.position;
-        Debug.DrawRay(this.transform.position, direction, Color.white, 300);
-        this.transform.DOMove(targetPos, duration: 0.3f);
-        this.transform.DOScale(this.transform.localScale / 3, duration: 0.6f).OnComplete(() =>
+    }
+
+    void ThrowBomb()
+    {
+        directionLine.gameObject.SetActive(false);
+        touchToSetDirectionLine.gameObject.SetActive(false);
+
+        SetDestroyedList();
+        DG.Tweening.Sequence seq = DOTween.Sequence();
+        this.transform.DOScale(this.transform.localScale * 0.2f, duration: 1f);
+        Vector3 rotate = new Vector3(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z);
+
+        this.transform.DORotate(rotate + new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)), duration: 1f).OnComplete(() => this.transform.rotation = Quaternion.Euler(0, 180, -90));
+        int i = 0;
+        for (i = 0; i < directionLine.Line.positionCount; i++)
+        {
+            seq.Append(this.transform.DOMove(directionLine.Line.GetPosition(i), duration: 0.02f));
+        }
+
+        seq.OnComplete(() =>
         {
             this.transform.position = pos;
             GameManager.Instance.blockPool.canRotate = true;
-            DestroyBlocks(targetPos);
+            DestroyBlocks(directionLine.Line.GetPosition(i - 1));
             this.gameObject.SetActive(false);
-
         });
-        this.transform.DORotate(new Vector3(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z - 30), duration: 0.6f).SetLoops(2, LoopType.Yoyo);
+    }
+
+    void SetDestroyedList()
+    {
+        destroyedBlock.Clear();
+        destroyedBlock = directionLine.ExploreArea.SetTestMoveBlocks(checkBlockDirection);
+    }
+
+    void DontThrowBomb()
+    {
+        directionLine.gameObject.SetActive(false);
+        touchToSetDirectionLine.gameObject.SetActive(false);
     }
 
     private void DestroyBlocks(Vector3 targetPos)
@@ -149,181 +139,5 @@ public class BombController : MonoBehaviour
             StartCoroutine(block.UpdateData());
             block.gameObject.SetActive(false);
         }
-    }
-
-    void CreateListTargetPos()
-    {
-        leftBottom.Clear();
-        rightBottom.Clear();
-        centerTop.Clear();
-        centerBottom.Clear();
-        leftTop.Clear();
-        rightTop.Clear();
-        GameManager.Instance.blockPool.Rb.angularVelocity = Vector3.zero;
-        float width = GameManager.Instance.mainCam.GetComponent<Camera>().orthographicSize;
-        for (int i = -20; i < 20; i++)
-        {
-            for (int j = -20; j < 20; j++)
-            {
-                if (Physics.Raycast(new Vector3(i * 4, j * 4, -30), new Vector3(0, 0, 1), out RaycastHit hit))
-                {
-                    Vector3 hitP = hit.point;
-                    if (hitP.y < 0)
-                    {
-                        if (hitP.x < -width / 6)
-                        {
-                            rightBottom.Add(hitP);
-                        }
-                        else if (hitP.x >= -width / 6 && hitP.x < width / 6)
-                        {
-                            centerBottom.Add(hitP);
-                        }
-                        else if (hitP.x >= width / 6)
-                        {
-                            leftBottom.Add(hitP);
-                        }
-                    }
-                    else
-                    {
-                        if (hitP.x < -width / 6)
-                        {
-                            rightTop.Add(hitP);
-                        }
-                        else if (hitP.x >= -width / 6 && hitP.x < width / 6)
-                        {
-                            centerTop.Add(hitP);
-                        }
-                        else if (hitP.x >= width / 6)
-                        {
-                            leftTop.Add(hitP);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    Vector3 ChooseTargetPos(Vector3 direction)
-    {
-        float angle = Vector2.Angle(new Vector2(direction.x, direction.y), Vector2.up);
-        Vector3 target = new Vector3();
-        int targetArea = -1;
-        if (angle >= 20 && angle < 90)
-        {
-            if (direction.x < 0)
-            {
-                //góc trên trái
-                targetArea = 0;
-            }
-            else
-            {
-                //góc trên phải
-                targetArea = 2;
-            }
-        }
-        else if (angle >= 90 && angle < 150)
-        {
-            if (direction.x < 0)
-            {
-                //góc dưới trái
-                targetArea = 5;
-            }
-            else
-            {
-                //góc dưới phải
-                targetArea = 3;
-            }
-        }
-        else if (angle < 20)
-        {
-            if (direction.x < 0)
-            {
-                //góc giữa trên
-                targetArea = 1;
-            }
-            else
-            {
-                //góc giữa dưới
-                targetArea = 4;
-            }
-        }
-        else if (angle >= 150)
-        {
-            if (direction.x < 0)
-            {
-                //góc giữa dưới
-                targetArea = 4;
-            }
-            else
-            {
-                //góc giữa trên
-                targetArea = 1;
-            }
-        }
-        switch (targetArea)
-        {
-            case 0:
-                if (leftTop.Count != 0)
-                {
-                    Debug.Log("Left Top");
-                    int i = Random.Range(0, leftTop.Count);
-                    target = leftTop[i];
-                    break;
-                }
-                goto case 1;
-            case 1:
-                if (centerTop.Count != 0)
-                {
-                    Debug.Log("Center Top");
-
-                    int i = Random.Range(0, centerTop.Count);
-                    target = centerTop[i];
-                    break;
-                }
-                goto case 2;
-            case 2:
-                if (rightTop.Count != 0)
-                {
-                    Debug.Log("Right Top");
-
-                    int i = Random.Range(0, rightTop.Count);
-                    target = rightTop[i];
-                    break;
-                }
-                goto case 3;
-            case 3:
-                if (rightBottom.Count != 0)
-                {
-                    Debug.Log("Right Bottom");
-
-                    int i = Random.Range(0, rightBottom.Count);
-                    target = rightBottom[i];
-                    break;
-                }
-                goto case 4;
-            case 4:
-                if (centerBottom.Count != 0)
-                {
-                    Debug.Log("Center Bottom");
-
-                    int i = Random.Range(0, centerBottom.Count);
-                    target = centerBottom[i];
-                    break;
-                }
-                goto case 5;
-            case 5:
-                if (leftBottom.Count != 0)
-                {
-                    Debug.Log("left Bottom");
-
-                    int i = Random.Range(0, leftBottom.Count);
-                    target = leftBottom[i];
-                    break;
-                }
-                goto default;
-            default: break;
-
-        }
-        return target;
     }
 }
