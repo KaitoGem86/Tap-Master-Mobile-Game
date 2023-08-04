@@ -93,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockPrefab: {fileID: 2089950795038433062, guid: 62edea887190da84d8883f335dc10376, type: 3}
   blockItem: {fileID: 9162241041797776281}
-  blockMaterial: {fileID: 2100000, guid: 49db7b47959e03d468a375fa396d13b9, type: 2}
+  blockMaterial: {fileID: 2100000, guid: 8e9c9172ee6316c4d936a8e2d6f9edb3, type: 2}
   blockButton: {fileID: 9162241041797776285}
   blockImage: {fileID: 9162241042425115838}
 --- !u!114 &9162241041797776285

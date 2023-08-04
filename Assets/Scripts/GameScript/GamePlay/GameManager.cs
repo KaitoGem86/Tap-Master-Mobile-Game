@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public BlockPool blockPool;
     public GameObject selectBlock;
     public GameObject input;
+    public CoinController gainCoinsAnim;
 
     [SerializeField]
     internal int currentLevel = 1;
@@ -68,7 +69,6 @@ public class GameManager : MonoBehaviour
         GameOverMenu.SetActive(false);
         currentLevel = PlayerPrefs.GetInt("Current Level", 0) + 1;
         coin = 0;
-        Debug.Log(currentLevel + "-" + (currentLevel >= 6));
         bombButton.SetActive(currentLevel >= 6);
 
         if (!UIManager.instance.isAwake)

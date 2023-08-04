@@ -15,7 +15,7 @@ public class ViewBlockListController : MonoBehaviour
     public List<int> interactableIndexs = new List<int>();
     // Start is called before the first frame update
 
-    void Start()
+    public void InitList()
     {
         foreach (var b in data.data)
         {
@@ -45,13 +45,14 @@ public class ViewBlockListController : MonoBehaviour
     {
         foreach (var block in data.data)
         {
-            var blockItem = blockPrefab.GetComponent<BlockItem>();
+            var go = Instantiate(blockPrefab.gameObject, blockGrid.transform);
+            var blockItem = go.GetComponent<BlockItem>();
             blockItem.SetBlockItem(block.material, block.image, block.blockName, block.isDefault);
             blockItem.SetGOInfo();
-            blockItem.SetInteractable(block.isDefault);
+            blockItem.SetInteractable(block.isDefault || PlayerPrefs.GetInt("BlockItem " + this.gameObject.name, 0) == 1);
             //blockItem.InitializeBlockItem(block.material, block.image, block.blockName, block.isDefault);
-            var go = Instantiate(blockItem.gameObject, blockGrid.transform);
-            blockItems.Add(go.GetComponent<BlockItem>());
+
+            blockItems.Add(blockItem);
             if (block.isDefault)
             {
                 PlayerPrefs.SetInt("BlockItem " + block.blockName, 1);

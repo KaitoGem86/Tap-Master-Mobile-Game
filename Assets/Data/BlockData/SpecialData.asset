@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 269d302257efb124289f1738d42a00ac, type: 3}
+  m_Name: SpecialData
+  m_EditorClassIdentifier: 
+  data:
+  - blockName: Special Skin 1
+    material: {fileID: 2100000, guid: f10a44ee01d6fc5468b5d0dde374dfda, type: 2}
+    image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
+    isDefault: 0
+  - blockName: Special Skin 2
+    material: {fileID: 2100000, guid: baac9ea44616e544da6f9981fc685d90, type: 2}
+    image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
+    isDefault: 0
+  - blockName: Special Skin 3
+    material: {fileID: 2100000, guid: 7cca8daf42ccb3c42a6866b253d28568, type: 2}
+    image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
+    isDefault: 0
+  - blockName: Special Skin 4
+    material: {fileID: 2100000, guid: 8e9c9172ee6316c4d936a8e2d6f9edb3, type: 2}
+    image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
+    isDefault: 0

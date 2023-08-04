@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -85,15 +85,16 @@ public class EffectItem : MonoBehaviour
                     ParticleController.instance.winGamePrefab.GetComponent<Renderer>().material = this.material;
                     PlayerPrefs.SetInt("Current Win Game Effect", index);
                     break;
-                case EffectDataList.EffectType.trails:
-                    foreach (GameObject b in GameManager.Instance.blockPool.pool)
-                    {
-                        TestMoveBlock tb = b.GetComponent<TestMoveBlock>();
-                        tb.Trail.material = this.material;
-                        GameManager.Instance.blockPool.BlockPrefab.GetComponent<TestMoveBlock>().Trail.material = this.material;
-                    }
-                    PlayerPrefs.SetInt("Current Block's Trail", index);
-                    break;
+                    //Hiệu ứng trail, tạm thời bỏ đi
+                    //case EffectDataList.EffectType.trails:
+                    //    foreach (GameObject b in GameManager.Instance.blockPool.pool)
+                    //    {
+                    //        TestMoveBlock tb = b.GetComponent<TestMoveBlock>();
+                    //        tb.Trail.material = this.material;
+                    //        GameManager.Instance.blockPool.BlockPrefab.GetComponent<TestMoveBlock>().Trail.material = this.material;
+                    //    }
+                    //    PlayerPrefs.SetInt("Current Block's Trail", index);
+                    //    break;
             }
         }
     }

@@ -10,13 +10,12 @@ public class DetermineBombArea : MonoBehaviour
 
     private void OnEnable()
     {
-        this.transform.localScale = 60 / GameManager.Instance.mainCam.GetComponent<Camera>().orthographicSize * Vector3.one;
+        this.transform.localScale = GameManager.Instance.mainCam.GetComponent<Camera>().orthographicSize / 120 * Vector3.one;
     }
 
     public List<TestMoveBlock> SetTestMoveBlocks(Vector3 dir)
     {
         List<TestMoveBlock> testMoveBlocks = new List<TestMoveBlock>();
-        Vector3 center = area.transform.position;
         foreach (var checkPoint in checkPoints)
         {
             Vector3 p = checkPoint.position;

@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public enum RewardType
 {
     Coin,
-    Puzzle
+    Puzzle,
+    ImediatedCoin
 }
 
 

@@ -9,14 +9,19 @@ public class RewardBlock : MonoBehaviour
     [SerializeField] int amount;
     [SerializeField] Material material;
     [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] MeshRenderer pieceRenderer;
+
 
     private void Start()
     {
-        this.enabled = false;
+        if (type == RewardType.Coin)
+            this.enabled = false;
     }
-    private void Update()
-    {
 
+    public RewardType Type
+    {
+        get { return type; }
+        set { type = value; }
     }
 
     public Material Material
@@ -33,16 +38,51 @@ public class RewardBlock : MonoBehaviour
                 case RewardType.Coin:
                     CollectCoin();
                     break;
+                case RewardType.Puzzle:
+                    CollectPuzzle();
+                    break;
+                case RewardType.ImediatedCoin:
+                    CollectImediatedCoin();
+                    break;
             }
         });
+        this.pieceRenderer.material.DOFade(endValue: 0, duration: 0.5f);
+    }
+
+    void CollectPuzzle()
+    {
+        var p_s = UIManager.instance.PuzzleRewardPanel.GetComponent<PuzzleRewardPanel>().NotCollectReward;
+
+        int i = Random.Range(0, p_s.Count);
+
+        UIManager.instance.CollectPuzzleNotice(i);
+        GameManager.Instance.isOnMenu = true;
+        GameManager.Instance.blockPool.canRotate = false;
+        StartCoroutine(UpdateData());
+        this.gameObject.SetActive(false);
     }
 
     void CollectCoin()
     {
+        this.amount = Random.Range(20, 45);
         Debug.Log("Collect hehehe");
         StartCoroutine(UpdateData());
+        UIManager.instance.CollectCoinPopUp.Amount = this.amount;
+        UIManager.instance.CollectCoinPopUp.transform.localScale = Vector3.zero;
+        UIManager.instance.CollectCoinPopUp.gameObject.SetActive(true);
+        GameManager.Instance.isOnMenu = true;
+        GameManager.Instance.blockPool.canRotate = false;
+        this.gameObject.SetActive(false);
+    }
+
+    void CollectImediatedCoin()
+    {
+        var gainCoinEffect = Instantiate(GameManager.Instance.gainCoinsAnim.gameObject,
+            Camera.main.WorldToScreenPoint(this.transform.position), Quaternion.identity, UIManager.instance.existingPanel.transform).GetComponent<CoinController>();
+        gainCoinEffect.CountCoins(new Vector3(-400, 840, 0));
         int n = PlayerPrefs.GetInt("Coin", 0);
-        PlayerPrefs.SetInt("Coin", n + amount);
+        PlayerPrefs.SetInt("Coin", n + 100);
+        StartCoroutine(UpdateData());
         this.gameObject.SetActive(false);
     }
 
@@ -59,5 +99,17 @@ public class RewardBlock : MonoBehaviour
             GameManager.Instance.WinGame();
         }
         yield return null;
+    }
+
+    public void PreMove(Vector3 startPos, Vector3 startAngle, Vector3 endPos, Vector3 endAngle, int i)
+    {
+        this.transform.DOScale(Vector3.one, duration: 1.5f);
+        this.transform.DOLocalMove(endPos, duration: 1.5f).SetEase(Ease.InSine);
+        this.transform.DOLocalRotate(endAngle, duration: 1.5f).SetEase(Ease.InSine);
+    }
+
+    public void SetLocalScale()
+    {
+        this.transform.localScale = Vector3.zero;
     }
 }

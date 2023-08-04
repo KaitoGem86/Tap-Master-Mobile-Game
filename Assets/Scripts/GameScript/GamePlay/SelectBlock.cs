@@ -30,6 +30,8 @@ public class SelectBlock : MonoBehaviour
             {
                 SoundManager.instance.PlayClickSound();
                 TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();
+                if (testMoveBlock.isMoving)
+                    return;
                 if (testMoveBlock != null)
                     testMoveBlock.IsSelected = true;
                 RewardBlock rewardBlock = hit.collider.gameObject.GetComponentInParent<RewardBlock>();

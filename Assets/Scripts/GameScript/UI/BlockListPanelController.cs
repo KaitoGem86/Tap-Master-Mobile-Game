@@ -10,6 +10,7 @@ public class BlockListPanelController : MonoBehaviour
     //[SerializeField] TMP_Text CoinText;
     [Header("Item lists")]
     [SerializeField] ViewBlockListController blockList;
+    [SerializeField] ViewBlockListController specialSkinList;
     [SerializeField] EffectItemList tapEffectList;
     [SerializeField] EffectItemList winEffectList;
     [SerializeField] EffectItemList trailEffectList;
@@ -18,10 +19,12 @@ public class BlockListPanelController : MonoBehaviour
     [Space]
     [Header("Elements of panel")]
     [SerializeField] GameObject blockSkinsList;
+    [SerializeField] GameObject specialSkinsList;
     [SerializeField] GameObject tapEffectsList;
     [SerializeField] GameObject trailsList;
     [SerializeField] GameObject winGameEffectsList;
     [SerializeField] Toggle blockSkinToggle;
+    [SerializeField] Toggle specialSkinToggle;
     [SerializeField] Toggle tapEffectToggle;
     [SerializeField] Toggle trailToggle;
     [SerializeField] Toggle winGameEffectToggle;
@@ -29,6 +32,15 @@ public class BlockListPanelController : MonoBehaviour
 
     float width;
     GameObject currentList;
+
+    public ViewBlockListController SpecialSkinList
+    {
+        get { return specialSkinList; }
+        set
+        {
+            specialSkinList = value;
+        }
+    }
 
     public void OnEnable()
     {
@@ -48,6 +60,13 @@ public class BlockListPanelController : MonoBehaviour
     {
         CheckInteractableBuyButton();
     }
+
+    public void InitBlockSkinLists()
+    {
+        blockList.InitList();
+        specialSkinList.InitList();
+    }
+
 
     public void ExitPanel()
     {
@@ -97,7 +116,7 @@ public class BlockListPanelController : MonoBehaviour
         }
         else
         {
-            Debug.Log("NULL Current List");
+            Debug.Log("This skin cant buy with coins");
         }
     }
 
@@ -163,6 +182,23 @@ public class BlockListPanelController : MonoBehaviour
             currentList.SetActive(false);
             currentList = blockSkinsList;
             blockSkinToggle.interactable = false;
+            specialSkinToggle.interactable = true;
+            tapEffectToggle.interactable = true;
+            trailToggle.interactable = true;
+            winGameEffectToggle.interactable = true;
+        }
+    }
+
+    public void ChooseSpecialSkinsList()
+    {
+        if (specialSkinToggle.isOn)
+        {
+            specialSkinsList.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+            specialSkinsList.SetActive(true);
+            currentList.SetActive(false);
+            currentList = specialSkinsList;
+            specialSkinToggle.interactable = false;
+            blockSkinToggle.interactable = true;
             tapEffectToggle.interactable = true;
             trailToggle.interactable = true;
             winGameEffectToggle.interactable = true;
@@ -178,6 +214,7 @@ public class BlockListPanelController : MonoBehaviour
             currentList.SetActive(false);
             currentList = tapEffectsList;
             blockSkinToggle.interactable = true;
+            specialSkinToggle.interactable = true;
             tapEffectToggle.interactable = false;
             trailToggle.interactable = true;
             winGameEffectToggle.interactable = true;
@@ -193,6 +230,7 @@ public class BlockListPanelController : MonoBehaviour
             currentList.SetActive(false);
             currentList = trailsList;
             blockSkinToggle.interactable = true;
+            specialSkinToggle.interactable = true;
             tapEffectToggle.interactable = true;
             trailToggle.interactable = false;
             winGameEffectToggle.interactable = true;
@@ -208,6 +246,7 @@ public class BlockListPanelController : MonoBehaviour
             currentList.SetActive(false);
             currentList = winGameEffectsList;
             blockSkinToggle.interactable = true;
+            specialSkinToggle.interactable = true;
             tapEffectToggle.interactable = true;
             trailToggle.interactable = true;
             winGameEffectToggle.interactable = false;

@@ -1,7 +1,9 @@
 ﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BombController : MonoBehaviour
 {
@@ -9,23 +11,23 @@ public class BombController : MonoBehaviour
     [SerializeField] ParticleSystem bombExplosion;
     [SerializeField] LineRenderer touchToSetDirectionLine;
     [SerializeField] DrawDirectionLine directionLine;
+    [SerializeField] Button bombButton;
 
     Vector3 pos;
     Vector3 oldPos;
     Vector3 direction;
     Vector3 checkBlockDirection;
-    float timer = 0;
     float coeff;
     bool isUsing = false;
     RaycastHit hitInfo;
 
-    List<Vector3> leftTop = new List<Vector3>();
-    List<Vector3> centerTop = new List<Vector3>();
-    List<Vector3> rightTop = new List<Vector3>();
-    List<Vector3> leftBottom = new List<Vector3>();
-    List<Vector3> centerBottom = new List<Vector3>();
-    List<Vector3> rightBottom = new List<Vector3>();
-    List<TestMoveBlock> destroyedBlock = new List<TestMoveBlock>();
+    //List<Vector3> leftTop = new List<Vector3>();
+    //List<Vector3> centerTop = new List<Vector3>();
+    //List<Vector3> rightTop = new List<Vector3>();
+    //List<Vector3> leftBottom = new List<Vector3>();
+    //List<Vector3> centerBottom = new List<Vector3>();
+    //List<Vector3> rightBottom = new List<Vector3>();
+    public List<TestMoveBlock> destroyedBlock = new List<TestMoveBlock>();
 
     // Start is called before the first frame update
     private void OnEnable()
@@ -34,43 +36,12 @@ public class BombController : MonoBehaviour
         coeff = GameManager.Instance.mainCam.GetComponent<Camera>().orthographicSize / 20;
         pos = this.transform.position;
         this.transform.position = new Vector3(pos.x, pos.y * coeff, pos.z);
-        this.transform.localScale = Vector3.zero;
-        this.transform.DOScale(new Vector3(0.05f * coeff, 0.05f * coeff, 0.05f * coeff), duration: 0.5f);
+        this.transform.localScale = new Vector3(0.05f * coeff, 0.05f * coeff, 0.05f * coeff);
         this.direction = Vector3.zero;
-        timer = 0;
-
         touchToSetDirectionLine.SetPosition(0, this.transform.position);
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetMouseButton(0) && Camera.main.ScreenToWorldPoint(Input.mousePosition).y <= pos.y + this.GetComponent<MeshCollider>().bounds.size.y / 2)
-        {
-            GameManager.Instance.blockPool.canRotate = false;
-            isUsing = true;
-            touchToSetDirectionLine.gameObject.SetActive(true);
-            directionLine.gameObject.SetActive(true);
-            touchToSetDirectionLine.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            direction = touchToSetDirectionLine.GetPosition(0) - touchToSetDirectionLine.GetPosition(1);
-            SetDirection(direction);
-        }
-        else if (Input.GetMouseButtonUp(0) && isUsing)
-        {
-            Vector3 t = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            t.z = this.transform.position.z;
-            float f = Vector3.Distance(t, this.transform.position);
-            if (f < 1f)
-                DontThrowBomb();
-            else
-                ThrowBomb();
-            isUsing = false;
-        }
-        else
-        {
-            GameManager.Instance.blockPool.canRotate = true;
-        }
-    }
 
     void SetDirection(Vector3 dir)
     {
@@ -80,19 +51,19 @@ public class BombController : MonoBehaviour
         {
             if (hitInfo.collider.CompareTag("BlockChild"))
             {
-                directionLine.PreDraw(hitInfo.point);
-                directionLine.DrawLine(hitInfo.point, hitInfo.normal);
+                //directionLine.PreDraw(hitInfo.point);
+                //directionLine.DrawLine(hitInfo.point, hitInfo.normal);
                 checkBlockDirection = hitInfo.normal;
             }
         }
     }
 
-    void ThrowBomb()
+    public void ThrowBomb(DrawDirectionLine directionLine)
     {
         directionLine.gameObject.SetActive(false);
         touchToSetDirectionLine.gameObject.SetActive(false);
 
-        SetDestroyedList();
+        ////SetDestroyedList(directionLine);
         DG.Tweening.Sequence seq = DOTween.Sequence();
         this.transform.DOScale(this.transform.localScale * 0.2f, duration: 1f);
         Vector3 rotate = new Vector3(this.transform.rotation.x, this.transform.rotation.y, this.transform.rotation.z);
@@ -113,13 +84,13 @@ public class BombController : MonoBehaviour
         });
     }
 
-    void SetDestroyedList()
+    void SetDestroyedList(DrawDirectionLine directionLine)
     {
         destroyedBlock.Clear();
         destroyedBlock = directionLine.ExploreArea.SetTestMoveBlocks(checkBlockDirection);
     }
 
-    void DontThrowBomb()
+    public void DontThrowBomb()
     {
         directionLine.gameObject.SetActive(false);
         touchToSetDirectionLine.gameObject.SetActive(false);
@@ -130,9 +101,7 @@ public class BombController : MonoBehaviour
         Vector3 p = targetPos;
         p.z = -30;
         bombExplosion.transform.position = p;
-        //Debug.Log(this.transform.position);
         bombExplosion.Play();
-        //Debug.Log(bombExplosion.transform.position);
         foreach (var block in destroyedBlock)
         {
             GameManager.Instance.countTouchs += 1;

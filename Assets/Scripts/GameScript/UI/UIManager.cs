@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,20 +16,49 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseGameMenu;
     [SerializeField] private GameObject blockListPanel;
     [SerializeField] private GameObject levelListPanel;
+    [SerializeField] public GameObject existingPanel;
+    [SerializeField] private GameObject puzzleRewardPanel;
+    [SerializeField] public GameObject puzzleRewardNotification;
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] public Canvas canvas;
     [SerializeField] private GameObject dailyRewardPanel;
     [SerializeField] private GameObject dailyRewardNotification;
+    [SerializeField] private CollectRewardPopUpController collectCoinPopUp;
+    [SerializeField] private CollectPuzzlePopUpController collectPuzzlePopUp;
+    [SerializeField] public CollectPuzzleNotice imageNotice;
+    [SerializeField] public CancelAreaController cancelArea;
 
     DateTime now;
     public static UIManager instance;
     public bool isAwake;
+    public GameObject PuzzleRewardPanel
+    {
+        get { return puzzleRewardPanel; }
+    }
+
+    public GameObject BlockListPanel
+    {
+        get => blockListPanel;
+    }
+
+    public CollectRewardPopUpController CollectCoinPopUp
+    {
+        get => collectCoinPopUp;
+        set => collectCoinPopUp = value;
+    }
+
+    public CollectPuzzlePopUpController CollectPuzzlePopUp
+    {
+        get => collectPuzzlePopUp;
+        set => collectPuzzlePopUp = value;
+    }
 
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("Is Awake", 0);
         settingPanel.GetComponent<SettingPanel>().SaveSoundState();
+        puzzleRewardPanel.GetComponent<PuzzleRewardPanel>().SaveStatus();
     }
 
     private void Awake()
@@ -46,19 +76,27 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //pauseGameMenu.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
-        //pauseGameMenu.SetActive(false);
         settingPanel.GetComponent<SettingPanel>().InitializeVibrating();
+        puzzleRewardNotification.SetActive(PlayerPrefs.GetInt("Having new puzzle's piece", 0) == 1);
+
         if (!pauseGameMenu.activeSelf)
         {
             float t = pauseGameMenu.transform.position.x + canvas.pixelRect.width;
             pauseGameMenu.GetComponent<RectTransform>().position = new Vector3(t, pauseGameMenu.transform.position.y, pauseGameMenu.transform.position.z);
 
         }
+
+        blockListPanel.GetComponent<BlockListPanelController>().InitBlockSkinLists();
         blockListPanel.transform.position = this.transform.position + Vector3.left * canvas.pixelRect.width;
         blockListPanel.SetActive(false);
+
         levelListPanel.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
         levelListPanel.SetActive(false);
+
+        puzzleRewardPanel.GetComponent<PuzzleRewardPanel>().InitPuzzles();
+        puzzleRewardPanel.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
+        puzzleRewardPanel.SetActive(false);
+
         settingPanel.transform.position = this.transform.position + Vector3.right * canvas.pixelRect.width;
         settingPanel.SetActive(false);
     }
@@ -78,8 +116,6 @@ public class UIManager : MonoBehaviour
     {
         CoinText.SetText(PlayerPrefs.GetInt("Coin", 0).ToString());
     }
-
-
 
     public void SetLevelText()
     {
@@ -124,6 +160,15 @@ public class UIManager : MonoBehaviour
         levelListPanel.SetActive(true);
     }
 
+    public void ChoosePuzzlePanel()
+    {
+        puzzleRewardNotification.SetActive(false);
+        PlayerPrefs.SetInt("Having new puzzle's piece", 0);
+        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.isOnMenu = true;
+        puzzleRewardPanel.SetActive(true);
+    }
+
     public void ChooseDailyRewardPanel()
     {
         GameManager.Instance.blockPool.canRotate = false;
@@ -131,4 +176,22 @@ public class UIManager : MonoBehaviour
         dailyRewardPanel.SetActive(true);
     }
 
+    public void CollectPuzzleNotice(int i)
+    {
+        imageNotice.gameObject.SetActive(true);
+        imageNotice.NoticeOnCollect();
+        imageNotice.t.OnComplete(() =>
+        {
+            var p_s = PuzzleRewardPanel.GetComponent<PuzzleRewardPanel>().NotCollectReward;
+
+            PuzzleRewardPanel.GetComponent<PuzzleRewardPanel>().Puzzles[p_s[i]].OnCollectPieces();
+            CollectPuzzlePopUp.Status = PuzzleRewardPanel.GetComponent<PuzzleRewardPanel>().Statuses[p_s[i]];
+            CollectPuzzlePopUp.Index = PuzzleRewardPanel.GetComponent<PuzzleRewardPanel>().Puzzles[p_s[i]].p_index;
+            CollectPuzzlePopUp.PreEnable();
+            CollectPuzzlePopUp.gameObject.SetActive(true);
+            puzzleRewardNotification.SetActive(true);
+            PlayerPrefs.SetInt("Having new puzzle's piece", 1);
+            imageNotice.gameObject.SetActive(false);
+        });
+    }
 }

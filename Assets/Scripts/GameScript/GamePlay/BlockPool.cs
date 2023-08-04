@@ -12,11 +12,13 @@ using UnityEngine;
 public class BlockPool : MonoBehaviour
 {
     [SerializeField] GameObject blockPrefab;
+    [SerializeField] GameObject puzzleRewardPrefab;
     [SerializeField] public Rigidbody rb;
     [SerializeField] TestMoveBlock block;
 
     private Vector3 oldPos = Vector3.zero;
     private Vector3 newPos = Vector3.zero;
+    private List<Vector3> listPos = new List<Vector3>();
     //private Vector3 aRotate = new Vector3();
     private int level;
     private int count;
@@ -28,6 +30,8 @@ public class BlockPool : MonoBehaviour
     public bool isRotating = false;
     public List<GameObject> pool;
     public bool canRotate = true;
+
+
 
     public int Size
     {
@@ -130,6 +134,8 @@ public class BlockPool : MonoBehaviour
 
     void Readdata()
     {
+        float max = 0;
+        Vector3 maxPos = new Vector3();
         DG.Tweening.Sequence seq = DOTween.Sequence();
         this.size = levelData.states.Count;
         float timer = 0;
@@ -147,12 +153,53 @@ public class BlockPool : MonoBehaviour
         for (int i = 0; i < levelData.states.Count; i++)
         {
             var s = levelData.states[i];
+            if (s.pos.magnitude > max)
+            {
+                maxPos = s.pos;
+                max = s.pos.magnitude;
+            }
+            listPos.Add(s.pos);
             var go = Instantiate(blockPrefab, s.pos * 30, Quaternion.Euler(s.rotation + new Vector3(180, 180, 0)), this.transform);
             TestMoveBlock goBlock = go.GetComponent<TestMoveBlock>();
             goBlock.SetColorArrow();
             goBlock.SetLocalScale();
             seq.Append(goBlock.Mesh.material.DOFade(1, timer).OnComplete(() => goBlock.PreMove(s.pos * 30, s.rotation + new Vector3(180, 180, 0), s.pos * 4, s.rotation, i)));
             pool.Add(go);
+        }
+
+        if (this.levelData.levelIndex >= 4 && UnityEngine.Random.Range(0, 100) < 40)
+        {
+            Vector3 puzzlePos = new Vector3();
+            if (!listPos.Contains(maxPos + Vector3.up))
+            {
+                puzzlePos = maxPos + Vector3.up;
+            }
+            else if (!listPos.Contains(maxPos + Vector3.right))
+            {
+                puzzlePos = maxPos + Vector3.right;
+            }
+            else if (!listPos.Contains(maxPos + Vector3.down))
+            {
+                puzzlePos = maxPos + Vector3.down;
+            }
+            else if (!listPos.Contains(maxPos + Vector3.left))
+            {
+                puzzlePos = maxPos + Vector3.left;
+            }
+            else if (!listPos.Contains(maxPos + Vector3.forward))
+            {
+                puzzlePos = maxPos + Vector3.forward;
+            }
+            else if (!listPos.Contains(maxPos + Vector3.back))
+            {
+                puzzlePos = maxPos + Vector3.back;
+            }
+            var p_go = Instantiate(puzzleRewardPrefab, puzzlePos * 30, Quaternion.identity, this.transform);
+            int i = UnityEngine.Random.Range(0, 2);
+            p_go.GetComponent<RewardBlock>().Type = i != 0 ? RewardType.Puzzle : RewardType.ImediatedCoin;
+            seq.Append(p_go.transform.DOLocalMove(puzzlePos * 4, 0.3f));
+            size += 1;
+            pool.Add(p_go);
         }
     }
 
@@ -170,7 +217,7 @@ public class BlockPool : MonoBehaviour
                 TestMoveBlock p = pool[i].GetComponent<TestMoveBlock>();
                 if (p.IsSelected)
                     continue;
-                else
+                else if (p != null)
                 {
                     p.ChangeTypeOfBlock();
                     return;
