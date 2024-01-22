@@ -52,7 +52,9 @@ public class InputController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            inputPos.z = -30;
+            Debug.Log(Input.mousePosition);
+            Debug.Log(inputPos);
+            //inputPos.z = -30;
             return inputPos;
         }
 

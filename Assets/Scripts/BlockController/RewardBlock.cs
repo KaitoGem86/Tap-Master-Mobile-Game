@@ -57,7 +57,7 @@ public class RewardBlock : MonoBehaviour
 
         UIManager.instance.CollectPuzzleNotice(i);
         GameManager.Instance.isOnMenu = true;
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         StartCoroutine(UpdateData());
         this.gameObject.SetActive(false);
     }
@@ -71,7 +71,7 @@ public class RewardBlock : MonoBehaviour
         UIManager.instance.CollectCoinPopUp.transform.localScale = Vector3.zero;
         UIManager.instance.CollectCoinPopUp.gameObject.SetActive(true);
         GameManager.Instance.isOnMenu = true;
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         this.gameObject.SetActive(false);
     }
 

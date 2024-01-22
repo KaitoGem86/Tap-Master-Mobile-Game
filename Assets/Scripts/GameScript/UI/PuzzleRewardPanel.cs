@@ -42,7 +42,7 @@ public class PuzzleRewardPanel : MonoBehaviour
     void Exit()
     {
         GameManager.Instance.isOnMenu = false;
-        GameManager.Instance.blockPool.canRotate = true;
+        GameManager.Instance.camMoving.CanRotate = true;
         this.gameObject.SetActive(false);
     }
 

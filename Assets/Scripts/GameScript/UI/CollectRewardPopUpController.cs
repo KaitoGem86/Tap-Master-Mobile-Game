@@ -101,7 +101,7 @@ public class CollectRewardPopUpController : MonoBehaviour
         this.transform.DOScale(0, duration: 0.3f).SetEase(Ease.InBack).OnComplete(() =>
         {
             GameManager.Instance.isOnMenu = false;
-            GameManager.Instance.blockPool.canRotate = true;
+            GameManager.Instance.camMoving.CanRotate = true;
             this.gameObject.SetActive(false);
             this.transform.localScale = Vector3.one;
         });

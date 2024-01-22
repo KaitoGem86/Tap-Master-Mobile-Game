@@ -15,10 +15,12 @@ public class BlockPool : MonoBehaviour
     [SerializeField] GameObject puzzleRewardPrefab;
     [SerializeField] public Rigidbody rb;
     [SerializeField] TestMoveBlock block;
+    [SerializeField] MB3_MeshBaker meshBaker;
 
     private Vector3 oldPos = Vector3.zero;
     private Vector3 newPos = Vector3.zero;
     private List<Vector3> listPos = new List<Vector3>();
+    private GameObject[] combinedGo;
     //private Vector3 aRotate = new Vector3();
     private int level;
     private int count;
@@ -71,11 +73,17 @@ public class BlockPool : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (canRotate)
-            Rotate();
-        isRotating = CheckRotating();
-        if (isRotating)
-            this.transform.rotation = rb.rotation;
+        //if (canRotate)
+        //    Rotate();
+        //isRotating = CheckRotating();
+        //if (isRotating)
+        //    this.transform.rotation = rb.rotation;
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            Debug.Log("C" + combinedGo.Length);
+
+            StaticBatchingUtility.Combine(combinedGo, this.gameObject);
+        }
     }
 
 
@@ -149,7 +157,7 @@ public class BlockPool : MonoBehaviour
             timer = 2f / this.size;
         GameManager.Instance.camSize = levelData.maxDis;
         CameraController.SetCameraSize(GameManager.Instance.camSize > 2 ? GameManager.Instance.camSize : 2);
-
+        combinedGo = new GameObject[levelData.states.Count];
         for (int i = 0; i < levelData.states.Count; i++)
         {
             var s = levelData.states[i];
@@ -163,10 +171,11 @@ public class BlockPool : MonoBehaviour
             TestMoveBlock goBlock = go.GetComponent<TestMoveBlock>();
             goBlock.SetColorArrow();
             goBlock.SetLocalScale();
-            seq.Append(goBlock.Mesh.material.DOFade(1, timer).OnComplete(() => goBlock.PreMove(s.pos * 30, s.rotation + new Vector3(180, 180, 0), s.pos * 4, s.rotation, i)));
+            seq.Append(goBlock.Mesh.material.DOFade(1, timer).OnComplete(() => goBlock.PreMove(s.pos * 30, s.rotation + new Vector3(180, 180, 0), s.pos * 4.05f, s.rotation, i)));
             pool.Add(go);
+            combinedGo[i] = goBlock.Mesh.gameObject;
         }
-
+        //seq.OnComplete(() => StartCoroutine(CombineMesh()));
         if (this.levelData.levelIndex >= 4 && UnityEngine.Random.Range(0, 100) < 40)
         {
             Vector3 puzzlePos = new Vector3();
@@ -201,6 +210,23 @@ public class BlockPool : MonoBehaviour
             size += 1;
             pool.Add(p_go);
         }
+    }
+
+
+
+    IEnumerator CombineMesh()
+    {
+        int i = 3;
+        while (i > 0)
+        {
+            i -= 1;
+            yield return new WaitForSeconds(1);
+        }
+        Debug.Log("OK");
+
+        //StaticBatchingUtility.Combine(combinedGo, this.gameObject);
+        meshBaker.AddDeleteGameObjects(combinedGo, null, true);
+        meshBaker.Apply();
     }
 
     public void RandomChangeBlockToReward()

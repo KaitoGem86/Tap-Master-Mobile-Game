@@ -12,6 +12,7 @@ public class TestMoveBlock : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] RewardBlock rewardBlock;
     [SerializeField] MeshRenderer mesh;
+    [SerializeField] MeshFilter meshFilter;
     //[SerializeField] TrailRenderer trail;
     [SerializeField] SpriteRenderer[] arrows;
     [SerializeField] Material escapeMaterial;
@@ -28,6 +29,7 @@ public class TestMoveBlock : MonoBehaviour
     public bool isMoving = false;
 
     public GameObject StartPos { get { return obstaclePos; } }
+    public MeshFilter MeshFilter { get { return meshFilter; } }
     public bool IsSelected
     {
         get { return isSelected; }
@@ -98,7 +100,7 @@ public class TestMoveBlock : MonoBehaviour
                 this.mesh.material = blockedMaterial;
                 SetActiveArrow(false);
                 float duration = Vector3.Distance(this.transform.position, this.obstaclePos.transform.position - this.transform.up * 4);
-                Debug.Log(Vector3.Distance(this.transform.position, this.obstaclePos.transform.position - this.transform.up * 4));
+                //Debug.Log(Vector3.Distance(this.transform.position, this.obstaclePos.transform.position - this.transform.up * 4));
                 duration = duration > 20 ? 2 : duration / 10;
                 if (duration < 0.2f)
                     duration = 0.2f;
@@ -122,7 +124,7 @@ public class TestMoveBlock : MonoBehaviour
                         {
                             if (GameManager.Instance.allowedVibrating)
                             {
-                                Debug.Log("VIbrate");
+                                //Debug.Log("VIbrate");
                                 VibrationManager.Vibrate(30);
                             }
                             isHitted = false;
@@ -141,7 +143,7 @@ public class TestMoveBlock : MonoBehaviour
             if (hitInfo.collider.gameObject.CompareTag("BlockChild"))
             {
                 this.obstaclePos = hitInfo.collider.gameObject.GetComponentInParent<TestMoveBlock>().startPos;
-                Debug.DrawRay(blockRb.transform.position, this.transform.up * hitInfo.distance, Color.yellow);
+                //Debug.DrawRay(blockRb.transform.position, this.transform.up * hitInfo.distance, Color.yellow);
             }
             else if (hitInfo.collider.gameObject.CompareTag("Bomb"))
             {
@@ -281,7 +283,7 @@ public class TestMoveBlock : MonoBehaviour
         this.arrows[3].gameObject.SetActive(false);
         sequence.Append(this.mesh.material.DOFade(0, 0.5f));
         this.mesh.material = rewardBlock.Material;
-        sequence.Append(this.mesh.material.DOFade(1, 0.5f));
+        sequence.Append(this.mesh.material.DOFade(0.5f, 0.5f));
         this.enabled = false;
         rewardBlock.enabled = true;
     }

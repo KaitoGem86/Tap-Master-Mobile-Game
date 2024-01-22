@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject GameOverMenu;
     [SerializeField] public GameObject bombButton;
 
+
     public int blockPrice = 100;
     public int effectPrice = 100;
     public GameObject mainCam;
@@ -18,6 +19,9 @@ public class GameManager : MonoBehaviour
     public GameObject selectBlock;
     public GameObject input;
     public CoinController gainCoinsAnim;
+    public ParticleController p;
+    public CameraMoving camMoving;
+    public Camera uiCam;
 
     [SerializeField]
     internal int currentLevel = 1;
@@ -55,6 +59,12 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt($"Level 31 passed", 1);
         }
 
+        if (ParticleController.instance == null)
+        {
+            p.Awake();
+        }
+        ParticleController.instance.InitializeSystem();
+
         Application.targetFrameRate = 120;
         PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
         Instance = this;
@@ -62,6 +72,7 @@ public class GameManager : MonoBehaviour
         GameWinMenu.GetComponent<WinGamePanelController>().achievementPanel.InitializeList();
         GameWinMenu.SetActive(false);
     }
+
 
     private void Start()
     {
@@ -76,7 +87,6 @@ public class GameManager : MonoBehaviour
 
             PlayerPrefs.SetInt($"Level {currentLevel} passed", 1);
             GameManager.Instance.blockPool.StartInit(currentLevel);
-            ParticleController.instance.InitializeSystem();
             countBlocks = blockPool.Size;
             totalBlocks = countBlocks;
             countTouchs = countBlocks + 700;

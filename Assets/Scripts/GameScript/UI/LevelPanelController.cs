@@ -70,7 +70,7 @@ public class LevelPanelController : MonoBehaviour
 
     void Exit()
     {
-        GameManager.Instance.blockPool.canRotate = true;
+        GameManager.Instance.camMoving.CanRotate = true;
         GameManager.Instance.isOnMenu = false || UIManager.instance.isAwake;
         gameObject.SetActive(false);
     }

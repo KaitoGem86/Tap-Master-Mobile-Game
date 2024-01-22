@@ -78,8 +78,8 @@ public class BombController : MonoBehaviour
         seq.OnComplete(() =>
         {
             this.transform.position = pos;
-            GameManager.Instance.blockPool.canRotate = true;
-            DestroyBlocks(directionLine.Line.GetPosition(i - 1));
+            GameManager.Instance.camMoving.CanRotate = true;
+            DestroyBlocks(directionLine.Line.GetPosition(i - 1), directionLine.Line.GetPosition(i - 2) - directionLine.Line.GetPosition(i - 1));
             this.gameObject.SetActive(false);
         });
     }
@@ -96,10 +96,10 @@ public class BombController : MonoBehaviour
         touchToSetDirectionLine.gameObject.SetActive(false);
     }
 
-    private void DestroyBlocks(Vector3 targetPos)
+    private void DestroyBlocks(Vector3 targetPos, Vector3 fromDirection)
     {
-        Vector3 p = targetPos;
-        p.z = -30;
+        Vector3 p = targetPos + fromDirection * 5;
+        //p.z = -30;
         bombExplosion.transform.position = p;
         bombExplosion.Play();
         foreach (var block in destroyedBlock)

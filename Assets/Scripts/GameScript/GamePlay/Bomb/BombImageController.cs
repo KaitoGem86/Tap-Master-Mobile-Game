@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -88,9 +87,10 @@ public class BombImageController : MonoBehaviour
 
     void GenerateBombDirection()
     {
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         touchToSetDirectionLine.gameObject.SetActive(true);
         directionLine.gameObject.SetActive(true);
+        touchToSetDirectionLine.SetPosition(0, Camera.main.ScreenToWorldPoint(this.transform.position));
         touchToSetDirectionLine.SetPosition(1, Camera.main.ScreenToWorldPoint(Input.mousePosition));
         var direction = touchToSetDirectionLine.GetPosition(0) - touchToSetDirectionLine.GetPosition(1);
         SetDirection(direction);
@@ -110,7 +110,7 @@ public class BombImageController : MonoBehaviour
         this.bomb.gameObject.SetActive(true);
         this.bomb.ThrowBomb(this.directionLine);
         UIManager.instance.cancelArea.gameObject.SetActive(false);
-        GameManager.Instance.blockPool.canRotate = true;
+        GameManager.Instance.camMoving.CanRotate = true;
     }
 
     void DontThrow()
@@ -135,8 +135,8 @@ public class BombImageController : MonoBehaviour
     void SetDirection(Vector3 dir)
     {
         Vector3 bombDir = dir;
-        bombDir.z = 0;
-        if (Physics.Raycast(Camera.main.ScreenToWorldPoint(this.transform.position) + bombDir * 3, Vector3.forward, out hitInfo))
+        //bombDir.z = 0;
+        if (Physics.Raycast(Camera.main.ScreenToWorldPoint(this.transform.position) + bombDir * 3, Camera.main.transform.forward, out hitInfo))
         {
             if (hitInfo.collider.CompareTag("BlockChild"))
             {

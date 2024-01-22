@@ -76,7 +76,7 @@ public class BlockListPanelController : MonoBehaviour
 
     public void Exit()
     {
-        GameManager.Instance.blockPool.canRotate = true;
+        GameManager.Instance.camMoving.CanRotate = true;
         GameManager.Instance.isOnMenu = false || UIManager.instance.isAwake;
         currentList.SetActive(false);
         blockSkinsList.SetActive(true);

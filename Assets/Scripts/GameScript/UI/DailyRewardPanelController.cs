@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DailyRewardPanelController : MonoBehaviour
 {
+    [SerializeField] RectTransform rewardPanel;
     bool isAwake = false;
 
     private void Awake()
@@ -22,6 +23,27 @@ public class DailyRewardPanelController : MonoBehaviour
         else
         {
             this.gameObject.SetActive(false);
+            PauseGameMenuController.isInteractable = true;
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 pos = Input.mousePosition;
+            if (pos.x < rewardPanel.position.x + rewardPanel.rect.width / 2
+                && pos.x > rewardPanel.position.x - rewardPanel.rect.width / 2
+                && pos.y < rewardPanel.position.y + rewardPanel.rect.height / 2
+                && pos.y > rewardPanel.position.y - rewardPanel.rect.height / 2
+                )
+            {
+                return;
+            }
+            else
+            {
+                ExitPanel();
+            }
         }
     }
 
@@ -35,11 +57,12 @@ public class DailyRewardPanelController : MonoBehaviour
     }
     void Exit()
     {
-        GameManager.Instance.blockPool.canRotate = true;
+        GameManager.Instance.camMoving.CanRotate = true;
         if (!isAwake)
         {
             isAwake = true;
-            PauseGameMenuController.isInteractable = true;
+            if (!DailyRewardSystem.isDailyCollected)
+                PauseGameMenuController.isInteractable = true;
         }
         else
         {

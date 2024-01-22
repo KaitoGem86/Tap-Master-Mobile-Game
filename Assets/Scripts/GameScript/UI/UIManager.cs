@@ -22,12 +22,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject settingPanel;
     [SerializeField] private TMP_Text levelText;
     [SerializeField] public Canvas canvas;
-    [SerializeField] private GameObject dailyRewardPanel;
+    [SerializeField] public GameObject dailyRewardPanel;
     [SerializeField] private GameObject dailyRewardNotification;
     [SerializeField] private CollectRewardPopUpController collectCoinPopUp;
     [SerializeField] private CollectPuzzlePopUpController collectPuzzlePopUp;
     [SerializeField] public CollectPuzzleNotice imageNotice;
     [SerializeField] public CancelAreaController cancelArea;
+    [SerializeField] public CollectDailyRewardPopUpController dailyRewardPopUp;
 
     DateTime now;
     public static UIManager instance;
@@ -83,7 +84,6 @@ public class UIManager : MonoBehaviour
         {
             float t = pauseGameMenu.transform.position.x + canvas.pixelRect.width;
             pauseGameMenu.GetComponent<RectTransform>().position = new Vector3(t, pauseGameMenu.transform.position.y, pauseGameMenu.transform.position.z);
-
         }
 
         blockListPanel.GetComponent<BlockListPanelController>().InitBlockSkinLists();
@@ -140,14 +140,14 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame()
     {
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         GameManager.Instance.isOnMenu = true;
         pauseGameMenu.SetActive(true);
     }
 
     public void ChooseBlock()
     {
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         GameManager.Instance.isOnMenu = true;
         blockListPanel.SetActive(true);
         UIManager.instance.SetCoinText();
@@ -155,7 +155,7 @@ public class UIManager : MonoBehaviour
 
     public void ChooseLevel()
     {
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         GameManager.Instance.isOnMenu = true;
         levelListPanel.SetActive(true);
     }
@@ -164,14 +164,14 @@ public class UIManager : MonoBehaviour
     {
         puzzleRewardNotification.SetActive(false);
         PlayerPrefs.SetInt("Having new puzzle's piece", 0);
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         GameManager.Instance.isOnMenu = true;
         puzzleRewardPanel.SetActive(true);
     }
 
     public void ChooseDailyRewardPanel()
     {
-        GameManager.Instance.blockPool.canRotate = false;
+        GameManager.Instance.camMoving.CanRotate = false;
         GameManager.Instance.isOnMenu = true;
         dailyRewardPanel.SetActive(true);
     }

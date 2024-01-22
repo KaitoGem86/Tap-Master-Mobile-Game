@@ -56,10 +56,12 @@ MonoBehaviour:
     m_Bits: 8
   rewardBlock: {fileID: 5958024972768221929}
   mesh: {fileID: 4098621718285172034}
+  meshFilter: {fileID: 0}
   arrows: []
   escapeMaterial: {fileID: 2100000, guid: b4232a4061e70af4a83ed4e1288f1762, type: 2}
   blockedMaterial: {fileID: 2100000, guid: 7e692d6ab134d2a4a866d1d8677c77bf, type: 2}
   isSelected: 0
+  isMoving: 0
 --- !u!114 &5958024972768221929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +250,10 @@ PrefabInstance:
     - target: {fileID: 1154777114922947665, guid: 18e888c1278a60d4db362537f52200a0, type: 3}
       propertyPath: m_Name
       value: Test Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 1154777114922947665, guid: 18e888c1278a60d4db362537f52200a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1154777114922947665, guid: 18e888c1278a60d4db362537f52200a0, type: 3}
       propertyPath: m_TagString

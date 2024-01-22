@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 // Chỉnh lại size camera bằng cách đặt kích thước ban đầu tỉ lệ thuận với khoảng cách xa nhất giữa 2 trong số các block
@@ -31,14 +32,14 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         //SetCameraSize();
-
+        Debug.Log(Unity.Jobs.LowLevel.Unsafe.JobsUtility.JobWorkerMaximumCount);
     }
 
     private void Update()
     {
         //_camera.orthographicSize = 15;
         //Debug.Log(Input.GetAxis("Mouse ScrollWheel"));
-        if (GameManager.Instance.blockPool.canRotate)
+        if (GameManager.Instance.camMoving.CanRotate)
             ZoomCamera();
     }
 
@@ -91,8 +92,8 @@ public class CameraController : MonoBehaviour
         else
             _camera.orthographicSize = 10 * i;
         startSize = _camera.orthographicSize;
-        Vector3 pos = new Vector3(0, 0, -100);
-        _camera.transform.position = pos;
+        //Vector3 pos = new Vector3(0, 0, -100);
+        //_camera.transform.position = pos;
         increaseSize = (int)startSize / 10 * 3.5f;
         decreaseSize = (int)startSize / 10 * 2.5f;
     }

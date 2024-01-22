@@ -27,14 +27,14 @@ public class CancelAreaController : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && Vector3.Distance(Input.mousePosition, UIManager.instance.cancelArea.GetComponent<RectTransform>().position) < UIManager.instance.cancelArea.GetComponent<RectTransform>().rect.width / 2)
             {
                 GameManager.Instance.bombButton.GetComponent<BombButtonController>().bombImage.SetActiveElement(false);
-                GameManager.Instance.blockPool.canRotate = true;
+                GameManager.Instance.camMoving.CanRotate = true;
             }
         }
     }
 
     public void FingerOnCancel()
     {
-        Debug.Log("scale");
+        //Debug.Log("scale");
         t = cancelArea.transform.DOScale(new Vector3(1.5f, 1.5f, 1.5f), duration: 1f).SetLoops(-1, LoopType.Yoyo);
     }
 

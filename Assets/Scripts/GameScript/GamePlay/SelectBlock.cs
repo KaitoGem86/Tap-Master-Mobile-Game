@@ -23,10 +23,11 @@ public class SelectBlock : MonoBehaviour
         {
             GameManager.Instance.blockPool.rb.angularVelocity = Vector3.zero;
             Vector3 selectPos = InputController.instance.GetInputPosition();
-            selectPos.z = -100;
-            //Debug.DrawRay(selectPos, Vector3.forward * 60, Color.red, 100);
+            //selectPos.z = -100;
+            //Debug.Log(selectPos);
+            Debug.DrawRay(selectPos, GameManager.Instance.mainCam.transform.forward * 60, Color.red, 100);
             ParticleController.instance.OnClick();
-            if (Physics.Raycast(selectPos, Vector3.forward * 60, out hit))
+            if (Physics.Raycast(selectPos, GameManager.Instance.mainCam.transform.forward * 60, out hit))
             {
                 SoundManager.instance.PlayClickSound();
                 TestMoveBlock testMoveBlock = hit.collider.gameObject.GetComponentInParent<TestMoveBlock>();

@@ -29,7 +29,8 @@ public class DrawDirectionLine : MonoBehaviour
     {
         line.positionCount = COUNT_OF_VERTEX;
         intermediatePos = (startPos + endPos) / 2;
-        intermediatePos.y = startPos.y > endPos.y ? startPos.y + 30 : endPos.y + 30;
+        intermediatePos += Camera.main.transform.up * 30;
+        //intermediatePos.y = startPos.y > endPos.y ? startPos.y + 30 : endPos.y + 30;
     }
 
     public void DrawLine(Vector3 startPos, Vector3 endPos, Vector3 normalVector)

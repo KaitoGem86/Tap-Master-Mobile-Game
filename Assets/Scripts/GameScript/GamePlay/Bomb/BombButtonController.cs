@@ -65,7 +65,7 @@ public class BombButtonController : MonoBehaviour
         while (countDownTime > 0)
         {
             countDownTime -= Time.deltaTime;
-            Debug.Log(countDownTime);
+            //Debug.Log(countDownTime);
             PlayerPrefs.SetFloat("Reload bomb in", countDownTime);
             countDownFilter.fillAmount = countDownTime / 15;
             bombButton.interactable = false;

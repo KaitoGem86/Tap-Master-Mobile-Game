@@ -15,11 +15,17 @@ public class DailyRewardItem : MonoBehaviour
     [SerializeField] protected DailyRewardListController listController;
 
     protected bool isCollected;
+    protected DailyRewardPanelController panel;
 
     public bool IsCollected
     {
         get { return isCollected; }
         set { isCollected = value; }
+    }
+
+    private void Awake()
+    {
+        panel = UIManager.instance.dailyRewardPanel.GetComponent<DailyRewardPanelController>();
     }
 
     public DailyRewardListController ListController { get { return listController; } set { listController = value; } }
@@ -57,6 +63,7 @@ public class DailyRewardItem : MonoBehaviour
 
     public virtual void CollectCoin()
     {
+        this.panel.ExitPanel();
         isCollected = true;
         PlayerPrefs.SetInt("Collected Daily Reward", 1);
         listController.IsDailyCollected = true;
@@ -68,5 +75,10 @@ public class DailyRewardItem : MonoBehaviour
         PlayerPrefs.SetInt("Collect daily reward at index: ", (collectIndex + 1));
         listController.GetIndex();
         listController.UpdateDailyRewardList();
+
+        UIManager.instance.dailyRewardPopUp.PreActive(this.amount);
+        UIManager.instance.dailyRewardPopUp.gameObject.SetActive(true);
+        GameManager.Instance.isOnMenu = true;
+        GameManager.Instance.camMoving.CanRotate = false;
     }
 }

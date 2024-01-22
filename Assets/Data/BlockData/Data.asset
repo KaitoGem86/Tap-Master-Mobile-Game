@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
   - blockName: Block 1
-    material: {fileID: 2100000, guid: 3e88e59b71315dd46a5b533b3cc177b8, type: 2}
+    material: {fileID: 2100000, guid: 52902d0bcec64c349b34ebbc84774784, type: 2}
     image: {fileID: 21300000, guid: 84d8b1546dbb21740b21712001df8412, type: 3}
     isDefault: 1
   - blockName: Block 2
