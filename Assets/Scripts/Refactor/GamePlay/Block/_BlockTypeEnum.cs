@@ -1,6 +1,6 @@
 namespace Core.GamePlay.Block
 {
-    public enum _BlockStateEnum{
+    public enum _BlockTypeEnum{
         Moving,
         Reward
     }
