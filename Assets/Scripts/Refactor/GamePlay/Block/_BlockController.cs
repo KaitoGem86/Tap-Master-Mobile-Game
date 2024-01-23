@@ -38,10 +38,9 @@ namespace Core.GamePlay.Block
         {
             StopCoroutine("CaculateHodingTime");
             Debug.Log(_InputSystem.Instance.Timer);
-            if (_InputSystem.Instance.Timer > 0.1f)
-                
+            if (_InputSystem.Instance.Timer > 0.1f)    
                 return;
-            Debug.Log("Select");
+            OnSelected();
         }
 
         private IEnumerator CaculateHodingTime()
@@ -52,6 +51,11 @@ namespace Core.GamePlay.Block
                 _InputSystem.Instance.Timer += Time.deltaTime;
                 yield return new WaitForEndOfFrame();
             }
+        }
+
+        private void OnSelected(){
+            Debug.Log("Selected");
+            _currentType.OnSelect();
         }
     }
 }
