@@ -32,6 +32,10 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Prefabs
+  - m_GUID: 43be0304977f43646bdf53148197e693
+    m_Address: SelectBlock
+    m_ReadOnly: 0
+    m_SerializedLabels: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 97c39e7f63697984798ee9b86d7b98ba, type: 2}
   m_SchemaSet:
