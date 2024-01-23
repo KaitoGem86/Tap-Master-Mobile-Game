@@ -36,7 +36,5 @@ namespace Core.GamePlay
             gameObject.name = cameraRotation.Value.name;
 #endif     
         }
-
-
     }
 }
