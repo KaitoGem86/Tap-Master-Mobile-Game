@@ -1,3 +1,4 @@
+using Core.System;
 using UnityEngine;
 
 namespace Core.GamePlay
@@ -19,11 +20,11 @@ namespace Core.GamePlay
 
         private void LateUpdate()
         {
-            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetMouseButtonDown(0))
+            if (_InputSystem.Instance.CheckSelectDown())
             {
                 _lastMousePosition = Input.mousePosition;
             }
-            else if ((Input.touchCount > 0 && Input.GetTouch(0).phase != TouchPhase.Began) || Input.GetMouseButton(0))
+            else if (_InputSystem.Instance.CheckHold())
             {
                 Vector3 mouseDelta = Input.mousePosition - _lastMousePosition;
                 _lastMousePosition = Input.mousePosition;
