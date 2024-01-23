@@ -1,3 +1,4 @@
+using Core.GamePlay.BlockPool;
 using Core.ResourceGamePlay;
 using DG.Tweening;
 using UnityEngine;
@@ -7,6 +8,10 @@ namespace Core.GamePlay
 {
     public class _GamePlaySceneContext : MonoBehaviour
     {
+        [SerializeField] private LevelDatasController _levelTest;
+
+        private _BlockPool _blockPool;
+
         private void Awake()
         {
             Init();
@@ -17,6 +22,7 @@ namespace Core.GamePlay
         void Start()
         {
             SetUpCamera();
+            InitBlockPool();
         }
 
         private async void DontDestroyOnLoad(){
@@ -35,6 +41,11 @@ namespace Core.GamePlay
 #if UNITY_EDITOR
             gameObject.name = cameraRotation.Value.name;
 #endif     
+        }
+
+        private void InitBlockPool(){
+            _blockPool = new _BlockPool();
+            _blockPool.InitPool(_levelTest);
         }
     }
 }
