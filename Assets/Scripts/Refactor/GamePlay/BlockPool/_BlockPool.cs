@@ -1,3 +1,4 @@
+using Core.GamePlay.Block;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -13,6 +14,7 @@ namespace Core.GamePlay.BlockPool{
             for(int i = 0; i < levelData.states.Count; i++){
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
+                block.GetComponent<_BlockController>().InitBlock();
                 block.transform.SetPositionAndRotation(levelData.states[i].pos, Quaternion.Euler(levelData.states[i].rotation));
             }
         }

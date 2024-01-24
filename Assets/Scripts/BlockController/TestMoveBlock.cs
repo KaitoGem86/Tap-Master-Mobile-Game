@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -198,7 +198,7 @@ public class TestMoveBlock : MonoBehaviour
                                                        duration: 0.1f).SetLoops(2, LoopType.Yoyo).OnStart(() =>
                                                        {
                                                            //startOPos.GetComponent<MeshRenderer>().material = this.blockedMaterial;
-                                                           //startOPos.GetComponentInParent<TestMoveBlock>().SetActiveArrow(false);
+                                                            //startOPos.GetComponentInParent<TestMoveBlock>().SetActiveArrow(false);
                                                        });
             t.OnComplete(() =>
             {

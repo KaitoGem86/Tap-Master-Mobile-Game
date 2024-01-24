@@ -9,11 +9,12 @@ namespace Core.GamePlay.Block
     {
         [SerializeField] private MeshRenderer _meshRenderer;
         private Dictionary<_BlockTypeEnum, _BlockState> _blockStates = new Dictionary<_BlockTypeEnum, _BlockState>();
-        private _BlockState _currentType;
+        private _BlockState _currentType;   
 
-        public void Awake()
+        public void InitBlock()
         {
             SetUpTypeBlock();
+            SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
 
         public void SetUpTypeBlock()
