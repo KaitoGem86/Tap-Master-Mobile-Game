@@ -11,7 +11,8 @@ namespace Core.GamePlay.Block
         [SerializeField] private MeshRenderer _meshRenderer;
         private Dictionary<_BlockTypeEnum, _BlockState> _blockStates = new Dictionary<_BlockTypeEnum, _BlockState>();
         private _BlockState _currentType;   
-        private Vector3 _logicPos;
+        private Vector3Int _logicPos;
+        private Vector3Int _obstacleLogicPos;
 
         public void InitBlock()
         {
@@ -40,7 +41,7 @@ namespace Core.GamePlay.Block
         void OnMouseUp()
         {
             StopCoroutine("CaculateHodingTime");
-            if (_InputSystem.Instance.Timer > 0.1f)    
+            if (_InputSystem.Instance.Timer > 0.15f)    
                 return;
             OnSelected();
         }
@@ -59,10 +60,16 @@ namespace Core.GamePlay.Block
             _currentType.OnSelect();
         }
 
-        public Vector3 LogicPos
+        public Vector3Int LogicPos
         {
             get => _logicPos;
             set => _logicPos = value;
+        }
+
+        public Vector3Int ObstacleLogicPos
+        {
+            get => _obstacleLogicPos;
+            set => _obstacleLogicPos = value;
         }
     }
 }
