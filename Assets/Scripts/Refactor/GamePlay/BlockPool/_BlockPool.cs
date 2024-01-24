@@ -34,7 +34,7 @@ namespace Core.GamePlay.BlockPool{
                 block.GetComponent<_BlockController>().InitBlock();
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
                 block.transform.SetPositionAndRotation(levelData.states[i].pos, Quaternion.Euler(levelData.states[i].rotation));
-                Vector3Int logicPos = _ConvertPositionToLogic.LogicPos(block.transform.position);
+                Vector3Int logicPos = _NormalizingVector3.LogicPos(block.transform.position);
                 minX = Mathf.Min(minX, logicPos.x);
                 minY = Mathf.Min(minY, logicPos.y);
                 minZ = Mathf.Min(minZ, logicPos.z);
@@ -43,7 +43,7 @@ namespace Core.GamePlay.BlockPool{
             Debug.Log(minX + " " + minY + " " + minZ);
 
             for(int i = 0; i < levelData.states.Count; i++){
-                Vector3Int logicPos = _ConvertPositionToLogic.LogicPos(_blockObjectPool[i].transform.position);
+                Vector3Int logicPos = _NormalizingVector3.LogicPos(_blockObjectPool[i].transform.position);
                 SetBlockPool(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ, true);
                 _blockObjectPool[i].LogicPos = new Vector3Int(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ);
             }
@@ -65,8 +65,10 @@ namespace Core.GamePlay.BlockPool{
             _blockLogicPool[x][y][z] = value;
         }
 
-        public bool CheckCanMove(Vector3 logicPos, Vector3 Direction){
-            Vector3 tempLogicPos = logicPos + Direction;
+
+        public bool CheckCanEscape(_BlockController block) {
+            Vector3 direction = _NormalizingVector3.IgnoreDecimalPart(block.transform.forward);
+            Vector3 tempLogicPos = block.LogicPos + direction;
             for(int i = 0; i < sizeX; i++){
                 //neu logicPos nam ngoai kich thuoc cua pool
                 if (tempLogicPos.x < 0 || tempLogicPos.x >= sizeX) return true;
@@ -75,6 +77,7 @@ namespace Core.GamePlay.BlockPool{
                 
                 //neu tai vi tri logicPos co block
                 if (_blockLogicPool[(int)tempLogicPos.x][(int)tempLogicPos.y][(int)tempLogicPos.z]) return false;
+                tempLogicPos += direction;
             }
             //neu logicPos nam trong kich thuoc cua pool va khong co block
             return true;

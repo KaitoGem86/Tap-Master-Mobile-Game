@@ -13,7 +13,6 @@ namespace Core.GamePlay.Block
         private _BlockState _currentType;   
         private Vector3 _logicPos;
 
-
         public void InitBlock()
         {
             SetUpTypeBlock();
@@ -41,7 +40,6 @@ namespace Core.GamePlay.Block
         void OnMouseUp()
         {
             StopCoroutine("CaculateHodingTime");
-            Debug.Log(_InputSystem.Instance.Timer);
             if (_InputSystem.Instance.Timer > 0.1f)    
                 return;
             OnSelected();
@@ -58,11 +56,7 @@ namespace Core.GamePlay.Block
         }
 
         private void OnSelected(){
-            Debug.Log("Selected");
-            Debug.Log(LogicPos);
             _currentType.OnSelect();
-            Debug.Log( "Forward Direction: " + transform.forward);
-            Debug.Log("CheckCanEscape: " + _GameManager.Instance.BlockPool.CheckCanMove(LogicPos, transform.forward));
         }
 
         public Vector3 LogicPos
