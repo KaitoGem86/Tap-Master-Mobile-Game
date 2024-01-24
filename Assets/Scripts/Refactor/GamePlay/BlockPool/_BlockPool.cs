@@ -7,12 +7,17 @@ using UnityEngine.AddressableAssets;
 namespace Core.GamePlay.BlockPool{
     public class _BlockPool{
         
+        private const int sizeX = 30;
+        private const int sizeY = 30;
+        private const int sizeZ = 30;
+
+
         private bool _isLogicInit;
         private bool[][][] _blockLogicPool;
         private List<_BlockController> _blockObjectPool;
 
         public _BlockPool(){
-            InitLogicPool(30, 30, 30);
+            InitLogicPool(sizeX, sizeY, sizeZ);
         }
 
         public async void InitPool(LevelDatasController levelData){
@@ -58,6 +63,21 @@ namespace Core.GamePlay.BlockPool{
 
         public void SetBlockPool(int x, int y, int z, bool value){
             _blockLogicPool[x][y][z] = value;
+        }
+
+        public bool CheckCanMove(Vector3 logicPos, Vector3 Direction){
+            Vector3 tempLogicPos = logicPos + Direction;
+            for(int i = 0; i < sizeX; i++){
+                //neu logicPos nam ngoai kich thuoc cua pool
+                if (tempLogicPos.x < 0 || tempLogicPos.x >= sizeX) return true;
+                if (tempLogicPos.y < 0 || tempLogicPos.y >= sizeY) return true;
+                if (tempLogicPos.z < 0 || tempLogicPos.z >= sizeZ) return true;
+                
+                //neu tai vi tri logicPos co block
+                if (_blockLogicPool[(int)tempLogicPos.x][(int)tempLogicPos.y][(int)tempLogicPos.z]) return false;
+            }
+            //neu logicPos nam trong kich thuoc cua pool va khong co block
+            return true;
         }
     }
 }

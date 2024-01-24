@@ -61,6 +61,8 @@ namespace Core.GamePlay.Block
             Debug.Log("Selected");
             Debug.Log(LogicPos);
             _currentType.OnSelect();
+            Debug.Log( "Forward Direction: " + transform.forward);
+            Debug.Log("CheckCanEscape: " + _GameManager.Instance.BlockPool.CheckCanMove(LogicPos, transform.forward));
         }
 
         public Vector3 LogicPos
