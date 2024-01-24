@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core.System;
+using Extensions;
 using UnityEngine;
 
 namespace Core.GamePlay.Block
@@ -10,6 +11,8 @@ namespace Core.GamePlay.Block
         [SerializeField] private MeshRenderer _meshRenderer;
         private Dictionary<_BlockTypeEnum, _BlockState> _blockStates = new Dictionary<_BlockTypeEnum, _BlockState>();
         private _BlockState _currentType;   
+        private Vector3 _logicPos;
+
 
         public void InitBlock()
         {
@@ -56,7 +59,14 @@ namespace Core.GamePlay.Block
 
         private void OnSelected(){
             Debug.Log("Selected");
+            Debug.Log(LogicPos);
             _currentType.OnSelect();
+        }
+
+        public Vector3 LogicPos
+        {
+            get => _logicPos;
+            set => _logicPos = value;
         }
     }
 }

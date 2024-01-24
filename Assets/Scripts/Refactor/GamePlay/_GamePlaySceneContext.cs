@@ -1,5 +1,6 @@
 using Core.GamePlay.BlockPool;
 using Core.ResourceGamePlay;
+using Core.System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -45,7 +46,8 @@ namespace Core.GamePlay
 
         private void InitBlockPool(){
             _blockPool = new _BlockPool();
-            _blockPool.InitPool(_levelTest);
+            _LevelSystem.Instance.BlockPool = _blockPool;
+            _LevelSystem.Instance.InitBlockPool(_levelTest);
         }
     }
 }
