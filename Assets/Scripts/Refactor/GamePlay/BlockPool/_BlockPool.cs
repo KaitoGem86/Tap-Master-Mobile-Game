@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.GamePlay.Block;
+using Core.ResourceGamePlay;
 using Extensions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,9 +28,9 @@ namespace Core.GamePlay.BlockPool
         {
             _blockObjectPool ??= new List<_BlockController>();
             var blockContainer = new GameObject("BlockContainer");
-            var gameObject = await AddressablesManager.LoadAssetAsync<GameObject>("Block");
-            var movingMaterial = await AddressablesManager.LoadAssetAsync<Material>("MovingMaterial");
-            var blockedMaterial = await AddressablesManager.LoadAssetAsync<Material>("BlockedMaterial");
+            var gameObject = await AddressablesManager.LoadAssetAsync<GameObject>(_KeyPrefabResources.KeyBlock);
+            var movingMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyMovingMaterial);
+            var blockedMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyBlockedMaterial);
             ObjectPooling._ObjectPooling.Instance.CreatePool(ObjectPooling._TypeGameObjectEnum.Block, gameObject, 100);
             int minX = 0;
             int minY = 0;
@@ -46,8 +47,6 @@ namespace Core.GamePlay.BlockPool
                 minY = Mathf.Min(minY, logicPos.y);
                 minZ = Mathf.Min(minZ, logicPos.z);
             }
-
-            Debug.Log(minX + " " + minY + " " + minZ);
 
             for (int i = 0; i < levelData.states.Count; i++)
             {
@@ -99,6 +98,11 @@ namespace Core.GamePlay.BlockPool
             }
             //neu logicPos nam trong kich thuoc cua pool va khong co block
             return true;
+        }
+
+        public _BlockController GetBlock(Vector3Int logicPos)
+        {
+            return _blockObjectPool.Find(block => block.LogicPos.Equals(logicPos));
         }
     }
 }

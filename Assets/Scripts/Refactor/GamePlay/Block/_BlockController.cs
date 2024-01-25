@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core.System;
+using DG.Tweening;
 using Extensions;
 using UnityEngine;
 
@@ -30,6 +31,23 @@ namespace Core.GamePlay.Block
         {
             _currentType = _blockStates[blockType];
             _currentType.SetUp();
+        }
+
+        public void SetMaterial(Material material)
+        {
+            _meshRenderer.material = material;
+        }
+
+        public void HittedByMovingBlock(Vector3 direction){
+            var t = transform.DOMove(transform.position + direction * 0.1f, 0.1f)
+                .SetLoops(2, LoopType.Yoyo)
+                .SetEase(Ease.InSine);
+            t.OnStepComplete(() => {
+                    if(t.ElapsedPercentage() == 1) return;
+                    var thisObstacle = _GameManager.Instance.BlockPool.GetBlock(_logicPos + _NormalizingVector3.IgnoreDecimalPart(direction));
+                    if (thisObstacle != null)
+                        thisObstacle.HittedByMovingBlock(direction);
+                });
         }
 
         void OnMouseDown()
