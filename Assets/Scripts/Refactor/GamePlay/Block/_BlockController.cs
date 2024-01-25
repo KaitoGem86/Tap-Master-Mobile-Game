@@ -14,15 +14,15 @@ namespace Core.GamePlay.Block
         private Vector3Int _logicPos;
         private Vector3Int _obstacleLogicPos;
 
-        public void InitBlock()
+        public void InitBlock(Material movingMaterial, Material blockedMaterial)
         {
-            SetUpTypeBlock();
+            SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
 
-        public void SetUpTypeBlock()
+        public void SetUpTypeBlock(Material movingMaterial, Material blockedMaterial)
         {
-            _blockStates.Add(_BlockTypeEnum.Moving, new _MovingBlock(this));
+            _blockStates.Add(_BlockTypeEnum.Moving, new _MovingBlock(this, movingMaterial, blockedMaterial));
             _blockStates.Add(_BlockTypeEnum.Reward, new _RewardBlock(this));
         }
 

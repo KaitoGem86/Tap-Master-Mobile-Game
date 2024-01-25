@@ -28,6 +28,8 @@ namespace Core.GamePlay.BlockPool
             _blockObjectPool ??= new List<_BlockController>();
             var blockContainer = new GameObject("BlockContainer");
             var gameObject = await AddressablesManager.LoadAssetAsync<GameObject>("Block");
+            var movingMaterial = await AddressablesManager.LoadAssetAsync<Material>("MovingMaterial");
+            var blockedMaterial = await AddressablesManager.LoadAssetAsync<Material>("BlockedMaterial");
             ObjectPooling._ObjectPooling.Instance.CreatePool(ObjectPooling._TypeGameObjectEnum.Block, gameObject, 100);
             int minX = 0;
             int minY = 0;
@@ -36,7 +38,7 @@ namespace Core.GamePlay.BlockPool
             {
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
-                block.GetComponent<_BlockController>().InitBlock();
+                block.GetComponent<_BlockController>().InitBlock(movingMaterial, blockedMaterial);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
                 block.transform.SetPositionAndRotation(levelData.states[i].pos, Quaternion.Euler(levelData.states[i].rotation));
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(block.transform.position);

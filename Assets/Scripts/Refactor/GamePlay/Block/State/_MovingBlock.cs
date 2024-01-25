@@ -4,16 +4,26 @@ using ObjectPooling;
 
 namespace Core.GamePlay.Block{
     public class _MovingBlock : _BlockState{
-        public _MovingBlock(_BlockController blockController){
+
+        private Material _movingMaterial;
+        private Material _blockedMaterial;
+        private bool _isMoving;
+        public _MovingBlock(_BlockController blockController, Material movingMaterial, Material blockedMaterial){
             _blockController = blockController;
+            _isMoving = false;
+            _movingMaterial = movingMaterial;
+            _blockedMaterial = blockedMaterial;
         }
     
         public override void SetUp(){
             base.SetUp();
+            _isMoving = false;
         }
 
         public override void OnSelect(){
             base.OnSelect();
+            if(_isMoving) return;
+            _isMoving = true;
             if(_GameManager.Instance.BlockPool.CheckCanEscape(_blockController)){
                 _blockController.transform.DOLocalMove(_blockController.transform.localPosition + _blockController.transform.forward, 0.05f)
                     .SetLoops(50, LoopType.Incremental)

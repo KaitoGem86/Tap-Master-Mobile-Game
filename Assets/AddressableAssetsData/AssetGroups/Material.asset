@@ -22,6 +22,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Materials
+  - m_GUID: 191c2cb92237166439c693949015a446
+    m_Address: BlockedMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Materials
+  - m_GUID: 56d4b501310641c4e9523926df902444
+    m_Address: MovingMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Materials
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 97c39e7f63697984798ee9b86d7b98ba, type: 2}
   m_SchemaSet:
