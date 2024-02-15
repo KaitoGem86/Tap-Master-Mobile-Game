@@ -50,9 +50,6 @@ namespace Core.GamePlay.Block
             }
             else
             {
-                //Debug.Log("Can't Escape with forward: " + _blockController.transform.forward + " at Logic Position " + _blockController.LogicPos);
-                //Debug.Log(_GameManager.Instance.BlockPool.GetBlock(_blockController.ObstacleLogicPos).gameObject.name);
-                //Debug.Log("Can't Escape with obstacle at: " +_blockController.ObstacleLogicPos + " at Logic Position " + _blockController.LogicPos);
                 var obstacle = _GameManager.Instance.BlockPool.GetBlock(_blockController.ObstacleLogicPos);
                 var t = _blockController.transform.DOMove(obstacle.transform.position - _blockController.transform.forward * 0.9f, 0.1f * _NormalizingVector3.GetDistanceBetweenVector3(_blockController.LogicPos, obstacle.LogicPos))
                     .SetLoops(2, LoopType.Yoyo)
