@@ -1,6 +1,7 @@
+using Core.Data;
 using Core.GamePlay.BlockPool;
 using Core.ResourceGamePlay;
-using Core.System;
+using Core.SystemGame;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -9,8 +10,7 @@ namespace Core.GamePlay
 {
     public class _GamePlaySceneContext : MonoBehaviour
     {
-        [SerializeField] private LevelDatasController _levelTest;
-        [SerializeField] private Sprite _blockCubeTexture;
+        [SerializeField] private LevelData _levelTest;
 
         private _BlockPool _blockPool;
 
@@ -25,6 +25,13 @@ namespace Core.GamePlay
         {
             SetUpCamera();
             InitBlockPool();
+            _PlayerData.StartGame();
+            _GameManager.Instance.StartLevel();
+        }
+
+        private void OnApplicationQuit(){
+            Debug.Log("OnApplicationQuit");
+            _PlayerData.SaveUserData();
         }
 
         private async void DontDestroyOnLoad()
@@ -53,7 +60,7 @@ namespace Core.GamePlay
             _blockPool = new _BlockPool();
             _GameManager.Instance.BlockPool = _blockPool;
             _LevelSystem.Instance.BlockPool = _blockPool;
-            _LevelSystem.Instance.InitBlockPool(_levelTest);
+            _LevelSystem.Instance.InitLevelSystem(_levelTest);
         }
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.System{
+namespace Core.SystemGame{
     public class _InputSystem{
         private static _InputSystem _instance;
         

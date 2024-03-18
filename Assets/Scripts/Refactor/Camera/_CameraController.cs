@@ -1,4 +1,4 @@
-using Core.System;
+using Core.SystemGame;
 using UnityEngine;
 
 namespace Core.GamePlay

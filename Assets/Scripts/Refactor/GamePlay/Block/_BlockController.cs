@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Core.ResourceGamePlay;
-using Core.System;
+using Core.SystemGame;
 using DG.Tweening;
 using Extensions;
 using UnityEngine;
