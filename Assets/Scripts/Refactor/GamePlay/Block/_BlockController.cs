@@ -19,6 +19,7 @@ namespace Core.GamePlay.Block
 
         public void InitBlock(Material movingMaterial, Material blockedMaterial)
         {
+            AnimationInitBlock();
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
@@ -54,6 +55,12 @@ namespace Core.GamePlay.Block
                     if (thisObstacle != null)
                         thisObstacle.HittedByMovingBlock(direction);
                 });
+        }
+
+        public void AnimationInitBlock(){
+            transform.localScale = Vector3.zero;
+            transform.DOScale(Vector3.one, 1.5f);
+            transform.DORotate(Vector3.one * 360, 1.5f, RotateMode.FastBeyond360);
         }
 
         void OnMouseDown()

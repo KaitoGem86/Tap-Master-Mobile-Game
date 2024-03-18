@@ -14,7 +14,6 @@ namespace Core.GamePlay.BlockPool
         private const int sizeY = 30;
         private const int sizeZ = 30;
 
-
         private bool _isLogicInit;
         private bool[][][] _blockLogicPool;
         private List<_BlockController> _blockObjectPool;
