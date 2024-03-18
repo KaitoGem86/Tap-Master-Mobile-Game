@@ -10,6 +10,7 @@ namespace Core.GamePlay
     public class _GamePlaySceneContext : MonoBehaviour
     {
         [SerializeField] private LevelDatasController _levelTest;
+        [SerializeField] private Sprite _blockCubeTexture;
 
         private _BlockPool _blockPool;
 
@@ -26,17 +27,20 @@ namespace Core.GamePlay
             InitBlockPool();
         }
 
-        private async void DontDestroyOnLoad(){
+        private async void DontDestroyOnLoad()
+        {
             var dontDestroyOnLoad = await AddressablesManager.LoadAssetAsync<GameObject>(_KeyPrefabResources.KeyDontDestroyOnLoad);
             var gameObject = GameObject.Instantiate(dontDestroyOnLoad);
         }
-        
-        private void Init(){
+
+        private void Init()
+        {
             DOTween.Init();
             Application.targetFrameRate = 60;
         }
 
-        private async void SetUpCamera(){
+        private async void SetUpCamera()
+        {
             var cameraRotation = await AddressablesManager.LoadAssetAsync<GameObject>(_KeyPrefabResources.KeyCameraRotation);
             var gameObject = GameObject.Instantiate(cameraRotation);
 #if UNITY_EDITOR
@@ -44,7 +48,8 @@ namespace Core.GamePlay
 #endif     
         }
 
-        private void InitBlockPool(){
+        private void InitBlockPool()
+        {
             _blockPool = new _BlockPool();
             _GameManager.Instance.BlockPool = _blockPool;
             _LevelSystem.Instance.BlockPool = _blockPool;

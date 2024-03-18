@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Core.ResourceGamePlay;
 using Core.System;
 using DG.Tweening;
 using Extensions;
@@ -10,6 +11,7 @@ namespace Core.GamePlay.Block
     public class _BlockController : MonoBehaviour
     {
         [SerializeField] private MeshRenderer _meshRenderer;
+        [SerializeField] private Sprite texture2D;
         private Dictionary<_BlockTypeEnum, _BlockState> _blockStates = new Dictionary<_BlockTypeEnum, _BlockState>();
         private _BlockState _currentType;   
         private Vector3Int _logicPos;
@@ -17,6 +19,7 @@ namespace Core.GamePlay.Block
 
         public void InitBlock(Material movingMaterial, Material blockedMaterial)
         {
+            Debug.Log(_meshRenderer.material.name);
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
@@ -36,6 +39,11 @@ namespace Core.GamePlay.Block
         public void SetMaterial(Material material)
         {
             _meshRenderer.material = material;
+        }
+
+        public void SetTexture(string typeTexture, Sprite texture){
+            Debug.Log(_meshRenderer.sharedMaterial.HasProperty(typeTexture) + " " + typeTexture + " " + texture.texture.name);
+            _meshRenderer.sharedMaterial.SetTexture(typeTexture, texture.texture);
         }
 
         public void HittedByMovingBlock(Vector3 direction){
