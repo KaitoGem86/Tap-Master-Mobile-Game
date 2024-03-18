@@ -8,5 +8,7 @@ namespace Core.GamePlay.Block{
 
         public virtual void OnSelect(){
         }
+
+        public bool IsCanMove {get; protected set;}
     }
 }

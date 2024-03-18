@@ -90,6 +90,7 @@ namespace Core.GamePlay.Block
 
         private void OnSelected(){
             _currentType.OnSelect();
+            _GamePlayManager.Instance.OnBlockSelected(_currentType.IsCanMove);
         }
 
         public Vector3Int LogicPos

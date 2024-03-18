@@ -167,5 +167,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b094d1236114cbeb9d04ba42875e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _levelTest: {fileID: 11400000, guid: 66014201a614adb4588c871c3812c66d, type: 2}
-  _blockCubeTexture: {fileID: 28873376, guid: 448161e85ca549041b5e801656d41506, type: 3}
+  _levelTest: {fileID: 11400000, guid: c183f69bd5d12214ab9b2ff7bdd80b0e, type: 2}

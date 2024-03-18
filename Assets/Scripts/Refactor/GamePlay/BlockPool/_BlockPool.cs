@@ -26,6 +26,8 @@ namespace Core.GamePlay.BlockPool
         public async void InitPool(LevelDatasController levelData)
         {
             _blockObjectPool ??= new List<_BlockController>();
+            _blockObjectPool.Clear();
+            ClearLogicPool();
             var blockContainer = new GameObject("BlockContainer");
             var gameObject = await AddressablesManager.LoadAssetAsync<GameObject>(_KeyPrefabResources.KeyBlock);
             var movingMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyMovingMaterial);
@@ -52,6 +54,7 @@ namespace Core.GamePlay.BlockPool
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(_blockObjectPool[i].transform.position);
                 SetElementBlockPool(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ, true);
                 _blockObjectPool[i].LogicPos = new Vector3Int(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ);
+                Debug.Log("LogicPos: " + _blockObjectPool[i].LogicPos);
             }
         }
 
@@ -70,6 +73,16 @@ namespace Core.GamePlay.BlockPool
             _isLogicInit = true;
         }
 
+        private void ClearLogicPool(){
+            for(int i = 0; i < sizeX; i++){
+                for(int j = 0; j < sizeY; j++){
+                    for(int k = 0; k < sizeZ; k++){
+                        _blockLogicPool[i][j][k] = false;
+                    }
+                }
+            }
+        }
+
         public void SetElementBlockPool(int x, int y, int z, bool value)
         {
             _blockLogicPool[x][y][z] = value;
@@ -78,7 +91,9 @@ namespace Core.GamePlay.BlockPool
 
         public bool CheckCanEscape(_BlockController block)
         {
-            Vector3 direction = _NormalizingVector3.IgnoreDecimalPart(-block.transform.right);
+            Debug.Log(-block.transform.right);
+            Vector3 direction = _NormalizingVector3.ConvertToVector3Int(-block.transform.right);
+            Debug.Log("Direction: " + direction);
             Vector3 tempLogicPos = block.LogicPos + direction;
             for (int i = 0; i < sizeX; i++)
             {
@@ -91,12 +106,21 @@ namespace Core.GamePlay.BlockPool
                 if (_blockLogicPool[(int)tempLogicPos.x][(int)tempLogicPos.y][(int)tempLogicPos.z])
                 {
                     block.ObstacleLogicPos = _NormalizingVector3.IgnoreDecimalPart(tempLogicPos);
+                    Debug.Log("ObstacleLogicPos: " + block.ObstacleLogicPos);
                     return false;
                 }
                 tempLogicPos += direction;
             }
             //neu logicPos nam trong kich thuoc cua pool va khong co block
             return true;
+        }
+
+        public void DeSpawnBlock()
+        {
+            foreach (var block in _blockObjectPool)
+            {
+                ObjectPooling._ObjectPooling.Instance.ReturnToPool(ObjectPooling._TypeGameObjectEnum.Block, block.gameObject);
+            }
         }
 
         public _BlockController GetBlock(Vector3Int logicPos)

@@ -4,7 +4,7 @@ namespace Core.Data{
         public int HighestLevel;
         
         public void InitUserData(){
-            HighestLevel = 1;
+            HighestLevel = 0;
         }
 
         public void UpdateWinGameUserDataValue(){

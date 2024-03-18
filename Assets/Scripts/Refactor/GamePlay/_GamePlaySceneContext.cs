@@ -24,7 +24,7 @@ namespace Core.GamePlay
         void Start()
         {
             SetUpCamera();
-            InitBlockPool();
+            InitGame();
             _PlayerData.StartGame();
             _GameManager.Instance.StartLevel();
         }
@@ -55,12 +55,13 @@ namespace Core.GamePlay
 #endif     
         }
 
-        private void InitBlockPool()
+        private void InitGame()
         {
             _blockPool = new _BlockPool();
-            _GameManager.Instance.BlockPool = _blockPool;
-            _LevelSystem.Instance.BlockPool = _blockPool;
-            _LevelSystem.Instance.InitLevelSystem(_levelTest);
+            _GameManager.Instance.InitGame(_blockPool, _levelTest);
+            // _GameManager.Instance.BlockPool = _blockPool;
+            // //_LevelSystem.Instance.BlockPool = _blockPool;
+            // _LevelSystem.Instance.InitLevelSystem(_levelTest);
         }
     }
 }

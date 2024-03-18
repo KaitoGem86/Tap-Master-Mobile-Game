@@ -13,14 +13,14 @@ namespace Core.SystemGame{
             _levelData = levelData;
         }
 
-        public void InitBlockPool(){
-            BlockPool?.InitPool(GetLevelData());
-        }
+//         public LevelDatasController InitBlockPool(){
+//             var level = GetLevelData();
+// //            BlockPool?.InitPool(level);
+//             return level;
+//         }
 
-        private LevelDatasController GetLevelData(){
+        public LevelDatasController GetLevelData(){
             return _levelData.datasControllers[_PlayerData.UserData.HighestLevel];
         }
-
-        public _BlockPool BlockPool { get; set; }
     }
 }

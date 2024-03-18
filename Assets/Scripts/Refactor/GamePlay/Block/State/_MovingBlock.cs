@@ -31,10 +31,14 @@ namespace Core.GamePlay.Block
         public override void OnSelect()
         {
             base.OnSelect();
-            if (_isMoving) return;
+            if (_isMoving) {
+                IsCanMove = false;
+                return;
+            }
             _isMoving = true;
             if (_GameManager.Instance.BlockPool.CheckCanEscape(_blockController))
             {
+                IsCanMove = true;
                 _blockController.transform.DOLocalMove(_blockController.transform.localPosition + -_blockController.transform.right, 0.05f)
                     .SetLoops(50, LoopType.Incremental)
                     .SetEase(Ease.Linear)
@@ -50,6 +54,8 @@ namespace Core.GamePlay.Block
             }
             else
             {
+                IsCanMove = false;
+                Debug.Log("Can't move");
                 var obstacle = _GameManager.Instance.BlockPool.GetBlock(_blockController.ObstacleLogicPos);
                 var t = _blockController.transform.DOMove(obstacle.transform.position - -_blockController.transform.right * 0.9f, 0.1f * _NormalizingVector3.GetDistanceBetweenVector3(_blockController.LogicPos, obstacle.LogicPos))
                     .SetLoops(2, LoopType.Yoyo)
