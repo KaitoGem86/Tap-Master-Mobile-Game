@@ -79,7 +79,7 @@ namespace Core.GamePlay.BlockPool
 
         public bool CheckCanEscape(_BlockController block)
         {
-            Vector3 direction = _NormalizingVector3.IgnoreDecimalPart(block.transform.forward);
+            Vector3 direction = _NormalizingVector3.IgnoreDecimalPart(-block.transform.right);
             Vector3 tempLogicPos = block.LogicPos + direction;
             for (int i = 0; i < sizeX; i++)
             {

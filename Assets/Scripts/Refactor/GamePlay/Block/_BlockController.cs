@@ -19,7 +19,6 @@ namespace Core.GamePlay.Block
 
         public void InitBlock(Material movingMaterial, Material blockedMaterial)
         {
-            Debug.Log(_meshRenderer.material.name);
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
@@ -42,7 +41,6 @@ namespace Core.GamePlay.Block
         }
 
         public void SetTexture(string typeTexture, Sprite texture){
-            Debug.Log(_meshRenderer.sharedMaterial.HasProperty(typeTexture) + " " + typeTexture + " " + texture.texture.name);
             _meshRenderer.sharedMaterial.SetTexture(typeTexture, texture.texture);
         }
 

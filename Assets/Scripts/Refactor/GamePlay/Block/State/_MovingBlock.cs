@@ -35,7 +35,7 @@ namespace Core.GamePlay.Block
             _isMoving = true;
             if (_GameManager.Instance.BlockPool.CheckCanEscape(_blockController))
             {
-                _blockController.transform.DOLocalMove(_blockController.transform.localPosition + _blockController.transform.forward, 0.05f)
+                _blockController.transform.DOLocalMove(_blockController.transform.localPosition + -_blockController.transform.right, 0.05f)
                     .SetLoops(50, LoopType.Incremental)
                     .SetEase(Ease.Linear)
                     .OnStart(() =>
@@ -51,7 +51,7 @@ namespace Core.GamePlay.Block
             else
             {
                 var obstacle = _GameManager.Instance.BlockPool.GetBlock(_blockController.ObstacleLogicPos);
-                var t = _blockController.transform.DOMove(obstacle.transform.position - _blockController.transform.forward * 0.9f, 0.1f * _NormalizingVector3.GetDistanceBetweenVector3(_blockController.LogicPos, obstacle.LogicPos))
+                var t = _blockController.transform.DOMove(obstacle.transform.position - -_blockController.transform.right * 0.9f, 0.1f * _NormalizingVector3.GetDistanceBetweenVector3(_blockController.LogicPos, obstacle.LogicPos))
                     .SetLoops(2, LoopType.Yoyo)
                     .SetEase(Ease.InSine)
                     .OnStart(() =>
@@ -67,7 +67,7 @@ namespace Core.GamePlay.Block
                 t.OnStepComplete(() =>
                     {
                         if(t.ElapsedPercentage() == 1) return;
-                        obstacle.HittedByMovingBlock(_blockController.transform.forward);
+                        obstacle.HittedByMovingBlock(-_blockController.transform.right);
                     });
             }
         }
@@ -75,7 +75,7 @@ namespace Core.GamePlay.Block
         private void ObstacleHitted(Vector3Int logicPos, Vector3 direction){
             var obstacle = _GameManager.Instance.BlockPool.GetBlock(_blockController.ObstacleLogicPos);
             if(obstacle == null) return;
-            obstacle.transform.DOMove(obstacle.transform.position + _blockController.transform.forward * 0.1f, 0.1f)
+            obstacle.transform.DOMove(obstacle.transform.position + -_blockController.transform.right * 0.1f, 0.1f)
                 .SetLoops(2, LoopType.Yoyo)
                 .SetEase(Ease.InSine)
                 .OnStart(() =>
@@ -87,7 +87,7 @@ namespace Core.GamePlay.Block
                     obstacle?.SetMaterial(_currentMaterial);
                 })
                 .OnStepComplete(() => {
-                    obstacle = _GameManager.Instance.BlockPool.GetBlock(obstacle.LogicPos + _NormalizingVector3.IgnoreDecimalPart(_blockController.transform.forward));        
+                    obstacle = _GameManager.Instance.BlockPool.GetBlock(obstacle.LogicPos + _NormalizingVector3.IgnoreDecimalPart(-_blockController.transform.right));        
                 });
         }
     }
