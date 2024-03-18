@@ -17,9 +17,9 @@ namespace Core.GamePlay.Block
         private Vector3Int _logicPos;
         private Vector3Int _obstacleLogicPos;
 
-        public void InitBlock(Material movingMaterial, Material blockedMaterial)
+        public void InitBlock(Material movingMaterial, Material blockedMaterial, Vector3 rotation)
         {
-            AnimationInitBlock();
+            AnimationInitBlock(rotation);
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
@@ -57,10 +57,11 @@ namespace Core.GamePlay.Block
                 });
         }
 
-        public void AnimationInitBlock(){
+        public void AnimationInitBlock(Vector3 rotation){
+            transform.rotation = Quaternion.Euler(rotation);
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1.5f);
-            transform.DORotate(Vector3.one * 360, 1.5f, RotateMode.FastBeyond360);
+            transform.DORotate(Vector3.one * 360 + rotation, 1.5f, RotateMode.FastBeyond360);
         }
 
         void OnMouseDown()
