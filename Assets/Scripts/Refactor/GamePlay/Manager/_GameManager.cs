@@ -20,6 +20,7 @@ namespace Core.GamePlay{
         public void StartLevel(){
             Level = _LevelSystem.GetLevelData();
             _gamePlayManager.StartLevel(Level);
+            _GameEvent.OnGamePlayReset?.Invoke();
         }
 
         public void WinGame(){

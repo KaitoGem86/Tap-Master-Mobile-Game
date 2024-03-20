@@ -51,7 +51,7 @@ namespace Core.GamePlay.Block
                 .SetEase(Ease.InSine);
             t.OnStepComplete(() => {
                     if(t.ElapsedPercentage() == 1) return;
-                    var thisObstacle = _GameManager.Instance.BlockPool.GetBlock(_logicPos + _NormalizingVector3.IgnoreDecimalPart(direction));
+                    var thisObstacle = _GameManager.Instance.BlockPool.GetBlock(_logicPos + _NormalizingVector3.ConvertToVector3Int(direction));
                     if (thisObstacle != null)
                         thisObstacle.HittedByMovingBlock(direction);
                 });

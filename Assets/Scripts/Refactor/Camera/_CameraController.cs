@@ -1,4 +1,5 @@
 using Core.SystemGame;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.GamePlay
@@ -13,8 +14,17 @@ namespace Core.GamePlay
         private Vector3 _remainingDelta;
         private Vector3 _lastMousePosition;
 
+        private void Awake(){
+            _GameEvent.OnGamePlayReset += SetUp;
+        }
+
+        private void OnDestroy(){
+            _GameEvent.OnGamePlayReset -= SetUp;
+        }
+
         public void SetUp()
         {
+            _cameraRotation.DORotate(Vector3.zero, 0.5f);
         }
 
 
