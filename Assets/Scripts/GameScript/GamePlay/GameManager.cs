@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
     internal bool isOnMenu = false;
     internal bool allowedVibrating;
     public int coin;
-    public LevelData data;
+    public LevelDatas data;
     private void Awake()
     {
         //SoundManager.instance.PlayBackgroundMusic();

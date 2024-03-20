@@ -22,7 +22,7 @@ namespace Core.GamePlay
             _blockPool = new _BlockPool();
         }
 
-        public void StartLevel(LevelDatasController level)
+        public void StartLevel(LevelData level)
         {
             _blockPool?.InitPool(level);
             _totalBlocks = level.numOfBlocks;

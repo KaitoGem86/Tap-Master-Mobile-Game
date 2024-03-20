@@ -11,7 +11,7 @@ public class LevelListController : MonoBehaviour
     }
 
     [SerializeField] private LevelItem item;
-    [SerializeField] private LevelData data;
+    [SerializeField] private LevelDatas data;
     [SerializeField] Type levelType;
 
 

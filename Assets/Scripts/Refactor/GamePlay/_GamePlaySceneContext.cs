@@ -10,7 +10,7 @@ namespace Core.GamePlay
 {
     public class _GamePlaySceneContext : MonoBehaviour
     {
-        [SerializeField] private LevelData _levelTest;
+        [SerializeField] private LevelDatas _levelTest;
 
         private _BlockPool _blockPool;
 

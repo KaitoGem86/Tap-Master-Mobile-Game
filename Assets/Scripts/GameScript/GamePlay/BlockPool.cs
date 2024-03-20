@@ -132,7 +132,7 @@ public class BlockPool : MonoBehaviour
 
     void Initial()
     {
-        levelData = GameManager.Instance.data.datasControllers[this.level - 1];
+        //levelData = GameManager.Instance.data.datasControllers[this.level - 1];
     }
 
     void Readdata()

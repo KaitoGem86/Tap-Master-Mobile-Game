@@ -23,7 +23,7 @@ namespace Core.GamePlay.BlockPool
             InitLogicPool(sizeX, sizeY, sizeZ);
         }
 
-        public async void InitPool(LevelDatasController levelData)
+        public async void InitPool(LevelData levelData)
         {
             _blockObjectPool ??= new List<_BlockController>();
             _blockObjectPool.Clear();
@@ -36,20 +36,20 @@ namespace Core.GamePlay.BlockPool
             int minX = 0;
             int minY = 0;
             int minZ = 0;
-            for (int i = 0; i < levelData.states.Count; i++)
+            for (int i = 0; i < levelData.blockStates.Count; i++)
             {
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
-                block.GetComponent<_BlockController>().InitBlock(movingMaterial, blockedMaterial, levelData.states[i].rotation);
+                block.GetComponent<_BlockController>().InitBlock(movingMaterial, blockedMaterial, levelData.blockStates[i].rotation);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
-                block.transform.SetPositionAndRotation(levelData.states[i].pos, Quaternion.Euler(levelData.states[i].rotation));
+                block.transform.SetPositionAndRotation(levelData.blockStates[i].pos, Quaternion.Euler(levelData.blockStates[i].rotation));
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(block.transform.position);
                 minX = Mathf.Min(minX, logicPos.x);
                 minY = Mathf.Min(minY, logicPos.y);
                 minZ = Mathf.Min(minZ, logicPos.z);
             }
 
-            for (int i = 0; i < levelData.states.Count; i++)
+            for (int i = 0; i < levelData.blockStates.Count; i++)
             {
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(_blockObjectPool[i].transform.position);
                 SetStateElementBlockInPool(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ, true);
