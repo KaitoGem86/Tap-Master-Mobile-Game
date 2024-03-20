@@ -1,8 +1,6 @@
-﻿using DG.Tweening;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TestMoveBlock : MonoBehaviour
@@ -82,7 +80,6 @@ public class TestMoveBlock : MonoBehaviour
             this.startPos.GetComponent<TestObstacleBlock>().isMoving = true;
             if (CheckCanEscape())
             {
-                Debug.Log("OK");
                 blockRb.velocity += blockRb.transform.up * 5;
                 //Time.timeScale = 0f;
                 if (count == 0)
@@ -201,7 +198,7 @@ public class TestMoveBlock : MonoBehaviour
                                                        duration: 0.1f).SetLoops(2, LoopType.Yoyo).OnStart(() =>
                                                        {
                                                            //startOPos.GetComponent<MeshRenderer>().material = this.blockedMaterial;
-                                                           //startOPos.GetComponentInParent<TestMoveBlock>().SetActiveArrow(false);
+                                                            //startOPos.GetComponentInParent<TestMoveBlock>().SetActiveArrow(false);
                                                        });
             t.OnComplete(() =>
             {

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
 // Chỉnh lại size camera bằng cách đặt kích thước ban đầu tỉ lệ thuận với khoảng cách xa nhất giữa 2 trong số các block
 // Độ zoom Camera cũng sẽ tỉ lệ thuận với khoảng cách đó.

@@ -1,11 +1,6 @@
 ﻿using DG.Tweening;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Security.Cryptography;
-using Unity.VisualScripting;
 using UnityEngine;
 // đọc thêm 1 dòng chứa khoảng cách xa nhất của 2 block, lưu vào 1 biến quản lý bởi GameManager.
 
@@ -15,7 +10,7 @@ public class BlockPool : MonoBehaviour
     [SerializeField] GameObject puzzleRewardPrefab;
     [SerializeField] public Rigidbody rb;
     [SerializeField] TestMoveBlock block;
-    [SerializeField] MB3_MeshBaker meshBaker;
+    //[SerializeField] MB3_MeshBaker meshBaker;
 
     private Vector3 oldPos = Vector3.zero;
     private Vector3 newPos = Vector3.zero;
@@ -137,7 +132,7 @@ public class BlockPool : MonoBehaviour
 
     void Initial()
     {
-        levelData = GameManager.Instance.data.datasControllers[this.level - 1];
+        //levelData = GameManager.Instance.data.datasControllers[this.level - 1];
     }
 
     void Readdata()
@@ -225,8 +220,8 @@ public class BlockPool : MonoBehaviour
         Debug.Log("OK");
 
         //StaticBatchingUtility.Combine(combinedGo, this.gameObject);
-        meshBaker.AddDeleteGameObjects(combinedGo, null, true);
-        meshBaker.Apply();
+        //meshBaker.AddDeleteGameObjects(combinedGo, null, true);
+        //meshBaker.Apply();
     }
 
     public void RandomChangeBlockToReward()

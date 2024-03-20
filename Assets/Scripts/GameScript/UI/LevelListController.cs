@@ -1,5 +1,3 @@
-using Mono.Cecil;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +11,7 @@ public class LevelListController : MonoBehaviour
     }
 
     [SerializeField] private LevelItem item;
-    [SerializeField] private LevelData data;
+    [SerializeField] private LevelDatas data;
     [SerializeField] Type levelType;
 
 
