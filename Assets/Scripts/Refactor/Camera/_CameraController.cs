@@ -12,6 +12,7 @@ namespace Core.GamePlay
         [SerializeField] private Transform _cameraRotation;
 
         private Vector3 _remainingDelta;
+        private Vector3 _lastRemainingDelta;
         private Vector3 _lastMousePosition;
 
         private void Awake(){
@@ -42,14 +43,19 @@ namespace Core.GamePlay
                 _remainingDelta = mouseDelta * _sensitivity * Time.deltaTime;
             }
 
-            Vector3 remainTmp = _remainingDelta;
+            Vector3 remainTmp = Vector3.Lerp( _lastRemainingDelta,_remainingDelta, _inertia);
             _cameraRotation.Rotate(Vector3.left, remainTmp.y, Space.Self);
             _cameraRotation.Rotate(Vector3.up, remainTmp.x, Space.Self);
                                                                                                                                                                                                                                                                     
             if (_damping > 0.0f)
             {
-                _remainingDelta = Vector3.Lerp(_remainingDelta, Vector3.zero, _inertia);
-            }     
+                _remainingDelta = Vector3.Lerp(_remainingDelta, Vector3.zero, _damping);
+            }
+            else
+            {
+                _remainingDelta = Vector3.zero;
+            }
+            _lastRemainingDelta = _remainingDelta;
         }
 
         //Set Camera size by modify position.z and position.y of camera
