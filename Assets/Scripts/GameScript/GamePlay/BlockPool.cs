@@ -10,7 +10,7 @@ public class BlockPool : MonoBehaviour
     [SerializeField] GameObject puzzleRewardPrefab;
     [SerializeField] public Rigidbody rb;
     [SerializeField] TestMoveBlock block;
-    [SerializeField] MB3_MeshBaker meshBaker;
+    //[SerializeField] MB3_MeshBaker meshBaker;
 
     private Vector3 oldPos = Vector3.zero;
     private Vector3 newPos = Vector3.zero;
@@ -220,8 +220,8 @@ public class BlockPool : MonoBehaviour
         Debug.Log("OK");
 
         //StaticBatchingUtility.Combine(combinedGo, this.gameObject);
-        meshBaker.AddDeleteGameObjects(combinedGo, null, true);
-        meshBaker.Apply();
+        //meshBaker.AddDeleteGameObjects(combinedGo, null, true);
+        //meshBaker.Apply();
     }
 
     public void RandomChangeBlockToReward()

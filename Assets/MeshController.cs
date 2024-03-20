@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 
 public class MeshController : MonoBehaviour
 {
@@ -33,7 +32,7 @@ public class MeshController : MonoBehaviour
         // {
         //     Debug.Log(vertex);
         // }
-        _meshRenderer.GetVertices();
+        //_meshRenderer.GetVertices();
     }
 
     // Update is called once per frame
