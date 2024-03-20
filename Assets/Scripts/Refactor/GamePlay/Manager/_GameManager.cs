@@ -9,12 +9,11 @@ namespace Core.GamePlay{
         private _LevelSystem _LevelSystem;
         private _GamePlayManager _gamePlayManager;
 
-        public void InitGame(_BlockPool blockPool, LevelData levelData){
-            BlockPool = blockPool;
+        public void InitGame(LevelData levelData){
             _LevelSystem = _LevelSystem.Instance;
             _LevelSystem.InitLevelSystem(levelData);
             _gamePlayManager = _GamePlayManager.Instance;
-            _gamePlayManager.InitGamePlayManager(blockPool);
+            _gamePlayManager.InitGamePlayManager();
         }
 
         public void StartLevel(){
@@ -31,7 +30,7 @@ namespace Core.GamePlay{
             StartLevel();
         }
 
-        public _BlockPool BlockPool { get; set; }
+        public _BlockPool BlockPool => _gamePlayManager.BlockPool;
         public LevelDatasController Level {get; set;}
 
     }

@@ -24,13 +24,13 @@ namespace Core.GamePlay.Block
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
         }
 
-        public void SetUpTypeBlock(Material movingMaterial, Material blockedMaterial)
+        private void SetUpTypeBlock(Material movingMaterial, Material blockedMaterial)
         {
             _blockStates.Add(_BlockTypeEnum.Moving, new _MovingBlock(this, movingMaterial, blockedMaterial));
             _blockStates.Add(_BlockTypeEnum.Reward, new _RewardBlock(this));
         }
 
-        public void SetCurrentTypeBlock(_BlockTypeEnum blockType)
+        private void SetCurrentTypeBlock(_BlockTypeEnum blockType)
         {
             _currentType = _blockStates[blockType];
             _currentType.SetUp();
@@ -57,20 +57,20 @@ namespace Core.GamePlay.Block
                 });
         }
 
-        public void AnimationInitBlock(Vector3 rotation){
+        private void AnimationInitBlock(Vector3 rotation){
             transform.rotation = Quaternion.Euler(rotation);
             transform.localScale = Vector3.zero;
             transform.DOScale(Vector3.one, 1.5f);
             transform.DORotate(Vector3.one * 360 + rotation, 1.5f, RotateMode.FastBeyond360);
         }
 
-        void OnMouseDown()
+        private void OnMouseDown()
         {
             StopAllCoroutines();
             StartCoroutine("CaculateHodingTime");
         }
 
-        void OnMouseUp()
+        private void OnMouseUp()
         {
             StopCoroutine("CaculateHodingTime");
             if (_InputSystem.Instance.Timer > 0.15f)    

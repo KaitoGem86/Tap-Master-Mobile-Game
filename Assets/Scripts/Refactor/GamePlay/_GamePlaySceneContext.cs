@@ -57,8 +57,7 @@ namespace Core.GamePlay
 
         private void InitGame()
         {
-            _blockPool = new _BlockPool();
-            _GameManager.Instance.InitGame(_blockPool, _levelTest);
+            _GameManager.Instance.InitGame(_levelTest);
             // _GameManager.Instance.BlockPool = _blockPool;
             // //_LevelSystem.Instance.BlockPool = _blockPool;
             // _LevelSystem.Instance.InitLevelSystem(_levelTest);

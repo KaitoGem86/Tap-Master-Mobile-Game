@@ -52,9 +52,8 @@ namespace Core.GamePlay.BlockPool
             for (int i = 0; i < levelData.states.Count; i++)
             {
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(_blockObjectPool[i].transform.position);
-                SetElementBlockPool(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ, true);
+                SetStateElementBlockInPool(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ, true);
                 _blockObjectPool[i].LogicPos = new Vector3Int(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ);
-                Debug.Log("LogicPos: " + _blockObjectPool[i].LogicPos);
             }
         }
 
@@ -83,7 +82,7 @@ namespace Core.GamePlay.BlockPool
             }
         }
 
-        public void SetElementBlockPool(int x, int y, int z, bool value)
+        public void SetStateElementBlockInPool(int x, int y, int z, bool value)
         {
             _blockLogicPool[x][y][z] = value;
         }
@@ -91,9 +90,7 @@ namespace Core.GamePlay.BlockPool
 
         public bool CheckCanEscape(_BlockController block)
         {
-            Debug.Log(-block.transform.right);
             Vector3 direction = _NormalizingVector3.ConvertToVector3Int(-block.transform.right);
-            Debug.Log("Direction: " + direction);
             Vector3 tempLogicPos = block.LogicPos + direction;
             for (int i = 0; i < sizeX; i++)
             {
@@ -106,7 +103,6 @@ namespace Core.GamePlay.BlockPool
                 if (_blockLogicPool[(int)tempLogicPos.x][(int)tempLogicPos.y][(int)tempLogicPos.z])
                 {
                     block.ObstacleLogicPos = _NormalizingVector3.IgnoreDecimalPart(tempLogicPos);
-                    Debug.Log("ObstacleLogicPos: " + block.ObstacleLogicPos);
                     return false;
                 }
                 tempLogicPos += direction;

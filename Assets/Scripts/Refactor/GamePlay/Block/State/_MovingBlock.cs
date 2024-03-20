@@ -45,7 +45,7 @@ namespace Core.GamePlay.Block
                     .OnStart(() =>
                     {
                         _blockController.SetMaterial(_movingMaterial);
-                        _GameManager.Instance.BlockPool.SetElementBlockPool(_blockController.LogicPos.x, _blockController.LogicPos.y, _blockController.LogicPos.z, false);
+                        _GameManager.Instance.BlockPool.SetStateElementBlockInPool(_blockController.LogicPos.x, _blockController.LogicPos.y, _blockController.LogicPos.z, false);
                     })
                     .OnComplete(() =>
                     {

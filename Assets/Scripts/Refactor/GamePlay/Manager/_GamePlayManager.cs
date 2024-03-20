@@ -1,4 +1,5 @@
 using Core.Data;
+using Core.GamePlay.Block;
 using Core.GamePlay.BlockPool;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -15,11 +16,12 @@ namespace Core.GamePlay
         private int _totalBlocks;
 
 
-        public void InitGamePlayManager(_BlockPool pool)
+        public void InitGamePlayManager()
         {
             _totalBlocks = 0;
-            _blockPool = pool;
+            _blockPool = new _BlockPool();
         }
+
         public void StartLevel(LevelDatasController level)
         {
             _blockPool?.InitPool(level);
@@ -46,5 +48,7 @@ namespace Core.GamePlay
                 }
             }
         }
+
+        public _BlockPool BlockPool => _blockPool;
     }
 }
