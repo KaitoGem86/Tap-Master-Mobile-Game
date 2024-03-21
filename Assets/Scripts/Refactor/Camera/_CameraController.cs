@@ -1,5 +1,6 @@
 using Core.SystemGame;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Core.GamePlay
@@ -17,6 +18,10 @@ namespace Core.GamePlay
 
         private void Awake(){
             _GameEvent.OnGamePlayReset += SetUp;
+        }
+
+        private void Start(){
+            _GameManager.Instance.CameraController = this;
         }
 
         private void OnDestroy(){
@@ -67,5 +72,23 @@ namespace Core.GamePlay
         //         _GameManager.Instance.CameraCanvas.transform.position = _ConstantCameraSetting._9x16PositionSetting;
         //     Debug.Log(cameraSize);
         // }
+
+        public float Sensitivity
+        {
+            get => _sensitivity;
+            set => _sensitivity = value;
+        }
+
+        public float Damping
+        {
+            get => _damping;
+            set => _damping = value;
+        }
+
+        public float Inertia
+        {
+            get => _inertia;
+            set => _inertia = value;
+        }
     }
 }
