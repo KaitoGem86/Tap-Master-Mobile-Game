@@ -214,8 +214,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sensitivity: 8
-  _damping: 0.5
-  _inertia: 0
+  _damping: 0.2
+  _inertia: 0.2
   _cameraRotation: {fileID: 1586702828666380876}
 --- !u!114 &3988508314166789449
 MonoBehaviour:
