@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using Core.Extensions;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace Generate
@@ -32,10 +34,9 @@ namespace Generate
         //     }
         // }
         [SerializeField] private Vector3Int[] _posArrayTest;
-
-        public void GenLevel(){
-            GenerateLevel(_posArrayTest);
-        }
+        [SerializeField] private TextAsset _testAsset;
+        [SerializeField] private TextAsset _levelPosAsset;
+        [SerializeField] private string _determineChar = "\n";
 
         private const string _levelPath = "Assets/Data/JSonData/TestGenLevelData.txt";
 
@@ -44,6 +45,7 @@ namespace Generate
         private (Vector3, int)[,,] _stateMatrix = new (Vector3, int)[30, 30, 30];
         private bool _isGenerateCompleted = false;
         private List<int> _currentPath = new List<int>();
+        private int _maxDis = 0;
         private List<Vector3Int> _direction = new List<Vector3Int>(){
             Vector3Int.up,
             Vector3Int.down,
@@ -53,9 +55,42 @@ namespace Generate
             Vector3Int.back
         };
 
-        public void GenerateLevel(Vector3Int[] positionArray)
+        public void ConvertData()
         {
-            File.WriteAllText(_levelPath, "");
+            ConvertData(_testAsset);
+        }
+
+        private void ConvertData(TextAsset text)
+        {
+            var data = text.text.Split('\n', System.StringSplitOptions.RemoveEmptyEntries);
+            int minX = 999, minY = 999, minZ = 999;
+            int count = 0;
+            foreach (var d in data)
+            {
+                var tmp = d.Split(' ');
+                if (System.Int32.TryParse(tmp[0], out int res)) break;
+                count += 1;
+            }
+            Vector3Int[] posArray = new Vector3Int[data.Length - count];
+            for (int i = count; i < data.Length; i++)
+            {
+                var tmp = data[i].Split(' ');
+                var pos = new Vector3Int(System.Int32.Parse(tmp[0]), System.Int32.Parse(tmp[1]), System.Int32.Parse(tmp[2]));
+                posArray[i - count] = pos;
+                minX = Mathf.Min(minX, pos.x);
+                minY = Mathf.Min(minY, pos.y);
+                minZ = Mathf.Min(minZ, pos.z);
+            }
+            _positionArray = posArray;
+            foreach (var pos in posArray)
+            {
+                Debug.Log("pos: " + pos);
+            }
+        }
+
+        public List<state> GenerateLevel(Vector3Int[] positionArray)
+        {
+            //File.WriteAllText(_levelPath, "");
             _stateMatrix = new (Vector3, int)[30, 30, 30];
             _isGenerateCompleted = false;
             _isChecked = new bool[30, 30, 30];
@@ -77,7 +112,7 @@ namespace Generate
                 var x = positionArray[i].x;
                 var y = positionArray[i].y;
                 var z = positionArray[i].z;
-                _stateMatrix[x, y, z] = ( _direction[GetRandomDirectionIndex()], i);
+                _stateMatrix[x, y, z] = (_direction[GetRandomDirectionIndex()], i);
                 _isChecked[x, y, z] = false;
             }
 
@@ -87,10 +122,81 @@ namespace Generate
                 _currentPath.Clear();
                 Try(i);
             }
+            // foreach (var pos in positionArray)
+            // {
+            //     File.AppendAllText(_levelPath, "pos: " + pos + " dir: " + _stateMatrix[pos.x, pos.y, pos.z].Item1 + "\n");
+            // }
+            List<state> states = new List<state>();
             foreach (var pos in positionArray)
             {
-                File.AppendAllText(_levelPath, "pos: " + pos + " dir: " + _stateMatrix[pos.x, pos.y, pos.z].Item1 + "\n");
+                var tmpDirect = Vector3.zero;
+                if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.up)
+                {
+                    tmpDirect = new Vector3(0,0,-90);
+                }
+                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.down)
+                {
+                    tmpDirect = new Vector3(0,0,90);
+                }
+                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.left)
+                {
+                    tmpDirect = new Vector3(-180,0,0);
+                }
+                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.right)
+                {
+                    tmpDirect = new Vector3(0,180,0);
+                }
+                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.forward)
+                {
+                    tmpDirect = new Vector3(0,90,0);
+                }
+                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.back)
+                {
+                    tmpDirect = new Vector3(0,-90,0);
+                }
+                states.Add(new state(pos, tmpDirect));
             }
+            return states;
+        }
+        
+        public void GenerateLevelFromText(){
+            File.WriteAllText(_levelPath, "");
+            var data = ReadTextData();
+            Debug.Log("Data Length: " + data.Length);
+            foreach(var d in data){
+                var (levelIndex, size, posArray) = FromStringToArray(d);
+                var states =  GenerateLevel(posArray);
+                var levelData = new LevelData(levelIndex, posArray.Length, size, states);
+                File.AppendAllText(_levelPath, _ConvertFromSOToJSon.FormatJson(JsonUtility.ToJson(levelData)) +  "\n" + "-----------------------------------" + "\n");
+            }
+        }
+
+        private string[] ReadTextData(){
+            return _levelPosAsset.text.Split(_determineChar, System.StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private (int, Vector3, Vector3Int[]) FromStringToArray(string posLevelText){
+            var data = posLevelText.Split(new string[] {"\n", "\r"}, System.StringSplitOptions.RemoveEmptyEntries);
+            int levelIndex = System.Int32.Parse(data[0]);
+            var sizeText = data[1].Split(" ");
+            Vector3Int size = new Vector3Int(System.Int32.Parse(sizeText[0]), System.Int32.Parse(sizeText[1]), System.Int32.Parse(sizeText[2]));
+            List<Vector3Int> posArray = new List<Vector3Int>();
+            var posData = data[2].Split(",");
+            foreach(var pos in posData){
+                var tmp = pos.Split(" ", System.StringSplitOptions.RemoveEmptyEntries);
+                if(!System.Int32.TryParse(tmp[0], out int posX)){
+                    Debug.LogError("Can't parse int from string: " + tmp[0]);
+                }
+                else if(!System.Int32.TryParse(tmp[1], out int posY)){
+                    Debug.LogError("Can't parse int from string: " + tmp[1]);
+                }
+                else if(!System.Int32.TryParse(tmp[2], out int posZ)){
+                    Debug.LogError("Can't parse int from string: " + tmp[2]);
+                }
+                
+                posArray.Add(new Vector3Int(System.Int32.Parse(tmp[0]), System.Int32.Parse(tmp[1]), System.Int32.Parse(tmp[2])));
+            }
+            return (levelIndex, size, posArray.ToArray());
         }
 
         private void Try(int k)
@@ -174,13 +280,20 @@ namespace Generate
     }
 
     [CustomEditor(typeof(_GenerateLevel))]
-    public class _GenerateLevelEditor : Editor{
+    public class _GenerateLevelEditor : Editor
+    {
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
             _GenerateLevel _generateLevel = (_GenerateLevel)target;
-            if(GUILayout.Button("Gen Level")){
-                _generateLevel.GenLevel();
+            if (GUILayout.Button("Gen Level"))
+            {
+                _generateLevel.GenerateLevelFromText();
+            }
+            else if (GUILayout.Button("Convert Data"))
+            {
+                // var text = Resources.Load<TextAsset>("TestGenLevelData");
+                _generateLevel.ConvertData();
             }
         }
     }

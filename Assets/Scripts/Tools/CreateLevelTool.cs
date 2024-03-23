@@ -11,6 +11,18 @@ public class state
 {
     public Vector3 pos;
     public Vector3 rotation;
+
+    public state(Vector3 pos, Vector3 rotation)
+    {
+        this.pos = pos;
+        this.rotation = rotation;
+    }
+
+    public state()
+    {
+        pos = Vector3.zero;
+        rotation = Vector3.zero;
+    }
 }
 public class CreateLevelTool : MonoBehaviour
 {

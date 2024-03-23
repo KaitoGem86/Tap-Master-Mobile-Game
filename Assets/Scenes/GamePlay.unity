@@ -1277,7 +1277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1059292988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,6 +1319,9 @@ MonoBehaviour:
   - {x: 0, y: 2, z: 2}
   - {x: 1, y: 2, z: 2}
   - {x: 2, y: 2, z: 2}
+  _testAsset: {fileID: 4900000, guid: 8f667f97b3499834db975a9a9bddf168, type: 3}
+  _levelPosAsset: {fileID: 4900000, guid: 8f667f97b3499834db975a9a9bddf168, type: 3}
+  _determineChar: '#'
 --- !u!4 &1059292989
 Transform:
   m_ObjectHideFlags: 0
@@ -1723,7 +1726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelSO: {fileID: 11400000, guid: c183f69bd5d12214ab9b2ff7bdd80b0e, type: 2}
-  _levelJson: {fileID: 4900000, guid: e7d6582a669dca840851a23c133d92e4, type: 3}
+  _levelJson: {fileID: 4900000, guid: 56d1c2818e6539847b56f7bd72145d1b, type: 3}
 --- !u!1 &1405118717
 GameObject:
   m_ObjectHideFlags: 0

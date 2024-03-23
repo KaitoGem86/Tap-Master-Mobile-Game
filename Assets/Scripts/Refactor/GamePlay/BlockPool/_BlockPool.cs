@@ -40,6 +40,7 @@ namespace Core.GamePlay.BlockPool
             {
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
+                block.transform.SetParent(blockContainer.transform);
                 block.GetComponent<_BlockController>().InitBlock(movingMaterial, blockedMaterial, levelData.blockStates[i].rotation);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
                 block.transform.SetPositionAndRotation(levelData.blockStates[i].pos, Quaternion.Euler(levelData.blockStates[i].rotation));
@@ -55,6 +56,9 @@ namespace Core.GamePlay.BlockPool
                 SetStateElementBlockInPool(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ, true);
                 _blockObjectPool[i].LogicPos = new Vector3Int(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ);
             }
+            var containerPos = blockContainer.transform.position;
+            containerPos -= levelData.size / 2 - new Vector3(0.5f, 0.5f, 0.5f);
+            blockContainer.transform.position = containerPos;
         }
 
         private void InitLogicPool(int sizeX, int sizeY, int sizeZ)
