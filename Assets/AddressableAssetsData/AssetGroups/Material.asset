@@ -32,6 +32,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Materials
+  - m_GUID: 3b83a6f1b4a6cf74a9dd6d8b14e383e0
+    m_Address: IdleMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Materials
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 97c39e7f63697984798ee9b86d7b98ba, type: 2}
   m_SchemaSet:

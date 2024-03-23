@@ -18,8 +18,9 @@ namespace Core.GamePlay.Block
         private Vector3Int _obstacleLogicPos;
         private bool _isInit;
 
-        public void InitBlock(Material movingMaterial, Material blockedMaterial, Vector3 rotation)
+        public void InitBlock(Material idleMaterial, Material movingMaterial, Material blockedMaterial, Vector3 rotation)
         {
+            _meshRenderer.material = idleMaterial;
             AnimationInitBlock(rotation);
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
