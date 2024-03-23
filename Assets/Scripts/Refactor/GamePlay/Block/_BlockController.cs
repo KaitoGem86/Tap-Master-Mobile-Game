@@ -26,6 +26,7 @@ namespace Core.GamePlay.Block
 
         private void SetUpTypeBlock(Material movingMaterial, Material blockedMaterial)
         {
+            _blockStates.Clear();
             _blockStates.Add(_BlockTypeEnum.Moving, new _MovingBlock(this, movingMaterial, blockedMaterial));
             _blockStates.Add(_BlockTypeEnum.Reward, new _RewardBlock(this));
         }

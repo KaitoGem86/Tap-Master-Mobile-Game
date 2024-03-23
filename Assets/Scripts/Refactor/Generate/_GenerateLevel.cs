@@ -234,11 +234,12 @@ namespace Generate
                             break;
                         }
                     }
-                    if (_isNext) break;
+                    if (_isNext) continue;
                     Try(t[0]);
                 }
             }
             _currentPath.Remove(k);
+            //_isChecked[currentPos.x, currentPos.y, currentPos.z] = false;
         }
 
         private void Solution()
