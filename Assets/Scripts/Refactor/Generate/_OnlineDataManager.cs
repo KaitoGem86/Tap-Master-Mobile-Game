@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json;
 
 namespace Core.ResourceGamePlay
 {
@@ -12,7 +13,12 @@ namespace Core.ResourceGamePlay
 
         public void ReadGoogleData()
         {
-            StartCoroutine(LoadDataFromGoogleSheet());
+            var data = _CSVOnlineReader.ReadGSheet(_sheetId, _gID);
+            //StartCoroutine(LoadDataFromGoogleSheet());
+            var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            Debug.Log(json);
+
+            //Debug.Log(json);
         }
 
         
