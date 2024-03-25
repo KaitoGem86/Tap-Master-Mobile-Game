@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ArrowShader
+  m_Name: IdleMaterial
   m_Shader: {fileID: -6465566751694194690, guid: b9ab63dbcf21eac4e8d98f9bc87e6456, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []

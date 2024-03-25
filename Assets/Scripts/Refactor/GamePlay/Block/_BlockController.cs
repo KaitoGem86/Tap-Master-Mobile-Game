@@ -16,9 +16,11 @@ namespace Core.GamePlay.Block
         private _BlockState _currentType;   
         private Vector3Int _logicPos;
         private Vector3Int _obstacleLogicPos;
+        private bool _isInit;
 
-        public void InitBlock(Material movingMaterial, Material blockedMaterial, Vector3 rotation)
+        public void InitBlock(Material idleMaterial, Material movingMaterial, Material blockedMaterial, Vector3 rotation)
         {
+            _meshRenderer.material = idleMaterial;
             AnimationInitBlock(rotation);
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
@@ -26,8 +28,10 @@ namespace Core.GamePlay.Block
 
         private void SetUpTypeBlock(Material movingMaterial, Material blockedMaterial)
         {
+            if (_isInit) return;
             _blockStates.Add(_BlockTypeEnum.Moving, new _MovingBlock(this, movingMaterial, blockedMaterial));
             _blockStates.Add(_BlockTypeEnum.Reward, new _RewardBlock(this));
+            _isInit = true;
         }
 
         private void SetCurrentTypeBlock(_BlockTypeEnum blockType)

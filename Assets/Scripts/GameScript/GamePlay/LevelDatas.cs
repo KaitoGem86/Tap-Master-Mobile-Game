@@ -13,6 +13,14 @@ public class LevelDatas : ScriptableObject
 public class LevelData{
     public int levelIndex;
     public int numOfBlocks;
-    public int maxDis;
+    public Vector3 size;
     public List<state> blockStates = new List<state>();
+
+    public LevelData(int levelIndex, int numOfBlocks, Vector3 size, List<state> blockStates)
+    {
+        this.levelIndex = levelIndex;
+        this.numOfBlocks = numOfBlocks;
+        this.size = size;
+        this.blockStates = blockStates;
+    }
 }

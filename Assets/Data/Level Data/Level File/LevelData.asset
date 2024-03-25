@@ -12,53 +12,389 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7548af2d228edd3408f858553f75df30, type: 3}
   m_Name: LevelData
   m_EditorClassIdentifier: 
-  numberOfLevels: 4
+  numberOfLevels: 5
   datasControllers:
   - levelIndex: 1
-    numOfBlocks: 1
-    maxDis: 0
+    numOfBlocks: 8
+    size: {x: 2, y: 2, z: 2}
     blockStates:
     - pos: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 1, y: 0, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 1, z: 0}
       rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 1, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 0, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 0, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 0, y: 1, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 1, z: 1}
+      rotation: {x: 0, y: 90, z: 0}
   - levelIndex: 2
-    numOfBlocks: 2
-    maxDis: 1
+    numOfBlocks: 18
+    size: {x: 2, y: 3, z: 3}
     blockStates:
-    - pos: {x: 0.5, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 90}
-    - pos: {x: -0.5, y: 0, z: 0}
-      rotation: {x: 180, y: 0, z: 0}
-  - levelIndex: 3
-    numOfBlocks: 4
-    maxDis: 1
-    blockStates:
-    - pos: {x: -0.5, y: 0, z: 0.5}
-      rotation: {x: 0, y: 0, z: 90}
-    - pos: {x: -0.5, y: 0, z: -0.5}
-      rotation: {x: -90, y: 0, z: 0}
-    - pos: {x: 0.5, y: 0, z: -0.5}
-      rotation: {x: 0, y: 0, z: 90}
-    - pos: {x: 0.5, y: 0, z: 0.5}
-      rotation: {x: 0, y: 0, z: -90}
-  - levelIndex: 4
-    numOfBlocks: 9
-    maxDis: 2
-    blockStates:
-    - pos: {x: -1, y: 0, z: -1}
-      rotation: {x: 180, y: 0, z: 0}
-    - pos: {x: -1, y: 0, z: 0}
-      rotation: {x: 180, y: 0, z: 0}
-    - pos: {x: -1, y: 0, z: 1}
-      rotation: {x: 0, y: 0, z: 90}
-    - pos: {x: 1, y: 0, z: -1}
-      rotation: {x: 180, y: 0, z: 0}
     - pos: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 1, y: 0, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 1, z: 0}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 1, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 0, y: 2, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 2, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 0, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 0, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 1, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 1, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 0, y: 2, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 2, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 0, y: 0, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 1, y: 0, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 1, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 1, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 2, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 2, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+  - levelIndex: 3
+    numOfBlocks: 26
+    size: {x: 3, y: 4, z: 3}
+    blockStates:
     - pos: {x: 1, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 90}
-    - pos: {x: 1, y: 0, z: 1}
-      rotation: {x: 90, y: 0, z: 0}
-    - pos: {x: 0, y: 0, z: -1}
+    - pos: {x: 2, y: 0, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 0, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 1, y: 1, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 1, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 3, y: 1, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 1, y: 2, z: 0}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 2, y: 2, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 2, z: 0}
       rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 3, z: 0}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 2, y: 3, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 3, y: 3, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 1, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 2, y: 2, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 0, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 0, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 0, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 1, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 1, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 1, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 2, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 2, y: 2, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 2, z: 2}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 1, y: 3, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 2, y: 3, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 3, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+  - levelIndex: 4
+    numOfBlocks: 40
+    size: {x: 4, y: 4, z: 4}
+    blockStates:
+    - pos: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 2, y: 0, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 0, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 0, y: 1, z: 0}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 1, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 0, y: 2, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 3, y: 2, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 3, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 1, y: 3, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 2, y: 3, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 3, y: 3, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
     - pos: {x: 0, y: 0, z: 1}
-      rotation: {x: 90, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 3, y: 0, z: 1}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 1, y: 1, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 2, y: 1, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 2, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 2, y: 2, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 3, z: 1}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 3, y: 3, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 0, y: 0, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 0, z: 2}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 1, y: 1, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 1, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 2, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 2, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 0, y: 3, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 3, z: 2}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 0, y: 0, z: 3}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 0, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 0, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 0, z: 3}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 0, y: 1, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 1, z: 3}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 0, y: 2, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 2, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 0, y: 3, z: 3}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 1, y: 3, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 3, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 3, z: 3}
+      rotation: {x: 0, y: -90, z: 0}
+  - levelIndex: 5
+    numOfBlocks: 90
+    size: {x: 6, y: 7, z: 5}
+    blockStates:
+    - pos: {x: 2, y: 0, z: 0}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 3, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 4, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 1, y: 1, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 1, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 1, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 4, y: 1, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 1, z: 0}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 1, y: 2, z: 0}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 2, y: 2, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 2, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 4, y: 2, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 5, y: 2, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 3, z: 0}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 2, y: 3, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 3, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 4, y: 3, z: 0}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 5, y: 3, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 2, y: 4, z: 0}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 4, z: 0}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 4, y: 4, z: 0}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 0, z: 1}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 2, y: 0, z: 1}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 3, y: 0, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 4, y: 0, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 0, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 1, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 5, y: 1, z: 1}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 1, y: 2, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 2, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 3, z: 1}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 3, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 4, z: 1}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 4, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 3, y: 4, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 4, y: 4, z: 1}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 5, y: 4, z: 1}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 5, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 3, y: 6, z: 1}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 0, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 0, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 3, y: 0, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 4, y: 0, z: 2}
+      rotation: {x: 0, y: 0, z: 90}
+    - pos: {x: 5, y: 0, z: 2}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 1, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 5, y: 1, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 2, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 5, y: 2, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 3, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 5, y: 3, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 1, y: 4, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 4, z: 2}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 4, z: 2}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 4, y: 4, z: 2}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 5, y: 4, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 3, y: 6, z: 2}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 0, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 0, z: 3}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 3, y: 0, z: 3}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 4, y: 0, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 0, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 1, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 1, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 2, z: 3}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 5, y: 2, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 3, z: 3}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 5, y: 3, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 4, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 4, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 4, z: 3}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 4, y: 4, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 5, y: 4, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 5, z: 3}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 6, z: 3}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 0, z: 4}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 2, y: 0, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 0, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 4, y: 0, z: 4}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 5, y: 0, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 1, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 5, y: 1, z: 4}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 1, y: 2, z: 4}
+      rotation: {x: -180, y: 0, z: 0}
+    - pos: {x: 5, y: 2, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 1, y: 3, z: 4}
+      rotation: {x: 0, y: 90, z: 0}
+    - pos: {x: 5, y: 3, z: 4}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 1, y: 4, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 2, y: 4, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
+    - pos: {x: 3, y: 4, z: 4}
+      rotation: {x: 0, y: 180, z: 0}
+    - pos: {x: 4, y: 4, z: 4}
+      rotation: {x: 0, y: -90, z: 0}
+    - pos: {x: 5, y: 4, z: 4}
+      rotation: {x: 0, y: 0, z: -90}
