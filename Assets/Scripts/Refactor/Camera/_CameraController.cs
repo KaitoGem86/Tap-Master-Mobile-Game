@@ -22,6 +22,7 @@ namespace Core.GamePlay
 
         private void Start(){
             _GameManager.Instance.CameraController = this;
+            SetUp();
         }
 
         private void OnDestroy(){
@@ -31,6 +32,7 @@ namespace Core.GamePlay
         public void SetUp()
         {
             _cameraRotation.DORotate(Vector3.zero, 0.5f);
+            SetCameraSize();
         }
 
 
@@ -72,6 +74,12 @@ namespace Core.GamePlay
         //         _GameManager.Instance.CameraCanvas.transform.position = _ConstantCameraSetting._9x16PositionSetting;
         //     Debug.Log(cameraSize);
         // }
+
+        private void SetCameraSize(){
+            Debug.Log(_GameManager.Instance.Level.size.x);
+            Debug.Log(_ConstantCameraSetting.GetCameraPositionValue((int)_GameManager.Instance.Level.size.x));
+            this.transform.localPosition = _ConstantCameraSetting.GetCameraPositionValue((int)_GameManager.Instance.Level.size.x);
+        }
 
         public float Sensitivity
         {
