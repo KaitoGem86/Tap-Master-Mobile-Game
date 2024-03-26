@@ -9,10 +9,10 @@ namespace Core.ResourceGamePlay
 {
     public class _OnlineDataManager : MonoBehaviour
     {
-        [SerializeField] private string _sheetId;
-        [SerializeField] private int _gID;
+        private static string _sheetId = "1BJlGwjsbHRF8DHj_qzvdgxQmzb_luWkQ-czgtOn-gG4";
+        private static int _gID = 1419078634;
 
-        public void ReadGoogleData()
+        public static List<TempLevelClass> ReadGoogleData()
         {
             var data = _CSVOnlineReader.ReadGSheet(_sheetId, _gID);
             //StartCoroutine(LoadDataFromGoogleSheet());
@@ -20,7 +20,7 @@ namespace Core.ResourceGamePlay
             Debug.Log(json);
             var tmp = JsonConvert.DeserializeObject<List<TempLevelClass>>(json);
             Debug.Log(tmp.Count);
-
+            return tmp;
             //Debug.Log(json);
         }
 
@@ -70,7 +70,7 @@ namespace Core.ResourceGamePlay
             var manager = (_OnlineDataManager)target;
             if (GUILayout.Button("Read Google Data"))
             {
-                manager.ReadGoogleData();
+                //manager.ReadGoogleData();
             }
         }
     }
