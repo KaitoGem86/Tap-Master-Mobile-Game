@@ -165,9 +165,9 @@ namespace Generate
             Debug.Log("Data Length: " + data.Length);
             foreach(var d in data){
                 var (levelIndex, size, posArray) = FromStringToArray(d);
-                var states =  GenerateLevel(posArray);
-                var levelData = new LevelData(levelIndex, posArray.Length, size, states);
-                File.AppendAllText(_levelPath, _ConvertFromSOToJSon.FormatJson(JsonUtility.ToJson(levelData)) +  "\n" + "-----------------------------------" + "\n");
+                // var states = GenerateLevel(posArray);
+                // var levelData = new LevelData(levelIndex, posArray.Length, size, states);
+                // File.AppendAllText(_levelPath, _ConvertFromSOToJSon.FormatJson(JsonUtility.ToJson(levelData)) +  "\n" + "-----------------------------------" + "\n");
             }
         }
 
@@ -291,11 +291,11 @@ namespace Generate
             {
                 _generateLevel.GenerateLevelFromText();
             }
-            else if (GUILayout.Button("Convert Data"))
-            {
-                // var text = Resources.Load<TextAsset>("TestGenLevelData");
-                _generateLevel.ConvertData();
-            }
+            // else if (GUILayout.Button("Convert Data"))
+            // {
+            //     // var text = Resources.Load<TextAsset>("TestGenLevelData");
+            //     _generateLevel.ConvertData();
+            // }
         }
     }
 }

@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Core.ResourceGamePlay
 {
@@ -17,6 +18,8 @@ namespace Core.ResourceGamePlay
             //StartCoroutine(LoadDataFromGoogleSheet());
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             Debug.Log(json);
+            var tmp = JsonConvert.DeserializeObject<List<TempLevelClass>>(json);
+            Debug.Log(tmp.Count);
 
             //Debug.Log(json);
         }
