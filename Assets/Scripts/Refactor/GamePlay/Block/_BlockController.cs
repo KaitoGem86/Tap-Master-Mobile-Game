@@ -50,9 +50,7 @@ namespace Core.GamePlay.Block
 
         private void SetColorIdleBlock(Vector3 color, bool isSetColor = false){
             if(isSetColor){
-                //_color = _NormalizingVector3.ConvertToVector3Int(color);
                 _color = color;
-                Debug.Log("Color: " + color);
                 _meshRenderer.material.SetColor("_ColorSetting", new Color(_color.x / 255, _color.y /255, _color.z/255));
             }
         }

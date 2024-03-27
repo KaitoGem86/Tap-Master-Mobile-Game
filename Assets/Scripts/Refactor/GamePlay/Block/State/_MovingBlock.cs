@@ -40,7 +40,7 @@ namespace Core.GamePlay.Block
             {
                 IsCanMove = true;
                 _blockController.transform.DOLocalMove(_blockController.transform.localPosition + -_blockController.transform.right, 0.05f)
-                    .SetLoops(50, LoopType.Incremental)
+                    .SetLoops(30, LoopType.Incremental)
                     .SetEase(Ease.Linear)
                     .OnStart(() =>
                     {

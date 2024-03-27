@@ -20,6 +20,10 @@ namespace Core.GamePlay.BlockPool
         private List<_BlockController> _blockObjectPool;
         private GameObject _blockContainer;
         private bool _isInitPool = false;
+        private GameObject _blockPrefab;
+        private Material _movingMaterial;
+        private Material _blockedMaterial;
+        private Material _idleMaterial;
 
         public _BlockPool()
         {
@@ -33,15 +37,15 @@ namespace Core.GamePlay.BlockPool
             ClearLogicPool();
             _blockContainer ??= new GameObject("BlockContainer");
             _blockContainer.transform.position = Vector3.zero;
-            var gameObject = await AddressablesManager.LoadAssetAsync<GameObject>(_KeyPrefabResources.KeyBlock);
-            var movingMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyMovingMaterial);
-            var blockedMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyBlockedMaterial);
-            var idleMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyIdleMaterial);
+            _blockPrefab ??= await AddressablesManager.LoadAssetAsync<GameObject>(_KeyPrefabResources.KeyBlock);
+            _movingMaterial ??= await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyMovingMaterial);
+            _blockedMaterial ??= await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyBlockedMaterial);
+            _idleMaterial ??= await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyIdleMaterial);
             if (!_isInitPool)
             {
                 Debug.Log("Create Pool");
                 _isInitPool = true;
-                ObjectPooling._ObjectPooling.Instance.CreatePool(ObjectPooling._TypeGameObjectEnum.Block, gameObject, 100);
+                ObjectPooling._ObjectPooling.Instance.CreatePool(ObjectPooling._TypeGameObjectEnum.Block, _blockPrefab, 100);
             }
             int minX = 0;
             int minY = 0;
@@ -52,9 +56,9 @@ namespace Core.GamePlay.BlockPool
                 block.name = "Block" + i;
                 Debug.Log(block.name);
                 block.transform.SetParent(_blockContainer.transform);
-                block.GetComponent<_BlockController>().InitBlock(idleMaterial, movingMaterial, blockedMaterial, levelData.blockStates[i].rotation, levelData.blockStates[i].color, levelData.isSetColor);
+                block.GetComponent<_BlockController>().InitBlock(_idleMaterial, _movingMaterial, _blockedMaterial, levelData.blockStates[i].rotation, levelData.blockStates[i].color, levelData.isSetColor);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
-                block.transform.SetPositionAndRotation(levelData.blockStates[i].pos, Quaternion.Euler(levelData.blockStates[i].rotation));
+                block.transform.position = levelData.blockStates[i].pos;
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(block.transform.position);
                 minX = Mathf.Min(minX, logicPos.x);
                 minY = Mathf.Min(minY, logicPos.y);
@@ -141,7 +145,8 @@ namespace Core.GamePlay.BlockPool
         {
             foreach (var block in _blockObjectPool)
             {
-                block.transform.DOKill();
+                int t = block.transform.DOKill();
+                Debug.Log(t);
                 ObjectPooling._ObjectPooling.Instance.ReturnToPool(ObjectPooling._TypeGameObjectEnum.Block, block.gameObject);
             }
         }
