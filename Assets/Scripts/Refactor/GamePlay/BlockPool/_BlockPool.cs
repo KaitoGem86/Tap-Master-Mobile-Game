@@ -44,7 +44,7 @@ namespace Core.GamePlay.BlockPool
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
                 block.transform.SetParent(_blockContainer.transform);
-                block.GetComponent<_BlockController>().InitBlock(idleMaterial, movingMaterial, blockedMaterial, levelData.blockStates[i].rotation);
+                block.GetComponent<_BlockController>().InitBlock(idleMaterial, movingMaterial, blockedMaterial, levelData.blockStates[i].rotation, levelData.blockStates[i].color, levelData.isSetColor);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
                 block.transform.SetPositionAndRotation(levelData.blockStates[i].pos, Quaternion.Euler(levelData.blockStates[i].rotation));
                 Vector3Int logicPos = _NormalizingVector3.LogicPos(block.transform.position);
