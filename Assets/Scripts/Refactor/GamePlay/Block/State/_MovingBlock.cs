@@ -17,7 +17,7 @@ namespace Core.GamePlay.Block
         {
             _blockController = blockController;
             _isMoving = false;
-            _currentMaterial = _blockController.GetComponent<MeshRenderer>().sharedMaterial;
+            _currentMaterial = _blockController.GetComponent<MeshRenderer>().material;
             _movingMaterial = movingMaterial;
             _blockedMaterial = blockedMaterial;
         }

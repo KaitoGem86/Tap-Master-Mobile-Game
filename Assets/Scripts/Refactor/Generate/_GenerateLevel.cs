@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Core.Extensions;
+using Core.ResourceGamePlay;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -88,7 +89,7 @@ namespace Generate
             }
         }
 
-        public List<state> GenerateLevel(Vector3Int[] positionArray)
+        public List<state> GenerateLevel(Vector3Int[] positionArray, bool isColored = false, Vector3Int[] colorArray = null)
         {
             //File.WriteAllText(_levelPath, "");
             _stateMatrix = new (Vector3, int)[30, 30, 30];
@@ -127,73 +128,120 @@ namespace Generate
             //     File.AppendAllText(_levelPath, "pos: " + pos + " dir: " + _stateMatrix[pos.x, pos.y, pos.z].Item1 + "\n");
             // }
             List<state> states = new List<state>();
-            foreach (var pos in positionArray)
+            if (isColored)
             {
-                var tmpDirect = Vector3.zero;
-                if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.up)
-                {
-                    tmpDirect = new Vector3(0,0,-90);
+                for(int i = 0; i < positionArray.Length; i++){
+                    var tmpDirect = Vector3.zero;
+                    if (_stateMatrix[positionArray[i].x, positionArray[i].y, positionArray[i].z].Item1 == Vector3.up)
+                    {
+                        tmpDirect = new Vector3(0, 0, -90);
+                    }
+                    else if (_stateMatrix[positionArray[i].x, positionArray[i].y, positionArray[i].z].Item1 == Vector3.down)
+                    {
+                        tmpDirect = new Vector3(0, 0, 90);
+                    }
+                    else if (_stateMatrix[positionArray[i].x, positionArray[i].y, positionArray[i].z].Item1 == Vector3.left)
+                    {
+                        tmpDirect = new Vector3(-180, 0, 0);
+                    }
+                    else if (_stateMatrix[positionArray[i].x, positionArray[i].y, positionArray[i].z].Item1 == Vector3.right)
+                    {
+                        tmpDirect = new Vector3(0, 180, 0);
+                    }
+                    else if (_stateMatrix[positionArray[i].x, positionArray[i].y, positionArray[i].z].Item1 == Vector3.forward)
+                    {
+                        tmpDirect = new Vector3(0, 90, 0);
+                    }
+                    else if (_stateMatrix[positionArray[i].x, positionArray[i].y, positionArray[i].z].Item1 == Vector3.back)
+                    {
+                        tmpDirect = new Vector3(0, -90, 0);
+                    }
+                    states.Add(new state(positionArray[i], tmpDirect, colorArray[i]));
                 }
-                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.down)
+            }
+            else
+            {
+                foreach (var pos in positionArray)
                 {
-                    tmpDirect = new Vector3(0,0,90);
+                    var tmpDirect = Vector3.zero;
+                    if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.up)
+                    {
+                        tmpDirect = new Vector3(0, 0, -90);
+                    }
+                    else if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.down)
+                    {
+                        tmpDirect = new Vector3(0, 0, 90);
+                    }
+                    else if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.left)
+                    {
+                        tmpDirect = new Vector3(-180, 0, 0);
+                    }
+                    else if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.right)
+                    {
+                        tmpDirect = new Vector3(0, 180, 0);
+                    }
+                    else if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.forward)
+                    {
+                        tmpDirect = new Vector3(0, 90, 0);
+                    }
+                    else if (_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.back)
+                    {
+                        tmpDirect = new Vector3(0, -90, 0);
+                    }
+                    states.Add(new state(pos, tmpDirect));
                 }
-                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.left)
-                {
-                    tmpDirect = new Vector3(-180,0,0);
-                }
-                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.right)
-                {
-                    tmpDirect = new Vector3(0,180,0);
-                }
-                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.forward)
-                {
-                    tmpDirect = new Vector3(0,90,0);
-                }
-                else if(_stateMatrix[pos.x, pos.y, pos.z].Item1 == Vector3.back)
-                {
-                    tmpDirect = new Vector3(0,-90,0);
-                }
-                states.Add(new state(pos, tmpDirect));
             }
             return states;
         }
-        
-        public void GenerateLevelFromText(){
+
+        public void GenerateLevelFromText()
+        {
             File.WriteAllText(_levelPath, "");
-            var data = ReadTextData();
-            Debug.Log("Data Length: " + data.Length);
-            foreach(var d in data){
-                var (levelIndex, size, posArray) = FromStringToArray(d);
-                var states =  GenerateLevel(posArray);
-                var levelData = new LevelData(levelIndex, posArray.Length, size, states);
-                File.AppendAllText(_levelPath, _ConvertFromSOToJSon.FormatJson(JsonUtility.ToJson(levelData)) +  "\n" + "-----------------------------------" + "\n");
+            var data = _OnlineDataManager.ReadGoogleData();
+            //Debug.Log("Data Length: " + data.Length);
+            foreach (var d in data)
+            {
+                //var (levelIndex, size, posArray) = FromStringToArray(d);
+                var levelIndex = d.GetLevel();
+                var size = d.GetSize();
+                var posArray = d.GetPosData();
+                var isColored = d.IsColored();
+                var colorArray = d.GetColorData();
+                var states = GenerateLevel(posArray, isColored, colorArray);
+                var levelData = new LevelData(levelIndex, posArray.Length, size, states, isColored);
+                File.AppendAllText(_levelPath, _ConvertFromSOToJSon.FormatJson(JsonUtility.ToJson(levelData)) + "\n" + "-----------------------------------" + "\n");
             }
         }
 
-        private string[] ReadTextData(){
+        private string[] ReadTextData()
+        {
             return _levelPosAsset.text.Split(_determineChar, System.StringSplitOptions.RemoveEmptyEntries);
         }
 
-        private (int, Vector3, Vector3Int[]) FromStringToArray(string posLevelText){
-            var data = posLevelText.Split(new string[] {"\n", "\r"}, System.StringSplitOptions.RemoveEmptyEntries);
+        private (int, Vector3, Vector3Int[]) FromStringToArray(string posLevelText)
+        {
+            var data = posLevelText.Split(new string[] { "\n", "\r" }, System.StringSplitOptions.RemoveEmptyEntries);
             int levelIndex = System.Int32.Parse(data[0]);
             var sizeText = data[1].Split(" ");
             Vector3Int size = new Vector3Int(System.Int32.Parse(sizeText[0]), System.Int32.Parse(sizeText[1]), System.Int32.Parse(sizeText[2]));
             List<Vector3Int> posArray = new List<Vector3Int>();
             var posData = data[2].Split(",");
-            foreach(var pos in posData){
+            foreach (var pos in posData)
+            {
                 var tmp = pos.Split(" ", System.StringSplitOptions.RemoveEmptyEntries);
-                if(!System.Int32.TryParse(tmp[0], out int posX)){
+                if (!System.Int32.TryParse(tmp[0], out int posX))
+                {
                     Debug.LogError("Can't parse int from string: " + tmp[0]);
                 }
-                else if(!System.Int32.TryParse(tmp[1], out int posY)){
+                else if (!System.Int32.TryParse(tmp[1], out int posY))
+                {
                     Debug.LogError("Can't parse int from string: " + tmp[1]);
                 }
-                else if(!System.Int32.TryParse(tmp[2], out int posZ)){
+                else if (!System.Int32.TryParse(tmp[2], out int posZ))
+                {
                     Debug.LogError("Can't parse int from string: " + tmp[2]);
                 }
-                
+
                 posArray.Add(new Vector3Int(System.Int32.Parse(tmp[0]), System.Int32.Parse(tmp[1]), System.Int32.Parse(tmp[2])));
             }
             return (levelIndex, size, posArray.ToArray());
@@ -291,11 +339,11 @@ namespace Generate
             {
                 _generateLevel.GenerateLevelFromText();
             }
-            else if (GUILayout.Button("Convert Data"))
-            {
-                // var text = Resources.Load<TextAsset>("TestGenLevelData");
-                _generateLevel.ConvertData();
-            }
+            // else if (GUILayout.Button("Convert Data"))
+            // {
+            //     // var text = Resources.Load<TextAsset>("TestGenLevelData");
+            //     _generateLevel.ConvertData();
+            // }
         }
     }
 }

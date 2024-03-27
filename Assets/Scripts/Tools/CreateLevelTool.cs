@@ -11,11 +11,19 @@ public class state
 {
     public Vector3 pos;
     public Vector3 rotation;
+    public Vector3 color;
 
     public state(Vector3 pos, Vector3 rotation)
     {
         this.pos = pos;
         this.rotation = rotation;
+    }
+
+    public state(Vector3 pos, Vector3 rotation, Vector3 color)
+    {
+        this.pos = pos;
+        this.rotation = rotation;
+        this.color = color;
     }
 
     public state()
