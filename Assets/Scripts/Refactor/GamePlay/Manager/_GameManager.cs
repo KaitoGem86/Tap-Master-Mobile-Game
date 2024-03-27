@@ -28,7 +28,7 @@ namespace Core.GamePlay
 
         public void WinGame()
         {
-
+            //_GameEvent.OnGamePlayWin?.Invoke();
         }
 
         public void NextLevel()

@@ -31,7 +31,7 @@ namespace Core.GamePlay
 
         public void SetUp()
         {
-            _cameraRotation.DORotate(Vector3.zero, 0.5f);
+            _cameraRotation.DORotate(new Vector3(-45, 90, 90), 0.5f);
             SetCameraSize();
         }
 
@@ -76,9 +76,10 @@ namespace Core.GamePlay
         // }
 
         private void SetCameraSize(){
-            Debug.Log(_GameManager.Instance.Level.size.x);
-            Debug.Log(_ConstantCameraSetting.GetCameraPositionValue((int)_GameManager.Instance.Level.size.x));
-            this.transform.localPosition = _ConstantCameraSetting.GetCameraPositionValue((int)_GameManager.Instance.Level.size.x);
+            //Debug.Log(_GameManager.Instance.Level.size.x);
+            //Debug.Log(_ConstantCameraSetting.GetCameraPositionValue((int)_GameManager.Instance.Level.size.x));
+            int max = Mathf.Max((int)_GameManager.Instance.Level.size.x, (int)_GameManager.Instance.Level.size.y, (int)_GameManager.Instance.Level.size.z);
+            this.transform.localPosition = _ConstantCameraSetting.GetCameraPositionValue(max);
         }
 
         public float Sensitivity

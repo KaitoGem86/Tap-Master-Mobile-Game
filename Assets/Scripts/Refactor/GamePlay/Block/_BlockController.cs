@@ -19,6 +19,14 @@ namespace Core.GamePlay.Block
         private Vector3 _color;
         private bool _isInit;
 
+        private void Awake(){
+            //_GameEvent.OnGamePlayReset += ResetBlock;
+        }
+
+        private void OnDestroy(){
+         //   _GameEvent.OnGamePlayReset -= ResetBlock;
+        }
+
         public void InitBlock(Material idleMaterial, Material movingMaterial, Material blockedMaterial, Vector3 rotation, Vector3 color, bool isSetColor = false)
         {
             _meshRenderer.material = idleMaterial;
@@ -26,6 +34,10 @@ namespace Core.GamePlay.Block
             SetUpTypeBlock(movingMaterial, blockedMaterial);
             SetCurrentTypeBlock(_BlockTypeEnum.Moving);
             SetColorIdleBlock(color, isSetColor);
+        }
+
+        private void ResetBlock(){
+            this.transform.DOKill();
         }
 
         private void SetUpTypeBlock(Material movingMaterial, Material blockedMaterial)
@@ -38,9 +50,7 @@ namespace Core.GamePlay.Block
 
         private void SetColorIdleBlock(Vector3 color, bool isSetColor = false){
             if(isSetColor){
-                //_color = _NormalizingVector3.ConvertToVector3Int(color);
                 _color = color;
-                Debug.Log("Color: " + color);
                 _meshRenderer.material.SetColor("_ColorSetting", new Color(_color.x / 255, _color.y /255, _color.z/255));
             }
         }
