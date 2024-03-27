@@ -54,7 +54,6 @@ namespace Core.GamePlay.BlockPool
             {
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
-                Debug.Log(block.name);
                 block.transform.SetParent(_blockContainer.transform);
                 block.GetComponent<_BlockController>().InitBlock(_idleMaterial, _movingMaterial, _blockedMaterial, levelData.blockStates[i].rotation, levelData.blockStates[i].color, levelData.isSetColor);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
@@ -72,7 +71,6 @@ namespace Core.GamePlay.BlockPool
                 _blockObjectPool[i].LogicPos = new Vector3Int(logicPos.x - minX, logicPos.y - minY, logicPos.z - minZ);
             }
             var containerPos = _blockContainer.transform.position;
-            Debug.Log(levelData.size / 2);
             containerPos -= levelData.size / 2 - new Vector3(0.5f, 0.5f, 0.5f);
             _blockContainer.transform.position = containerPos;
         }
@@ -155,5 +153,7 @@ namespace Core.GamePlay.BlockPool
         {
             return _blockObjectPool.Find(block => block.LogicPos.Equals(logicPos));
         }
+
+        public List<_BlockController> BlockObjectPool => _blockObjectPool;
     }
 }

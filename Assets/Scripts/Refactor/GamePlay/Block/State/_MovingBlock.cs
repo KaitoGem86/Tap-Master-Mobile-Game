@@ -39,7 +39,8 @@ namespace Core.GamePlay.Block
             if (_GameManager.Instance.BlockPool.CheckCanEscape(_blockController))
             {
                 IsCanMove = true;
-                _blockController.transform.DOLocalMove(_blockController.transform.localPosition + -_blockController.transform.right, 0.05f)
+                _GameManager.Instance.BlockPool.BlockObjectPool.Remove(_blockController);
+                _blockController.transform.DOLocalMove(_blockController.transform.localPosition + -_blockController.transform.right, 0.04f)
                     .SetLoops(30, LoopType.Incremental)
                     .SetEase(Ease.Linear)
                     .OnStart(() =>

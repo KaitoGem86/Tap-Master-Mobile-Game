@@ -31,7 +31,7 @@ namespace Core.GamePlay
         {
             Debug.Log("WinGame");
             _PlayerData.UserData.UpdateWinGameUserDataValue();
-            await UniTask.Delay(3000);
+            await UniTask.Delay(1500);
             _blockPool?.DeSpawnBlock();
             _GameManager.Instance.NextLevel();
         }
