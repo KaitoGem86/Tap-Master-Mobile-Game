@@ -4,6 +4,7 @@ using Core.ResourceGamePlay;
 using Extensions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using DG.Tweening;
 
 namespace Core.GamePlay.BlockPool
 {
@@ -18,6 +19,7 @@ namespace Core.GamePlay.BlockPool
         private bool[][][] _blockLogicPool;
         private List<_BlockController> _blockObjectPool;
         private GameObject _blockContainer;
+        private bool _isInitPool = false;
 
         public _BlockPool()
         {
@@ -35,7 +37,12 @@ namespace Core.GamePlay.BlockPool
             var movingMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyMovingMaterial);
             var blockedMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyBlockedMaterial);
             var idleMaterial = await AddressablesManager.LoadAssetAsync<Material>(_KeyMaterialResources.KeyIdleMaterial);
-            ObjectPooling._ObjectPooling.Instance.CreatePool(ObjectPooling._TypeGameObjectEnum.Block, gameObject, 100);
+            if (!_isInitPool)
+            {
+                Debug.Log("Create Pool");
+                _isInitPool = true;
+                ObjectPooling._ObjectPooling.Instance.CreatePool(ObjectPooling._TypeGameObjectEnum.Block, gameObject, 100);
+            }
             int minX = 0;
             int minY = 0;
             int minZ = 0;
@@ -43,6 +50,7 @@ namespace Core.GamePlay.BlockPool
             {
                 var block = ObjectPooling._ObjectPooling.Instance.SpawnFromPool(ObjectPooling._TypeGameObjectEnum.Block, Vector3.zero, Quaternion.identity);
                 block.name = "Block" + i;
+                Debug.Log(block.name);
                 block.transform.SetParent(_blockContainer.transform);
                 block.GetComponent<_BlockController>().InitBlock(idleMaterial, movingMaterial, blockedMaterial, levelData.blockStates[i].rotation, levelData.blockStates[i].color, levelData.isSetColor);
                 _blockObjectPool.Add(block.GetComponent<_BlockController>());
@@ -80,10 +88,20 @@ namespace Core.GamePlay.BlockPool
             _isLogicInit = true;
         }
 
-        private void ClearLogicPool(){
-            for(int i = 0; i < sizeX; i++){
-                for(int j = 0; j < sizeY; j++){
-                    for(int k = 0; k < sizeZ; k++){
+        private void InitObjectPooling()
+        {
+            _blockObjectPool ??= new List<_BlockController>();
+            _blockObjectPool.Clear();
+        }
+
+        private void ClearLogicPool()
+        {
+            for (int i = 0; i < sizeX; i++)
+            {
+                for (int j = 0; j < sizeY; j++)
+                {
+                    for (int k = 0; k < sizeZ; k++)
+                    {
                         _blockLogicPool[i][j][k] = false;
                     }
                 }
@@ -123,6 +141,7 @@ namespace Core.GamePlay.BlockPool
         {
             foreach (var block in _blockObjectPool)
             {
+                block.transform.DOKill();
                 ObjectPooling._ObjectPooling.Instance.ReturnToPool(ObjectPooling._TypeGameObjectEnum.Block, block.gameObject);
             }
         }
