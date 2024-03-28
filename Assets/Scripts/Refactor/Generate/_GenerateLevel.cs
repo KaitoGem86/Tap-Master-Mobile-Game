@@ -3,7 +3,6 @@ using System.IO;
 using Core.Extensions;
 using Core.ResourceGamePlay;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace Generate
@@ -193,7 +192,7 @@ namespace Generate
             }
             return states;
         }
-
+#if UNITY_EDITOR
         public void GenerateLevelFromText()
         {
             File.WriteAllText(_levelPath, "");
@@ -212,6 +211,7 @@ namespace Generate
                 File.AppendAllText(_levelPath, _ConvertFromSOToJSon.FormatJson(JsonUtility.ToJson(levelData)) + "\n" + "-----------------------------------" + "\n");
             }
         }
+#endif
 
         private string[] ReadTextData()
         {
@@ -327,7 +327,7 @@ namespace Generate
             return Random.Range(0, 6);
         }
     }
-
+#if UNITY_EDITOR
     [CustomEditor(typeof(_GenerateLevel))]
     public class _GenerateLevelEditor : Editor
     {
@@ -346,4 +346,5 @@ namespace Generate
             // }
         }
     }
+#endif
 }

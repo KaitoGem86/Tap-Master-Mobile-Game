@@ -16,6 +16,13 @@ namespace Core.SystemGame{
 
         public float Timer { get; set; }
 
+        public bool CheckSpread(){
+            if(Input.touchCount == 2 || Input.GetAxis("Mouse ScrollWheel") != 0){
+                return true;
+            }
+            return false;
+        }
+
         public bool CheckSelect(){
             if(Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Ended){
                 return true;
@@ -54,6 +61,24 @@ namespace Core.SystemGame{
             }
 
             return Vector3.positiveInfinity;
+        }
+
+        public float GetZoomValue(){
+            if(Input.touchCount == 2){
+                Touch touchZero = Input.GetTouch(0);
+                Touch touchOne = Input.GetTouch(1);
+
+                Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+                Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
+
+                float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
+                float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+                return currentMagnitude - prevMagnitude;
+            }
+            else{
+                return Input.GetAxis("Mouse ScrollWheel");
+            }
         }
     }
 }

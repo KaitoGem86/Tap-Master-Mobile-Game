@@ -60,7 +60,7 @@ namespace Core.ResourceGamePlay
             }
         }
     }
-
+#if UNITY_EDITOR
     [CustomEditor(typeof(_OnlineDataManager))]
     public class _OnlineDataManagerEditor : Editor
     {
@@ -74,4 +74,5 @@ namespace Core.ResourceGamePlay
             }
         }
     }
+#endif
 }
