@@ -112,4 +112,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 5241577185009561807}
   texture2D: {fileID: 21300000, guid: f8d289857bc92b546906cae6e7e0e817, type: 3}
-  _defaultScale: {x: 0, y: 0, z: 0}
+  _defaultScale: {x: 1, y: 1, z: 1}
