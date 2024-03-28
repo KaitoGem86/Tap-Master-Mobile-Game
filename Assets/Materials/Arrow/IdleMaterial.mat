@@ -137,9 +137,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - _ArrowColor: {r: 0.11320742, g: 0.083730765, b: 0.083730765, a: 0.7490196}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorSetting: {r: 0.5188679, g: 0.3950249, b: 0.27118188, a: 1}
+    - _ColorSetting: {r: 0.249644, g: 0.5076869, b: 0.7075472, a: 1}
     - _DefaultColor: {r: 0.056959715, g: 0.24223898, b: 0.9433962, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}

@@ -12,6 +12,7 @@ namespace Core.GamePlay.Block
     {
         [SerializeField] private MeshRenderer _meshRenderer;
         [SerializeField] private Sprite texture2D;
+        [SerializeField] private Vector3 _defaultScale;
         private Dictionary<_BlockTypeEnum, _BlockState> _blockStates = new Dictionary<_BlockTypeEnum, _BlockState>();
         private _BlockState _currentType;   
         private Vector3Int _logicPos;
@@ -85,7 +86,7 @@ namespace Core.GamePlay.Block
         private void AnimationInitBlock(Vector3 rotation){
             transform.rotation = Quaternion.Euler(rotation);
             transform.localScale = Vector3.zero;
-            transform.DOScale(Vector3.one, 1.5f);
+            transform.DOScale(_defaultScale, 1.5f);
             transform.DORotate(Vector3.one * 360 + rotation, 1.5f, RotateMode.FastBeyond360);
         }
 
